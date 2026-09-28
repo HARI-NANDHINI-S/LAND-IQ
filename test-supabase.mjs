@@ -14,7 +14,7 @@ if (!url || !key) {
 const supabase = createClient(url, key);
 async function test() {
   try {
-    const { error } = await supabase.from('nonexistent').select('*').limit(1);
+    await supabase.from('nonexistent').select('*').limit(1);
     console.log('Connectivity check passed.');
   } catch (err) {
     console.error('Connectivity failed', err);
