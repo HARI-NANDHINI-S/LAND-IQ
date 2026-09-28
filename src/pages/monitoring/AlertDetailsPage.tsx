@@ -67,6 +67,7 @@ export default function AlertDetailsPage() {
       void queryClient.invalidateQueries({ queryKey: ['monitoring-alert', id] });
       void queryClient.invalidateQueries({ queryKey: ['monitoring-alerts'] });
       void queryClient.invalidateQueries({ queryKey: ['monitoring-alert-stats'] });
+      void queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
     },
     onError: (error) => setActionMessage({ kind: 'error', text: error instanceof Error ? error.message : 'Alert update failed.' }),
   });

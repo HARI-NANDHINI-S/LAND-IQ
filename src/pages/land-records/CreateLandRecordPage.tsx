@@ -101,6 +101,10 @@ export default function CreateLandRecordPage() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['land-records'] });
+      queryClient.invalidateQueries({ queryKey: ['recent-records'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['gis-records'] });
+      queryClient.invalidateQueries({ queryKey: ['gis-summary'] });
       if (false) {
         queryClient.invalidateQueries({ queryKey: ['land-record', id] });
         navigate('/land-records/' + id);

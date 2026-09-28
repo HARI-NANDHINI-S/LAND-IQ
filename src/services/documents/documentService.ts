@@ -176,7 +176,7 @@ export const documentService = {
   async deleteDocument(id: string) {
     const { data: doc, error: docError } = await supabase
       .from('documents')
-      .select('storage_path')
+      .select('id, storage_path, land_record_id')
       .eq('id', id)
       .single();
 
@@ -189,6 +189,6 @@ export const documentService = {
       await supabase.storage.from(STORAGE_BUCKET).remove([doc.storage_path]);
     }
 
-    return true;
+    return { id: doc.id, land_record_id: doc.land_record_id };
   },
 };

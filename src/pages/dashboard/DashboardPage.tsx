@@ -19,21 +19,17 @@ export default function DashboardPage() {
   
   // Dashboard statistics query
   const { data: stats, isLoading: statsLoading, error: statsError, refetch: refetchStats } = useQuery({
-    queryKey: ['dashboard-stats', user?.profile?.district_id],
+    queryKey: ['dashboard-stats', user?.id, user?.profile?.state_id, user?.profile?.district_id],
     queryFn: async () => {
-      const scope = user?.profile?.district_id ? { district_id: user.profile.district_id } : {};
-      
-      // Efficient count queries
       const [totalRecords, pendingVerif, highRisk, activeAlerts] = await Promise.all([
-        supabase.from('land_records').select('*', { count: 'exact', head: true }).match(scope),
-        supabase.from('land_records').select('*', { count: 'exact', head: true }).match({ ...scope, verification_status: 'PENDING' }),
-        supabase.from('risk_assessments').select('*, land_records!inner(*)', { count: 'exact', head: true })
-          .in('risk_level', ['HIGH', 'CRITICAL'])
-          .match(scope.district_id ? { 'land_records.district_id': scope.district_id } : {}),
-        supabase.from('alerts').select('*, land_records!inner(*)', { count: 'exact', head: true })
-          .in('status', ['NEW', 'UNDER_REVIEW'])
-          .match(scope.district_id ? { 'land_records.district_id': scope.district_id } : {})
+        supabase.from('land_records').select('id', { count: 'exact', head: true }),
+        supabase.from('verification_tasks').select('id', { count: 'exact', head: true }).in('status', ['QUEUED', 'ASSIGNED']),
+        supabase.from('risk_assessments').select('id', { count: 'exact', head: true }).in('risk_level', ['HIGH', 'CRITICAL']),
+        supabase.from('alerts').select('id', { count: 'exact', head: true }).neq('status', 'RESOLVED'),
       ]);
+
+      const queryError = [totalRecords.error, pendingVerif.error, highRisk.error, activeAlerts.error].find(Boolean);
+      if (queryError) throw queryError;
 
       return {
         totalRecords: totalRecords.count ?? 0,
@@ -46,11 +42,8 @@ export default function DashboardPage() {
 
   // Recent records query
   const { data: recentRecordsData, isLoading: recordsLoading, error: recordsError } = useQuery({
-    queryKey: ['recent-records', user?.profile?.district_id],
-    queryFn: () => landRecordService.getLandRecords({ 
-      district_id: user?.profile?.district_id ?? undefined,
-      pageSize: 5 
-    })
+    queryKey: ['recent-records', user?.id],
+    queryFn: () => landRecordService.getLandRecords({ pageSize: 5 }),
   });
 
   const getStatusColor = (status: string) => {
@@ -112,11 +105,11 @@ export default function DashboardPage() {
               description="Awaiting review"
             />
             <StatCard 
-              title="High/Critical Risk" 
+              title="High/Critical Risk Assessments"
               value={stats?.highRiskRecords} 
               icon={<ShieldAlert className="text-rose-500" />} 
               loading={statsLoading}
-              description="Require immediate attention"
+              description="Stored assessment records"
             />
             <StatCard 
               title="Active Alerts" 

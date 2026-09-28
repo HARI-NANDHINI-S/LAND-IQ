@@ -44,6 +44,9 @@ export default function VerificationDetailsPage() {
       queryClient.invalidateQueries({ queryKey: ['verification-task', id] });
       queryClient.invalidateQueries({ queryKey: ['verification-tasks'] });
       queryClient.invalidateQueries({ queryKey: ['verification-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
+      queryClient.invalidateQueries({ queryKey: ['monitoring-alert-context'] });
     },
   });
 

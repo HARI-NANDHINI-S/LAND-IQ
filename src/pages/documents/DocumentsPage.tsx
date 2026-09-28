@@ -154,8 +154,10 @@ export default function DocumentsPage() {
         uploaded_by: user.id,
       });
     },
-    onSuccess: () => {
+    onSuccess: (document) => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
+      if (document.land_record_id) queryClient.invalidateQueries({ queryKey: ['land-record', document.land_record_id] });
+      queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
       setUploadOpen(false);
       setSelectedFile(null);
       setUploadError(null);
@@ -168,8 +170,10 @@ export default function DocumentsPage() {
 
   const deleteMutation = useMutation({
     mutationFn: async (documentId: string) => documentService.deleteDocument(documentId),
-    onSuccess: () => {
+    onSuccess: (document) => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
+      if (document.land_record_id) queryClient.invalidateQueries({ queryKey: ['land-record', document.land_record_id] });
+      queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
     },
   });
 

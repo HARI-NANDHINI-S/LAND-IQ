@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LoginPage from './pages/auth/LoginPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
@@ -48,6 +48,11 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function RiskIntelligenceDetailsRedirect() {
+  const { id } = useParams<{ id: string }>();
+  return <Navigate to={id ? `/risk/${id}` : '/risk'} replace />;
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -84,7 +89,7 @@ export default function App() {
               <Route path=":id" element={<RiskDetailsPage />} />
             </Route>
             <Route path="risk-intelligence" element={<Navigate to="/risk" replace />} />
-            <Route path="risk-intelligence/:id" element={<Navigate to="/risk/:id" replace />} />
+            <Route path="risk-intelligence/:id" element={<RiskIntelligenceDetailsRedirect />} />
             <Route path="monitoring">
               <Route index element={<MonitoringPage />} />
               <Route path="alerts/:id" element={<AlertDetailsPage />} />
