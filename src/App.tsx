@@ -19,6 +19,11 @@ import DuplicatesPage from './pages/duplicates/DuplicatesPage';
 import DuplicateDetailsPage from './pages/duplicates/DuplicateDetailsPage';
 import RiskIntelligencePage from './pages/risk/RiskIntelligencePage';
 import RiskDetailsPage from './pages/risk/RiskDetailsPage';
+import MonitoringPage from './pages/monitoring/MonitoringPage';
+import AlertDetailsPage from './pages/monitoring/AlertDetailsPage';
+import NotificationsPage from './pages/monitoring/NotificationsPage';
+import WatchlistsPage from './pages/monitoring/WatchlistsPage';
+import WatchlistDetailsPage from './pages/monitoring/WatchlistDetailsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -79,7 +84,13 @@ export default function App() {
             </Route>
             <Route path="risk-intelligence" element={<Navigate to="/risk" replace />} />
             <Route path="risk-intelligence/:id" element={<Navigate to="/risk/:id" replace />} />
-            <Route path="monitoring" element={<ModulePlaceholderPage moduleName="Monitoring (BhoomiWatch)" />} />
+            <Route path="monitoring">
+              <Route index element={<MonitoringPage />} />
+              <Route path="alerts/:id" element={<AlertDetailsPage />} />
+              <Route path="watchlists" element={<WatchlistsPage />} />
+              <Route path="watchlists/:id" element={<WatchlistDetailsPage />} />
+            </Route>
+            <Route path="notifications" element={<NotificationsPage />} />
             <Route path="gis" element={<ModulePlaceholderPage moduleName="GIS Mapping" />} />
             <Route path="analytics" element={<ModulePlaceholderPage moduleName="Analytics" />} />
             <Route path="audit-logs" element={<ModulePlaceholderPage moduleName="Audit Logs" />} />
