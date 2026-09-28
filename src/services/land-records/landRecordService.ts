@@ -5,9 +5,11 @@ import { toAppError } from '@/utils/errorHandler';
 export type LandRecord = Database['public']['Tables']['land_records']['Row'];
 
 export interface LandRecordFilters {
+  state_id?: string;
   district_id?: string;
   taluk_id?: string;
   village_id?: string;
+  land_type?: string;
   verification_status?: string;
   record_status?: string;
   search?: string;
@@ -27,9 +29,11 @@ export const landRecordService = {
       .order('created_at', { ascending: false })
       .range(from, to);
 
+    if (rest.state_id) query = query.eq('state_id', rest.state_id);
     if (rest.district_id) query = query.eq('district_id', rest.district_id);
     if (rest.taluk_id) query = query.eq('taluk_id', rest.taluk_id);
     if (rest.village_id) query = query.eq('village_id', rest.village_id);
+    if (rest.land_type) query = query.ilike('land_type', rest.land_type);
     if (rest.verification_status) query = query.eq('verification_status', rest.verification_status);
     if (rest.record_status) query = query.eq('record_status', rest.record_status);
     if (search) {

@@ -24,6 +24,7 @@ import AlertDetailsPage from './pages/monitoring/AlertDetailsPage';
 import NotificationsPage from './pages/monitoring/NotificationsPage';
 import WatchlistsPage from './pages/monitoring/WatchlistsPage';
 import WatchlistDetailsPage from './pages/monitoring/WatchlistDetailsPage';
+import GISMappingPage from './pages/gis/GISMappingPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -91,7 +92,7 @@ export default function App() {
               <Route path="watchlists/:id" element={<WatchlistDetailsPage />} />
             </Route>
             <Route path="notifications" element={<NotificationsPage />} />
-            <Route path="gis" element={<ModulePlaceholderPage moduleName="GIS Mapping" />} />
+            <Route path="gis" element={<GISMappingPage />} />
             <Route path="analytics" element={<ModulePlaceholderPage moduleName="Analytics" />} />
             <Route path="audit-logs" element={<ModulePlaceholderPage moduleName="Audit Logs" />} />
             <Route path="users" element={<ModulePlaceholderPage moduleName="User Administration" />} />
