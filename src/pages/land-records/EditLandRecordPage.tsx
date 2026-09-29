@@ -97,6 +97,7 @@ export default function EditLandRecordPage() {
       queryClient.invalidateQueries({ queryKey: ['land-records'] });
       queryClient.invalidateQueries({ queryKey: ['recent-records'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['gis-records'] });
       queryClient.invalidateQueries({ queryKey: ['gis-summary'] });
       if (true) {

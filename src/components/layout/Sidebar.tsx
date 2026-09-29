@@ -41,7 +41,7 @@ export default function Sidebar() {
     {
       group: 'ASSISTANT',
       items: [
-        { name: 'BhoomiVoice', to: '/assistant', icon: Bot, show: hasPermission('assistant:use') },
+        { name: 'BhoomiVoice', to: '/bhoomi-voice', icon: Bot, show: hasPermission('assistant:use') },
       ]
     },
     {

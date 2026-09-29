@@ -156,6 +156,7 @@ export default function DocumentsPage() {
     },
     onSuccess: (document) => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
+      queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
       if (document.land_record_id) queryClient.invalidateQueries({ queryKey: ['land-record', document.land_record_id] });
       queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
       setUploadOpen(false);
@@ -172,6 +173,7 @@ export default function DocumentsPage() {
     mutationFn: async (documentId: string) => documentService.deleteDocument(documentId),
     onSuccess: (document) => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
+      queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
       if (document.land_record_id) queryClient.invalidateQueries({ queryKey: ['land-record', document.land_record_id] });
       queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
     },

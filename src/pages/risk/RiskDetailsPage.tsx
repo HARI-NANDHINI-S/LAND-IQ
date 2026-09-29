@@ -42,6 +42,7 @@ export default function RiskDetailsPage() {
       queryClient.invalidateQueries({ queryKey: ['risk-assessment', id] });
       queryClient.invalidateQueries({ queryKey: ['risk-assessments'] });
       queryClient.invalidateQueries({ queryKey: ['risk-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
       queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
       queryClient.invalidateQueries({ queryKey: ['monitoring-alert-context'] });

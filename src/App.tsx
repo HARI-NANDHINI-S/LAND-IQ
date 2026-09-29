@@ -25,6 +25,8 @@ import NotificationsPage from './pages/monitoring/NotificationsPage';
 import WatchlistsPage from './pages/monitoring/WatchlistsPage';
 import WatchlistDetailsPage from './pages/monitoring/WatchlistDetailsPage';
 import GISMappingPage from './pages/gis/GISMappingPage';
+import AnalyticsPage from './pages/analytics/AnalyticsPage';
+import BhoomiVoicePage from './pages/assistant/BhoomiVoicePage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -98,10 +100,11 @@ export default function App() {
             </Route>
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="gis" element={<GISMappingPage />} />
-            <Route path="analytics" element={<ModulePlaceholderPage moduleName="Analytics" />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
             <Route path="audit-logs" element={<ModulePlaceholderPage moduleName="Audit Logs" />} />
             <Route path="users" element={<ModulePlaceholderPage moduleName="User Administration" />} />
-            <Route path="assistant" element={<ModulePlaceholderPage moduleName="BhoomiVoice Assistant" />} />
+            <Route path="assistant" element={<BhoomiVoicePage />} />
+            <Route path="bhoomi-voice" element={<BhoomiVoicePage />} />
             <Route path="settings" element={<ModulePlaceholderPage moduleName="Settings" />} />
             
             <Route path="*" element={
