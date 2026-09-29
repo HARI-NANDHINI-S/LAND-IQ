@@ -39,6 +39,7 @@ export default function WatchlistDetailsPage() {
   const invalidateEntry = () => {
     void queryClient.invalidateQueries({ queryKey: ['watchlist-entry', id] });
     void queryClient.invalidateQueries({ queryKey: ['watchlists'] });
+    void queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
   };
   const updateMutation = useMutation({
     mutationFn: async () => {
@@ -58,7 +59,11 @@ export default function WatchlistDetailsPage() {
       if (!hasPermission('watchlist:manage')) throw new Error('You do not have permission to manage watchlists.');
       return monitoringService.deleteWatchlist(id!);
     },
-    onSuccess: () => { void queryClient.invalidateQueries({ queryKey: ['watchlists'] }); navigate('/monitoring/watchlists'); },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['watchlists'] });
+      void queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
+      navigate('/monitoring/watchlists');
+    },
     onError: (error) => setActionError(error instanceof Error ? error.message : 'Could not delete watchlist entry.'),
   });
 

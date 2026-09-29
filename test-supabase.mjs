@@ -14,11 +14,17 @@ if (!url || !key) {
 const supabase = createClient(url, key);
 async function test() {
   try {
-    await supabase.from('nonexistent').select('*').limit(1);
+    const { error } = await supabase.from('roles').select('id').limit(1);
+    if (error) {
+      console.error('Supabase connectivity failed:', error.code, error.message);
+      process.exitCode = 1;
+      return;
+    }
+
     console.log('Connectivity check passed.');
   } catch (err) {
-    console.error('Connectivity failed', err);
-    process.exit(1);
+    console.error('Connectivity failed:', err instanceof Error ? err.message : 'Unknown error');
+    process.exitCode = 1;
   }
 }
 test();

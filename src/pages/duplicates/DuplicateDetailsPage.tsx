@@ -67,7 +67,7 @@ export default function DuplicateDetailsPage() {
       queryClient.invalidateQueries({ queryKey: ['duplicate-stats'] });
       queryClient.invalidateQueries({ queryKey: ['duplicate-candidate-history', id] });
       queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
       queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
       queryClient.invalidateQueries({ queryKey: ['monitoring-alert-context'] });
     },

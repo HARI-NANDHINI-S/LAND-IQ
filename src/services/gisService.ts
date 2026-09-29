@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { landRecordService, type LandRecordFilters } from '@/services/land-records/landRecordService';
 import { toAppError } from '@/utils/errorHandler';
+import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
 
 export interface GISFilters extends LandRecordFilters {
   state_id?: string;
@@ -39,8 +40,7 @@ function filteredRecordsQuery(filters: GISFilters) {
   if (filters.verification_status) query = query.eq('verification_status', filters.verification_status);
   if (filters.record_status) query = query.eq('record_status', filters.record_status);
   if (filters.search?.trim()) {
-    const term = filters.search.trim().replace(/[%_]/g, '\\$&');
-    query = query.or(`survey_number.ilike.%${term}%,patta_number.ilike.%${term}%,record_number.ilike.%${term}%`);
+    query = query.or(buildIlikeOrFilter(['survey_number', 'patta_number', 'record_number'], filters.search));
   }
   return query;
 }

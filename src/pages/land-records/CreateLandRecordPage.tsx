@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -34,18 +34,11 @@ type FormValues = z.infer<typeof recordSchema>;
 
 export default function CreateLandRecordPage() {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
   const { hasPermission } = useAuth();
   const queryClient = useQueryClient();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const { data: record, isLoading: recordLoading } = useQuery({
-    queryKey: ['land-record', id],
-    queryFn: () => landRecordService.getLandRecord(id!),
-    enabled: false && !!id,
-  });
-
-  const { register, handleSubmit, setValue, control, watch, formState: { errors, isSubmitting }, reset, getValues } = useForm<FormValues>({
+  const { register, handleSubmit, setValue, control, watch, formState: { errors, isSubmitting } } = useForm<FormValues>({
     resolver: zodResolver(recordSchema),
     defaultValues: {
       record_number: '',
@@ -60,22 +53,6 @@ export default function CreateLandRecordPage() {
     }
   });
 
-  useEffect(() => {
-    if (false && record) {
-      reset({
-        record_number: record.record_number,
-        survey_number: record.survey_number,
-        patta_number: record.patta_number || '',
-        state_id: record.state_id,
-        district_id: record.district_id,
-        taluk_id: record.taluk_id,
-        village_id: record.village_id,
-        land_area: record.land_area || undefined,
-        land_type: record.land_type || 'WET',
-      });
-    }
-  }, [record, reset]);
-
   const watchState = watch('state_id');
   const watchDistrict = watch('district_id');
   const watchTaluk = watch('taluk_id');
@@ -85,33 +62,17 @@ export default function CreateLandRecordPage() {
   const { data: taluks } = useQuery({ queryKey: ['taluks', watchDistrict], queryFn: () => geoService.getTaluks(watchDistrict), enabled: !!watchDistrict });
   const { data: villages } = useQuery({ queryKey: ['villages', watchTaluk], queryFn: () => geoService.getVillages(watchTaluk), enabled: !!watchTaluk });
 
-  // DEBUG: Log actual data from geoService
-  console.log('DEBUG states data:', JSON.stringify(states?.slice(0, 2)));
-  console.log('DEBUG districts data:', JSON.stringify(districts?.slice(0, 2)));
-  console.log('DEBUG taluks data:', JSON.stringify(taluks?.slice(0, 2)));
-  console.log('DEBUG villages data:', JSON.stringify(villages?.slice(0, 2)));
-
   const mutation = useMutation({
-    mutationFn: (data: FormValues) => {
-      if (false) {
-        return landRecordService.updateLandRecord(id!, data as any);
-      } else {
-        return landRecordService.createLandRecord({ ...data, verification_status: 'PENDING', record_status: 'ACTIVE' } as any);
-      }
-    },
+    mutationFn: (data: FormValues) =>
+      landRecordService.createLandRecord({ ...data, verification_status: 'PENDING', record_status: 'ACTIVE' } as any),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['land-records'] });
       queryClient.invalidateQueries({ queryKey: ['recent-records'] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
       queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['gis-records'] });
       queryClient.invalidateQueries({ queryKey: ['gis-summary'] });
-      if (false) {
-        queryClient.invalidateQueries({ queryKey: ['land-record', id] });
-        navigate('/land-records/' + id);
-      } else {
-        navigate('/land-records/' + data.id);
-      }
+      navigate('/land-records/' + data.id);
     },
     onError: (err: any) => {
       setErrorMsg(err.message || 'Failed to save record.');
@@ -119,25 +80,12 @@ export default function CreateLandRecordPage() {
   });
 
   const onSubmit = (data: FormValues) => {
-    console.log("LOCATION FORM VALUES", {
-      state_id: getValues("state_id"),
-      district_id: getValues("district_id"),
-      taluk_id: getValues("taluk_id"),
-      village_id: getValues("village_id"),
-    });
     setErrorMsg(null);
     mutation.mutate(data);
   };
 
-  if (false && !hasPermission('land_record:update')) {
-    return <div className="p-6 text-destructive font-medium">You do not have permission to edit records.</div>;
-  }
-  if (!false && !hasPermission('land_record:create')) {
+  if (!hasPermission('land_record:create')) {
     return <div className="p-6 text-destructive font-medium">You do not have permission to create records.</div>;
-  }
-
-  if (false && recordLoading) {
-    return <div className="p-6 flex items-center gap-2"><Loader2 className="animate-spin h-5 w-5" /> Loading record...</div>;
   }
 
   return (
@@ -156,7 +104,7 @@ export default function CreateLandRecordPage() {
 
       <Card className="max-w-3xl">
         <CardContent className="p-6">
-          <form onSubmit={handleSubmit(onSubmit, (errs) => { console.log("FORM ERRORS", errs); console.log("LOCATION VALUES AT ERROR", { state_id: getValues("state_id"), district_id: getValues("district_id"), taluk_id: getValues("taluk_id"), village_id: getValues("village_id") }); })} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {errorMsg && (
               <div className="p-3 bg-destructive/15 text-destructive rounded-md text-sm font-medium">
                 {errorMsg}

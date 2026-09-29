@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import {
   Activity,
   AlertTriangle,
-  ArrowRight,
   Bell,
   Bot,
   CheckCheck,
@@ -20,6 +19,8 @@ import {
 import { useAuth } from '@/hooks/auth/useAuth';
 import { supabase } from '@/lib/supabase';
 import { analyticsService } from '@/services/analyticsService';
+import { toAppError } from '@/utils/errorHandler';
+import { CommandCenterHero } from '@/components/dashboard/CommandCenterHero';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -106,8 +107,7 @@ export default function DashboardPage() {
         recentActivity.error,
       ].filter(Boolean);
       if (errors.length > 0) {
-        const firstError = errors[0];
-        throw firstError instanceof Error ? firstError : new Error('Unknown dashboard query error');
+        throw toAppError(errors[0]);
       }
 
       const scopedRecordIds = (landRecords.data ?? []).map((record) => record.id as string);
@@ -139,6 +139,9 @@ export default function DashboardPage() {
             .select('id', { count: 'exact', head: true })
             .neq('status', 'RESOLVED')
         : { count: 0, error: null }
+
+      const countError = [pendingVerification.error, highRisk.error, pendingDuplicates.error, activeAlerts.error].find(Boolean);
+      if (countError) throw toAppError(countError);
 
       const landRecordsCount = hasPermission('land_record:read') ? (landRecords.count ?? (landRecords.data?.length ?? 0)) : 0;
       const totalDocuments = hasPermission('document:read') ? (documents.count ?? 0) : 0;
@@ -314,16 +317,14 @@ export default function DashboardPage() {
   const hasError = dashboardQuery.isError;
 
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <div className="landiq-page flex-1 space-y-6 p-4 md:p-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">LAND-IQ Command Center</h1>
-          <p className="text-sm text-muted-foreground">Operational overview of land records, verification, risk, monitoring, and analytics in your active scope.</p>
-        </div>
         <Button variant="outline" size="sm" onClick={() => void dashboardQuery.refetch()} disabled={isLoading}>
           <RefreshCw className={`mr-2 h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} /> Refresh
         </Button>
       </div>
+
+      <CommandCenterHero />
 
       {hasError && (
         <Alert variant="destructive">
@@ -335,16 +336,17 @@ export default function DashboardPage() {
 
       {summaryCards.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {summaryCards.map((card) => {
+          {summaryCards.map((card, index) => {
             const CardIcon = card.icon;
             return (
-              <Link key={card.title} to={card.href} className="block">
+              <Link key={card.title} to={card.href} className="block" style={{ animationDelay: `${index * 80}ms` }}>
                 <StatCard
                   title={card.title}
                   value={isLoading ? undefined : card.value}
                   icon={<CardIcon className={card.tone === 'amber' ? 'text-amber-500' : card.tone === 'rose' ? 'text-rose-500' : card.tone === 'orange' ? 'text-orange-500' : card.tone === 'emerald' ? 'text-emerald-500' : 'text-blue-500'} />}
                   description={card.description}
                   loading={isLoading}
+                  className="landiq-fade-up"
                 />
               </Link>
             );
@@ -359,14 +361,14 @@ export default function DashboardPage() {
       )}
 
       <div className="grid gap-4 xl:grid-cols-[1.5fr_1fr]">
-        <Card>
+        <Card className="landiq-panel landiq-fade-up">
           <CardHeader className="flex flex-row items-center justify-between gap-2">
             <div>
               <CardTitle>Priority Work</CardTitle>
               <CardDescription>Live operational items requiring attention.</CardDescription>
             </div>
             <Button asChild variant="outline" size="sm">
-              <Link to="/analytics">Open analytics <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              <Link to="/analytics">Open analytics</Link>
             </Button>
           </CardHeader>
           <CardContent>
@@ -381,7 +383,7 @@ export default function DashboardPage() {
             ) : (
               <div className="space-y-3">
                 {dashboardQuery.data.priorityWork.map((item, index) => (
-                  <div key={`${item.title}-${index}`} className="flex items-start justify-between gap-3 rounded-md border p-3">
+                  <div key={`${item.title}-${index}`} className="landiq-activity-item flex items-start justify-between gap-3 rounded-xl border border-border/80 bg-background/60 p-3">
                     <div className="min-w-0">
                       <p className="truncate font-medium">{item.title}</p>
                       <p className="text-xs text-muted-foreground">{item.subtitle}</p>
@@ -400,7 +402,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="landiq-panel landiq-fade-up">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Authorized tasks and module entry points.</CardDescription>
@@ -412,7 +414,7 @@ export default function DashboardPage() {
               quickActions.map((action) => {
                 const Icon = action.icon;
                 return (
-                  <Button key={action.href} asChild variant="outline" className="justify-start">
+                  <Button key={action.href} asChild variant="outline" className="landiq-quick-action justify-start">
                     <Link to={action.href}>
                       <Icon className="mr-2 h-4 w-4" /> {action.label}
                     </Link>
@@ -425,7 +427,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-2">
-        <Card>
+        <Card className="landiq-panel landiq-fade-up">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Recent Records</CardTitle>
@@ -451,7 +453,7 @@ export default function DashboardPage() {
                 </TableHeader>
                 <TableBody>
                   {dashboardQuery.data.recentRecords.map((record) => (
-                    <TableRow key={record.id}>
+                    <TableRow key={record.id} className="landiq-table-row">
                       <TableCell>
                         <Link to={`/land-records/${record.id}`} className="font-medium text-primary hover:underline">
                           {record.record_number || record.survey_number}
@@ -470,7 +472,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="landiq-panel landiq-fade-up">
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
             <CardDescription>Latest system events and field actions recorded in the database.</CardDescription>
@@ -485,7 +487,7 @@ export default function DashboardPage() {
                 {dashboardQuery.data.recentActivity.map((entry) => {
                   const actor = Array.isArray(entry.profiles) ? entry.profiles[0] : entry.profiles;
                   return (
-                    <div key={entry.id} className="rounded-md border p-3">
+                    <div key={entry.id} className="landiq-activity-item rounded-xl border border-border/80 bg-background/60 p-3">
                       <div className="flex items-center justify-between gap-2">
                         <p className="font-medium">{formatLabel(entry.action)}</p>
                         <Badge variant="outline">{entry.entity_type}</Badge>
@@ -503,7 +505,7 @@ export default function DashboardPage() {
       </div>
 
       {hasPermission('analytics:read') && dashboardQuery.data?.analyticsSummary && (
-        <Card>
+        <Card className="landiq-panel landiq-fade-up">
           <CardHeader className="flex flex-row items-center justify-between gap-2">
             <div>
               <CardTitle>Analytics Snapshot</CardTitle>
@@ -515,20 +517,20 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-md border p-4">
-                <p className="text-sm text-muted-foreground">Land records</p>
+              <div className="landiq-metric-box rounded-xl border border-border/80 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Land records</p>
                 <p className="mt-2 text-2xl font-semibold">{dashboardQuery.data.analyticsSummary.summary.totalLandRecords}</p>
               </div>
-              <div className="rounded-md border p-4">
-                <p className="text-sm text-muted-foreground">Pending verification</p>
+              <div className="landiq-metric-box rounded-xl border border-border/80 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Pending verification</p>
                 <p className="mt-2 text-2xl font-semibold">{dashboardQuery.data.analyticsSummary.summary.pendingVerificationTasks}</p>
               </div>
-              <div className="rounded-md border p-4">
-                <p className="text-sm text-muted-foreground">Duplicate candidates</p>
+              <div className="landiq-metric-box rounded-xl border border-border/80 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Duplicate candidates</p>
                 <p className="mt-2 text-2xl font-semibold">{dashboardQuery.data.analyticsSummary.summary.totalDuplicateCandidates}</p>
               </div>
-              <div className="rounded-md border p-4">
-                <p className="text-sm text-muted-foreground">Active alerts</p>
+              <div className="landiq-metric-box rounded-xl border border-border/80 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">Active alerts</p>
                 <p className="mt-2 text-2xl font-semibold">{dashboardQuery.data.analyticsSummary.summary.activeAlerts}</p>
               </div>
             </div>

@@ -42,10 +42,10 @@ export default function EditLandRecordPage() {
   const { data: record, isLoading: recordLoading } = useQuery({
     queryKey: ['land-record', id],
     queryFn: () => landRecordService.getLandRecord(id!),
-    enabled: true && !!id,
+    enabled: !!id,
   });
 
-  const { register, handleSubmit, setValue, control, watch, formState: { errors, isSubmitting }, reset, getValues } = useForm<FormValues>({
+  const { register, handleSubmit, setValue, control, watch, formState: { errors, isSubmitting }, reset } = useForm<FormValues>({
     resolver: zodResolver(recordSchema),
     defaultValues: {
       record_number: '',
@@ -61,7 +61,7 @@ export default function EditLandRecordPage() {
   });
 
   useEffect(() => {
-    if (true && record) {
+    if (record) {
       reset({
         record_number: record.record_number,
         survey_number: record.survey_number,
@@ -86,26 +86,16 @@ export default function EditLandRecordPage() {
   const { data: villages } = useQuery({ queryKey: ['villages', watchTaluk], queryFn: () => geoService.getVillages(watchTaluk), enabled: !!watchTaluk });
 
   const mutation = useMutation({
-    mutationFn: (data: FormValues) => {
-      if (true) {
-        return landRecordService.updateLandRecord(id!, data as any);
-      } else {
-        return landRecordService.createLandRecord({ ...data, verification_status: 'PENDING', record_status: 'ACTIVE' } as any);
-      }
-    },
-    onSuccess: (data) => {
+    mutationFn: (data: FormValues) => landRecordService.updateLandRecord(id!, data as any),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['land-records'] });
       queryClient.invalidateQueries({ queryKey: ['recent-records'] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
       queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['gis-records'] });
       queryClient.invalidateQueries({ queryKey: ['gis-summary'] });
-      if (true) {
-        queryClient.invalidateQueries({ queryKey: ['land-record', id] });
-        navigate('/land-records/' + id);
-      } else {
-        navigate('/land-records/' + data.id);
-      }
+      queryClient.invalidateQueries({ queryKey: ['land-record', id] });
+      navigate('/land-records/' + id);
     },
     onError: (err: any) => {
       setErrorMsg(err.message || 'Failed to save record.');
@@ -113,24 +103,15 @@ export default function EditLandRecordPage() {
   });
 
   const onSubmit = (data: FormValues) => {
-    console.log("LOCATION FORM VALUES", {
-      state_id: getValues("state_id"),
-      district_id: getValues("district_id"),
-      taluk_id: getValues("taluk_id"),
-      village_id: getValues("village_id"),
-    });
     setErrorMsg(null);
     mutation.mutate(data);
   };
 
-  if (true && !hasPermission('land_record:update')) {
+  if (!hasPermission('land_record:update')) {
     return <div className="p-6 text-destructive font-medium">You do not have permission to edit records.</div>;
   }
-  if (!true && !hasPermission('land_record:create')) {
-    return <div className="p-6 text-destructive font-medium">You do not have permission to create records.</div>;
-  }
 
-  if (true && recordLoading) {
+  if (recordLoading) {
     return <div className="p-6 flex items-center gap-2"><Loader2 className="animate-spin h-5 w-5" /> Loading record...</div>;
   }
 

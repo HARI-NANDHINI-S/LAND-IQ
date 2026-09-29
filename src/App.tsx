@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LoginPage from './pages/auth/LoginPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
-import ModulePlaceholderPage from './pages/ModulePlaceholderPage';
 import AppShell from './components/layout/AppShell';
 import { useAuth } from './hooks/auth/useAuth';
 
@@ -29,6 +28,9 @@ import AnalyticsPage from './pages/analytics/AnalyticsPage';
 import BhoomiVoicePage from './pages/assistant/BhoomiVoicePage';
 import UsersPage from './pages/users/UsersPage';
 
+import AuditLogsPage from './pages/audit/AuditLogsPage';
+import SettingsPage from './pages/settings/SettingsPage';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { retry: 1, staleTime: 60_000 },
@@ -36,7 +38,7 @@ const queryClient = new QueryClient({
 });
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+  const { user, loading, error } = useAuth();
   if (loading) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
@@ -47,7 +49,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
       </div>
     );
   }
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" replace state={error ? { authError: error } : undefined} />;
   return <>{children}</>;
 }
 
@@ -102,11 +104,11 @@ export default function App() {
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="gis" element={<GISMappingPage />} />
             <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="audit-logs" element={<ModulePlaceholderPage moduleName="Audit Logs" />} />
+            <Route path="audit-logs" element={<AuditLogsPage />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="assistant" element={<BhoomiVoicePage />} />
             <Route path="bhoomi-voice" element={<BhoomiVoicePage />} />
-            <Route path="settings" element={<ModulePlaceholderPage moduleName="Settings" />} />
+            <Route path="settings" element={<SettingsPage />} />
             
             <Route path="*" element={
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">

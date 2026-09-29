@@ -63,6 +63,7 @@ export default function DocumentsPage() {
   const [searchTerm, setSearchTerm] = useState(search);
   const [uploadOpen, setUploadOpen] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [documentActionError, setDocumentActionError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [documentForm, setDocumentForm] = useState({
     land_record_id: '',
@@ -155,8 +156,10 @@ export default function DocumentsPage() {
       });
     },
     onSuccess: (document) => {
+      setDocumentActionError(null);
       queryClient.invalidateQueries({ queryKey: ['documents'] });
       queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
       if (document.land_record_id) queryClient.invalidateQueries({ queryKey: ['land-record', document.land_record_id] });
       queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
       setUploadOpen(false);
@@ -174,9 +177,11 @@ export default function DocumentsPage() {
     onSuccess: (document) => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
       queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
       if (document.land_record_id) queryClient.invalidateQueries({ queryKey: ['land-record', document.land_record_id] });
       queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
     },
+    onError: (error: Error) => setDocumentActionError(error.message || 'Document deletion failed.'),
   });
 
   const totalPages = documentsData ? Math.max(1, Math.ceil(documentsData.total / PAGE_SIZE)) : 1;
@@ -210,7 +215,7 @@ export default function DocumentsPage() {
       const signedUrl = await documentService.getSignedUrl(document.storage_path);
       window.open(signedUrl, '_blank', 'noopener,noreferrer');
     } catch (error) {
-      setUploadError(error instanceof Error ? error.message : 'Unable to download document.');
+      setDocumentActionError(error instanceof Error ? error.message : 'Unable to download document.');
     }
   };
 
@@ -309,6 +314,14 @@ export default function DocumentsPage() {
           </Dialog>
         )}
       </div>
+
+      {documentActionError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Document action failed</AlertTitle>
+          <AlertDescription>{documentActionError}</AlertDescription>
+        </Alert>
+      )}
 
       <Card>
         <CardContent className="p-4">

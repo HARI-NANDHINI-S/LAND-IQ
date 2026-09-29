@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
+import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
+import { auditService } from '@/services/audit/auditService';
 
 export type LandRecord = Database['public']['Tables']['land_records']['Row'];
 
@@ -37,7 +39,7 @@ export const landRecordService = {
     if (rest.verification_status) query = query.eq('verification_status', rest.verification_status);
     if (rest.record_status) query = query.eq('record_status', rest.record_status);
     if (search) {
-      query = query.or('survey_number.ilike.%' + search + '%,patta_number.ilike.%' + search + '%,record_number.ilike.%' + search + '%');
+      query = query.or(buildIlikeOrFilter(['survey_number', 'patta_number', 'record_number'], search));
     }
 
     const { data, error, count } = await query;
@@ -55,17 +57,33 @@ export const landRecordService = {
     return data;
   },
 
-  async createLandRecord(record: Database['public']['Tables']['land_records']['Insert']) {
+  async createLandRecord(record: Database['public']['Tables']['land_records']['Insert'], actorId?: string, actorRole?: string) {
     const { data, error } = await supabase
       .from('land_records')
       .insert(record as any)
       .select()
       .single();
     if (error) throw toAppError(error);
+
+    if (actorId && actorRole) {
+      await auditService.log({
+        actor_id: actorId,
+        actor_role: actorRole,
+        action: 'land_record_created',
+        entity_type: 'land_records',
+        entity_id: data.id,
+        after_state: data,
+        status: 'SUCCESS'
+      });
+    }
+
     return data as LandRecord;
   },
 
-  async updateLandRecord(id: string, updates: Database['public']['Tables']['land_records']['Update']) {
+  async updateLandRecord(id: string, updates: Database['public']['Tables']['land_records']['Update'], actorId?: string, actorRole?: string) {
+    // Get before state
+    const { data: beforeData } = await supabase.from('land_records').select('*').eq('id', id).single();
+
     const payload = { ...updates, updated_at: new Date().toISOString() };
     const { data, error } = await supabase
       .from('land_records')
@@ -73,7 +91,37 @@ export const landRecordService = {
       .eq('id', id)
       .select()
       .single();
-    if (error) throw toAppError(error);
+    
+    if (error) {
+      if (actorId && actorRole) {
+        await auditService.log({
+          actor_id: actorId,
+          actor_role: actorRole,
+          action: 'land_record_updated',
+          entity_type: 'land_records',
+          entity_id: id,
+          before_state: beforeData,
+          after_state: payload as any,
+          status: 'FAILURE',
+          remarks: error.message
+        });
+      }
+      throw toAppError(error);
+    }
+
+    if (actorId && actorRole) {
+      await auditService.log({
+        actor_id: actorId,
+        actor_role: actorRole,
+        action: 'land_record_updated',
+        entity_type: 'land_records',
+        entity_id: id,
+        before_state: beforeData,
+        after_state: data,
+        status: 'SUCCESS'
+      });
+    }
+
     return data as LandRecord;
   },
 };

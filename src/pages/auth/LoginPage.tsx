@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -18,10 +18,13 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const { user, loading: authLoading, signIn } = useAuth();
+  const { user, loading: authLoading, signIn, error: authError } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const routeError = (location.state as { authError?: string } | null)?.authError;
+  const visibleError = error || routeError || authError;
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -64,9 +67,9 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              {error && (
+              {visibleError && (
                 <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
-                  {error}
+                  {visibleError}
                 </div>
               )}
               

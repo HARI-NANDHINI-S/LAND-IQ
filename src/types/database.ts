@@ -37,6 +37,11 @@ export interface Database {
         Insert: { role_id: string; permission_id: string }
         Update: never
       }
+      settings: {
+        Row: { key: string; value: any; description: string | null; is_public: boolean; updated_at: string; updated_by: string | null }
+        Insert: { key: string; value?: any; description?: string | null; is_public?: boolean; updated_at?: string; updated_by?: string | null }
+        Update: { key?: string; value?: any; description?: string | null; is_public?: boolean; updated_at?: string; updated_by?: string | null }
+      }
       states: {
         Row: { id: string; name: string; code: string; is_active: boolean; created_at: string; updated_at: string }
         Insert: { id?: string; name: string; code: string; is_active?: boolean }
@@ -172,8 +177,8 @@ export interface Database {
         Update: { is_read?: boolean; read_at?: string | null }
       }
       audit_logs: {
-        Row: { id: string; actor_id: string | null; actor_role: string | null; action: string; entity_type: string; entity_id: string | null; before_state: Json | null; after_state: Json | null; ip_address: string | null; user_agent: string | null; request_id: string | null; metadata: Json | null; created_at: string }
-        Insert: { actor_id?: string | null; actor_role?: string | null; action: string; entity_type: string; entity_id?: string | null; before_state?: Json | null; after_state?: Json | null; metadata?: Json | null }
+        Row: { id: string; actor_id: string | null; actor_role: string | null; actor_email: string | null; action: string; entity_type: string; entity_id: string | null; before_state: Json | null; after_state: Json | null; ip_address: string | null; user_agent: string | null; request_id: string | null; correlation_id: string | null; metadata: Json | null; status: string | null; remarks: string | null; created_at: string }
+        Insert: { actor_id?: string | null; actor_role?: string | null; actor_email?: string | null; action: string; entity_type: string; entity_id?: string | null; before_state?: Json | null; after_state?: Json | null; metadata?: Json | null; status?: string | null; remarks?: string | null; correlation_id?: string | null }
         Update: never
       }
     }

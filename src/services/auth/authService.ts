@@ -1,6 +1,21 @@
 import { supabase } from '@/lib/supabase';
 import type { AuthUser } from '@/types';
-import { toAppError } from '@/utils/errorHandler';
+import { toAppError, type AppError } from '@/utils/errorHandler';
+
+let currentUserLoad: { userId: string; promise: Promise<AuthUser | null> } | null = null;
+
+function loadCurrentUserForSession(userId: string) {
+  if (currentUserLoad?.userId === userId) return currentUserLoad.promise;
+
+  const promise = authService.getCurrentUser()
+    .then((user) => user?.id === userId ? user : null)
+    .finally(() => {
+      if (currentUserLoad?.promise === promise) currentUserLoad = null;
+    });
+
+  currentUserLoad = { userId, promise };
+  return promise;
+}
 
 export const authService = {
   async signIn(email: string, password: string) {
@@ -21,7 +36,8 @@ export const authService = {
   },
 
   async getCurrentUser(): Promise<AuthUser | null> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError) throw toAppError(userError);
     if (!user) return null;
 
     const { data: profile, error: profileError } = await supabase
@@ -30,14 +46,26 @@ export const authService = {
       .eq('id', user.id)
       .single();
 
-    if (profileError || !profile) return null;
+    if (profileError) {
+      throw new Error(profileError.code === '42501'
+        ? 'You do not have permission to load your account profile.'
+        : 'Unable to load your account profile. Try again or contact an administrator.');
+    }
+    if (!profile) throw new Error('Your account profile could not be loaded. Contact an administrator.');
+    if (!profile.is_active) throw new Error('This account is inactive. Contact an administrator.');
 
     const role = (profile as Record<string, any>).roles;
+    if (!role) throw new Error('Your account does not have an active role. Contact an administrator.');
     
-    const { data: rolePerms } = await supabase
+    const { data: rolePerms, error: permissionsError } = await supabase
       .from('role_permissions')
       .select('permissions(code)')
       .eq('role_id', (profile as Record<string, any>).role_id ?? '');
+    if (permissionsError) {
+      throw new Error(permissionsError.code === '42501'
+        ? 'You do not have permission to load your account permissions.'
+        : 'Unable to load account permissions. Try again or contact an administrator.');
+    }
 
     const permissions = ((rolePerms ?? []) as Record<string, any>[])
       .flatMap((rp) => rp.permissions ? [rp.permissions.code as string] : []);
@@ -51,14 +79,27 @@ export const authService = {
     };
   },
 
-  onAuthStateChange(callback: (user: AuthUser | null) => void) {
-    return supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session?.user) {
-        const user = await authService.getCurrentUser();
-        callback(user);
-      } else {
-        callback(null);
+  onAuthStateChange(callback: (user: AuthUser | null, error?: AppError | Error, sessionUserId?: string | null, event?: string) => void) {
+    let latestSessionUserId: string | null = null;
+
+    return supabase.auth.onAuthStateChange((_event, session) => {
+      latestSessionUserId = session?.user.id ?? null;
+      const sessionUserId = latestSessionUserId;
+
+      if (!sessionUserId) {
+        callback(null, undefined, null, _event);
+        return;
       }
+
+      queueMicrotask(() => {
+        void loadCurrentUserForSession(sessionUserId)
+          .then((user) => {
+            if (latestSessionUserId === sessionUserId) callback(user, undefined, sessionUserId, _event);
+          })
+          .catch((error: unknown) => {
+            if (latestSessionUserId === sessionUserId) callback(null, toAppError(error), sessionUserId, _event);
+          });
+      });
     });
   },
 };

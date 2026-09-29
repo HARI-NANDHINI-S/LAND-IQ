@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
+import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
+import { auditService } from '@/services/audit/auditService';
 
 export type DocumentRow = Database['public']['Tables']['documents']['Row'];
 
@@ -99,9 +101,22 @@ export const documentService = {
       .single();
 
     if (dbError) {
-      await supabase.storage.from(STORAGE_BUCKET).remove([storagePath]);
+      const { error: cleanupError } = await supabase.storage.from(STORAGE_BUCKET).remove([storagePath]);
+      if (cleanupError) {
+        throw new Error('Document metadata could not be saved, and the uploaded file could not be removed. Contact an administrator.');
+      }
       throw toAppError(dbError);
     }
+
+    await auditService.log({
+      actor_id: metadata.uploaded_by,
+      actor_role: 'UNKNOWN',
+      action: 'document_uploaded',
+      entity_type: 'documents',
+      entity_id: data.id,
+      after_state: { original_filename: file.name, document_type: metadata.document_type, storage_path: storagePath },
+      status: 'SUCCESS',
+    });
 
     return data as DocumentRow;
   },
@@ -147,9 +162,7 @@ export const documentService = {
     if (verification_status) query = query.eq('verification_status', verification_status);
     if (document_type) query = query.eq('document_type', document_type);
     if (search) {
-      query = query.or(
-        'original_filename.ilike.%' + search + '%,document_type.ilike.%' + search + '%'
-      );
+      query = query.or(buildIlikeOrFilter(['original_filename', 'document_type'], search));
     }
 
     const { data, error, count } = await query;
@@ -173,10 +186,10 @@ export const documentService = {
     return data.signedUrl;
   },
 
-  async deleteDocument(id: string) {
+  async deleteDocument(id: string, actorId?: string, actorRole?: string) {
     const { data: doc, error: docError } = await supabase
       .from('documents')
-      .select('id, storage_path, land_record_id')
+      .select('id, storage_path, land_record_id, original_filename, document_type')
       .eq('id', id)
       .single();
 
@@ -186,7 +199,22 @@ export const documentService = {
     if (deleteError) throw toAppError(deleteError);
 
     if (doc?.storage_path) {
-      await supabase.storage.from(STORAGE_BUCKET).remove([doc.storage_path]);
+      const { error: storageError } = await supabase.storage.from(STORAGE_BUCKET).remove([doc.storage_path]);
+      if (storageError) {
+        throw new Error('Document metadata was deleted, but its storage file could not be removed. Contact an administrator.');
+      }
+    }
+
+    if (actorId && actorRole) {
+      await auditService.log({
+        actor_id: actorId,
+        actor_role: actorRole,
+        action: 'document_deleted',
+        entity_type: 'documents',
+        entity_id: id,
+        before_state: { original_filename: doc.original_filename, document_type: doc.document_type, land_record_id: doc.land_record_id },
+        status: 'SUCCESS',
+      });
     }
 
     return { id: doc.id, land_record_id: doc.land_record_id };

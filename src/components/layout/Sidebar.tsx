@@ -57,14 +57,14 @@ export default function Sidebar() {
   return (
     <div 
       className={cn(
-        "relative flex h-full flex-col border-r bg-card transition-all duration-300",
+        "landiq-sidebar relative flex h-full flex-col transition-all duration-300",
         sidebarCollapsed ? "w-[72px]" : "w-64"
       )}
     >
-      <div className="flex h-14 items-center justify-center border-b px-4">
-        <div className="flex items-center gap-2 font-bold tracking-tight text-primary">
-          <ShieldCheck className="h-6 w-6 shrink-0" />
-          {!sidebarCollapsed && <span className="truncate text-lg">LAND-IQ</span>}
+      <div className="flex h-16 items-center justify-center border-b border-white/10 px-4">
+        <div className="flex items-center gap-2 font-bold tracking-[0.18em] text-primary">
+          <ShieldCheck className="h-5 w-5 shrink-0" />
+          {!sidebarCollapsed && <span className="truncate text-base">LAND-IQ</span>}
         </div>
       </div>
 
@@ -76,26 +76,26 @@ export default function Sidebar() {
           return (
             <div key={i} className="mb-6 px-3">
               {!sidebarCollapsed && (
-                <h3 className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <h3 className="mb-2 px-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/80">
                   {group.group}
                 </h3>
               )}
               {sidebarCollapsed && <div className="mb-2 h-4" />}
               
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 {visibleItems.map((item) => (
                   <NavLink
                     key={item.to}
                     to={item.to}
                     className={({ isActive }) => cn(
-                      "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                      isActive 
-                        ? "bg-primary text-primary-foreground" 
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      "landiq-nav-link flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                      isActive
+                        ? "bg-primary/12 text-primary shadow-[0_0_0_1px_rgba(88,143,95,0.12)]"
+                        : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                     )}
                     title={sidebarCollapsed ? item.name : undefined}
                   >
-                    <item.icon className={cn("h-5 w-5 shrink-0", sidebarCollapsed ? "mx-auto" : "")} />
+                    <item.icon className={cn("h-4 w-4 shrink-0", sidebarCollapsed ? "mx-auto" : "")} />
                     {!sidebarCollapsed && <span>{item.name}</span>}
                   </NavLink>
                 ))}
@@ -105,12 +105,12 @@ export default function Sidebar() {
         })}
       </div>
 
-      <div className="border-t p-3">
+      <div className="border-t border-white/10 p-3">
         <Button 
           variant="ghost" 
           size="icon" 
           onClick={toggleSidebar} 
-          className="w-full flex justify-center text-muted-foreground hover:text-foreground"
+          className="w-full justify-center text-muted-foreground hover:text-foreground"
           aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}

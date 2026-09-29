@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import type { Profile, Role } from '@/types/auth';
 import { toAppError } from '@/utils/errorHandler';
+import { auditService } from '@/services/audit/auditService';
 
 type ProfileUpdate = Database['public']['Tables']['profiles']['Update'];
 type AdminProfileUpdate = Database['public']['Functions']['admin_update_profile_authorization']['Args'];
@@ -73,7 +74,9 @@ export const profileService = {
     return { profiles, roles, states, districts, villages };
   },
 
-  async updateSafeFields(profileId: string, updates: ProfileUpdate): Promise<Profile> {
+  async updateSafeFields(profileId: string, updates: ProfileUpdate, actorId?: string, actorRole?: string): Promise<Profile> {
+    const { data: beforeData } = await supabase.from('profiles').select('*').eq('id', profileId).single();
+
     const { data, error } = await supabase
       .from('profiles')
       .update(updates)
@@ -81,13 +84,43 @@ export const profileService = {
       .select('*')
       .single();
     if (error) throw toAppError(error);
+
+    if (actorId && actorRole) {
+      await auditService.log({
+        actor_id: actorId,
+        actor_role: actorRole,
+        action: 'profile_updated',
+        entity_type: 'profiles',
+        entity_id: profileId,
+        before_state: beforeData,
+        after_state: updates as any,
+        status: 'SUCCESS',
+      });
+    }
+
     return data as Profile;
   },
 
-  async updateAuthorization(args: AdminProfileUpdate): Promise<Profile> {
+  async updateAuthorization(args: AdminProfileUpdate, actorId?: string, actorRole?: string): Promise<Profile> {
+    const { data: beforeData } = await supabase.from('profiles').select('*').eq('id', args.p_profile_id).single();
+
     const { data, error } = await supabase.rpc('admin_update_profile_authorization', args);
     if (error) throw toAppError(error);
     if (!data) throw new Error('The profile authorization update returned no profile.');
+
+    if (actorId && actorRole) {
+      await auditService.log({
+        actor_id: actorId,
+        actor_role: actorRole,
+        action: 'profile_authorization_updated',
+        entity_type: 'profiles',
+        entity_id: args.p_profile_id,
+        before_state: beforeData,
+        after_state: { role_id: args.p_role_id, is_active: args.p_is_active, state_id: args.p_state_id, district_id: args.p_district_id, village_id: args.p_village_id },
+        status: 'SUCCESS',
+      });
+    }
+
     return data as Profile;
   },
 };

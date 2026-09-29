@@ -54,6 +54,7 @@ export default function WatchlistsPage() {
     },
     onSuccess: (entry) => {
       void queryClient.invalidateQueries({ queryKey: ['watchlists', user?.id] });
+      void queryClient.invalidateQueries({ queryKey: ['dashboard-overview'] });
       setCreateOpen(false);
       setRecordId('');
       setReason('');

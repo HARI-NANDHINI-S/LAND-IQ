@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
 import { auditService } from '@/services/audit/auditService';
+import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
 
 export type RecordChange = Database['public']['Tables']['record_changes']['Row'];
 export type Alert = Database['public']['Tables']['alerts']['Row'];
@@ -58,8 +59,7 @@ export const monitoringService = {
     if (criteria.priority) query = query.eq('priority', criteria.priority);
     if (criteria.alert_type) query = query.eq('alert_type', criteria.alert_type);
     if (search?.trim()) {
-      const term = search.trim().replace(/[%_]/g, '\\$&');
-      query = query.or(`title.ilike.%${term}%,description.ilike.%${term}%`);
+      query = query.or(buildIlikeOrFilter(['title', 'description'], search));
     }
 
     const { data, error, count } = await query;
@@ -241,10 +241,23 @@ export const monitoringService = {
     }
     const { data, error } = await supabase.from('watchlists').insert(entry).select().single();
     if (error) throw toAppError(error);
+
+    await auditService.log({
+      actor_id: entry.user_id,
+      actor_role: actorRole,
+      action: 'watchlist_created',
+      entity_type: 'watchlists',
+      entity_id: data.id,
+      after_state: { land_record_id: entry.land_record_id, reason: entry.reason ?? null },
+      status: 'SUCCESS',
+    });
+
     return data as WatchlistEntry;
   },
 
-  async updateWatchlist(watchlistId: string, updates: Database['public']['Tables']['watchlists']['Update']) {
+  async updateWatchlist(watchlistId: string, updates: Database['public']['Tables']['watchlists']['Update'], actorId?: string, actorRole?: string) {
+    const { data: beforeData } = await supabase.from('watchlists').select('status, reason').eq('id', watchlistId).single();
+
     const { data, error } = await supabase
       .from('watchlists')
       .update({ ...updates, updated_at: new Date().toISOString() } as any)
@@ -252,12 +265,41 @@ export const monitoringService = {
       .select()
       .single();
     if (error) throw toAppError(error);
+
+    if (actorId && actorRole) {
+      await auditService.log({
+        actor_id: actorId,
+        actor_role: actorRole,
+        action: 'watchlist_updated',
+        entity_type: 'watchlists',
+        entity_id: watchlistId,
+        before_state: beforeData,
+        after_state: updates as any,
+        status: 'SUCCESS',
+      });
+    }
+
     return data as WatchlistEntry;
   },
 
-  async deleteWatchlist(watchlistId: string) {
+  async deleteWatchlist(watchlistId: string, actorId?: string, actorRole?: string) {
+    const { data: beforeData } = await supabase.from('watchlists').select('*').eq('id', watchlistId).single();
+
     const { data, error } = await supabase.from('watchlists').delete().eq('id', watchlistId).select().single();
     if (error) throw toAppError(error);
+
+    if (actorId && actorRole) {
+      await auditService.log({
+        actor_id: actorId,
+        actor_role: actorRole,
+        action: 'watchlist_deleted',
+        entity_type: 'watchlists',
+        entity_id: watchlistId,
+        before_state: beforeData,
+        status: 'SUCCESS',
+      });
+    }
+
     return data as WatchlistEntry;
   },
 };

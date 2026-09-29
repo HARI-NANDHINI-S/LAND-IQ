@@ -4,11 +4,11 @@ import Header from './Header';
 
 export default function AppShell() {
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="landiq-shell flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="landiq-content flex flex-1 flex-col overflow-hidden">
         <Header />
-        <main className="flex-1 overflow-auto bg-muted/20">
+        <main className="landiq-main flex-1 overflow-auto">
           <Outlet />
         </main>
       </div>
