@@ -27,6 +27,7 @@ import WatchlistDetailsPage from './pages/monitoring/WatchlistDetailsPage';
 import GISMappingPage from './pages/gis/GISMappingPage';
 import AnalyticsPage from './pages/analytics/AnalyticsPage';
 import BhoomiVoicePage from './pages/assistant/BhoomiVoicePage';
+import UsersPage from './pages/users/UsersPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -102,7 +103,7 @@ export default function App() {
             <Route path="gis" element={<GISMappingPage />} />
             <Route path="analytics" element={<AnalyticsPage />} />
             <Route path="audit-logs" element={<ModulePlaceholderPage moduleName="Audit Logs" />} />
-            <Route path="users" element={<ModulePlaceholderPage moduleName="User Administration" />} />
+            <Route path="users" element={<UsersPage />} />
             <Route path="assistant" element={<BhoomiVoicePage />} />
             <Route path="bhoomi-voice" element={<BhoomiVoicePage />} />
             <Route path="settings" element={<ModulePlaceholderPage moduleName="Settings" />} />

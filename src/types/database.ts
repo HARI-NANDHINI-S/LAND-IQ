@@ -65,7 +65,7 @@ export interface Database {
           created_at: string; updated_at: string;
         }
         Insert: { id: string; full_name: string; email: string; role_id?: string | null; state_id?: string | null; district_id?: string | null }
-        Update: { full_name?: string; phone?: string | null; avatar_url?: string | null; role_id?: string | null; state_id?: string | null; district_id?: string | null; is_active?: boolean }
+        Update: { full_name?: string; phone?: string | null; avatar_url?: string | null; employee_code?: string | null; designation?: string | null }
       }
       land_records: {
         Row: {
@@ -178,7 +178,19 @@ export interface Database {
       }
     }
     Views: Record<string, never>
-    Functions: Record<string, never>
+    Functions: {
+      admin_update_profile_authorization: {
+        Args: {
+          p_profile_id: string
+          p_role_id?: string | null
+          p_state_id?: string | null
+          p_district_id?: string | null
+          p_village_id?: string | null
+          p_is_active?: boolean | null
+        }
+        Returns: Database['public']['Tables']['profiles']['Row']
+      }
+    }
     Enums: Record<string, never>
   }
 }

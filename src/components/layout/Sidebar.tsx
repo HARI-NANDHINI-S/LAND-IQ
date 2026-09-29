@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
 export default function Sidebar() {
-  const { hasPermission } = useAuth();
+  const { hasPermission, user } = useAuth();
   const { sidebarCollapsed, toggleSidebar } = useAppStore();
 
   const navigation = [
@@ -48,7 +48,7 @@ export default function Sidebar() {
       group: 'GOVERNANCE',
       items: [
         { name: 'Audit Logs', to: '/audit-logs', icon: History, show: hasPermission('audit:read') },
-        { name: 'Users', to: '/users', icon: Users, show: hasPermission('user:read') },
+        { name: 'Users', to: '/users', icon: Users, show: user?.role?.code === 'SUPER_ADMIN' && hasPermission('user:read') },
         { name: 'Settings', to: '/settings', icon: Settings, show: hasPermission('settings:manage') },
       ]
     }
