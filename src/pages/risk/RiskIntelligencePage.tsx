@@ -1,15 +1,18 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   AlertTriangle,
   ChevronLeft,
   ChevronRight,
   Eye,
+  RefreshCw,
   Search,
   ShieldAlert,
 } from 'lucide-react';
 import { riskService } from '@/services/risk/riskService';
+import { useAuth } from '@/hooks/auth/useAuth';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -22,7 +25,10 @@ const PAGE_SIZE = 10;
 
 export default function RiskIntelligencePage() {
   const navigate = useNavigate();
+  const { hasPermission } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
+  const queryClient = useQueryClient();
+  const [recomputeFeedback, setRecomputeFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   const page = Number(searchParams.get('page') || '1');
   const search = searchParams.get('search') || '';
@@ -45,6 +51,17 @@ export default function RiskIntelligencePage() {
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ['risk-stats'],
     queryFn: () => riskService.getRiskStats(),
+  });
+
+  const recomputeMutation = useMutation({
+    mutationFn: (landRecordId: string) => riskService.recomputeRiskAssessment(landRecordId),
+    onSuccess: () => {
+      setRecomputeFeedback({ type: 'success', message: 'Risk assessment recalculated from current database evidence.' });
+      void queryClient.invalidateQueries({ queryKey: ['risk-assessments'] });
+      void queryClient.invalidateQueries({ queryKey: ['risk-stats'] });
+      void queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
+    },
+    onError: (error: Error) => setRecomputeFeedback({ type: 'error', message: error.message }),
   });
 
   const handleSearch = (event: React.FormEvent) => {
@@ -109,6 +126,13 @@ export default function RiskIntelligencePage() {
         <h1 className="text-2xl font-bold tracking-tight">Risk Intelligence</h1>
         <p className="text-sm text-muted-foreground">Review persisted risk assessments and signals for authorized investigation.</p>
       </div>
+
+      {recomputeFeedback && (
+        <Alert variant={recomputeFeedback.type === 'error' ? 'destructive' : 'default'}>
+          <AlertTitle>{recomputeFeedback.type === 'error' ? 'Risk recalculation failed' : 'Risk recalculation complete'}</AlertTitle>
+          <AlertDescription>{recomputeFeedback.message}</AlertDescription>
+        </Alert>
+      )}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {summaryCards.map(({ label, value, icon: Icon }) => (
@@ -228,6 +252,21 @@ export default function RiskIntelligencePage() {
                     <TableCell>{getStatusBadge(assessment.status)}</TableCell>
                     <TableCell>{assessment.risk_signals?.length ?? 0}</TableCell>
                     <TableCell className="text-right">
+                      {(hasPermission('risk:manage') || hasPermission('risk:investigate')) && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            setRecomputeFeedback(null);
+                            recomputeMutation.mutate(assessment.land_record_id);
+                          }}
+                          disabled={recomputeMutation.isPending}
+                          aria-label="Recalculate risk from current evidence"
+                          title="Recalculate risk"
+                        >
+                          <RefreshCw className={`h-4 w-4 ${recomputeMutation.isPending ? 'animate-spin' : ''}`} />
+                        </Button>
+                      )}
                       <Button variant="ghost" size="icon" onClick={() => navigate(`/risk/${assessment.id}`)}>
                         <Eye className="h-4 w-4" />
                       </Button>

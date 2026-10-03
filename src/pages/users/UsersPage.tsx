@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Search, ShieldCheck, UserRoundCog } from 'lucide-react';
 import { useAuth } from '@/hooks/auth/useAuth';
-import { auditService } from '@/services/audit/auditService';
 import { profileService, type ProfileDirectoryEntry } from '@/services/profileService';
 import type { Database } from '@/types/database';
 import { Badge } from '@/components/ui/badge';
@@ -138,18 +137,6 @@ export default function UsersPage() {
         }
         throw error;
       }
-
-      const afterState = { ...editingProfile, ...draft };
-      await auditService.log({
-        actor_id: user.id,
-        actor_role: user.role.code,
-        action: 'UPDATE_PROFILE',
-        entity_type: 'profiles',
-        entity_id: editingProfile.id,
-        before_state: editingProfile as unknown as Database['public']['Tables']['audit_logs']['Insert']['before_state'],
-        after_state: afterState as unknown as Database['public']['Tables']['audit_logs']['Insert']['after_state'],
-        metadata: { changed_authorization: authorizationChanged, changed_safe_fields: Object.keys(safeUpdates) },
-      });
 
       return editingProfile;
     },

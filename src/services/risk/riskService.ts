@@ -1,7 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
-import { auditService } from '@/services/audit/auditService';
 
 export type RiskAssessment = Database['public']['Tables']['risk_assessments']['Row'];
 export type RiskSignal = Database['public']['Tables']['risk_signals']['Row'];
@@ -18,6 +17,20 @@ export interface RiskAssessmentFilters {
 const VALID_RISK_STATUS = new Set(['ACTIVE', 'UNDER_REVIEW', 'RESOLVED', 'REOPENED']);
 
 export const riskService = {
+  async getHighRiskAssessments(pageSize = 8) {
+    const { data, error, count } = await supabase
+      .from('risk_assessments')
+      .select(
+        'id, risk_level, status, land_record_id, land_records(id, record_number, districts(name))',
+        { count: 'exact' }
+      )
+      .in('risk_level', ['HIGH', 'CRITICAL'])
+      .order('calculated_at', { ascending: false })
+      .range(0, pageSize - 1);
+    if (error) throw toAppError(error);
+    return { data: data ?? [], total: count ?? 0 };
+  },
+
   async getRiskAssessments(filters: RiskAssessmentFilters = {}) {
     const { risk_level, status, district_id, search, page = 1, pageSize = 10 } = filters;
     const from = (page - 1) * pageSize;
@@ -73,7 +86,7 @@ export const riskService = {
 
     return {
       data: scoped,
-      total: scoped.length || (count ?? 0),
+      total: term || district_id ? scoped.length : (count ?? scoped.length),
     };
   },
 
@@ -83,6 +96,7 @@ export const riskService = {
       .select(
         `*,
         risk_signals(*),
+        assigned_officer:profiles!assigned_to(full_name, email),
         land_records(
           *,
           states(name),
@@ -107,78 +121,54 @@ export const riskService = {
   },
 
   async getRiskStats() {
-    const { data, error } = await supabase.from('risk_assessments').select('risk_level, status');
+    const [total, highRisk, moderateRisk, lowRisk, underInvestigation, resolved, activeSignals] = await Promise.all([
+      supabase.from('risk_assessments').select('id', { count: 'exact', head: true }),
+      supabase.from('risk_assessments').select('id', { count: 'exact', head: true }).in('risk_level', ['HIGH', 'CRITICAL']),
+      supabase.from('risk_assessments').select('id', { count: 'exact', head: true }).eq('risk_level', 'MODERATE'),
+      supabase.from('risk_assessments').select('id', { count: 'exact', head: true }).eq('risk_level', 'LOW'),
+      supabase.from('risk_assessments').select('id', { count: 'exact', head: true }).eq('status', 'UNDER_REVIEW'),
+      supabase.from('risk_assessments').select('id', { count: 'exact', head: true }).eq('status', 'RESOLVED'),
+      supabase.from('risk_signals').select('id', { count: 'exact', head: true }),
+    ]);
+    const error = [total.error, highRisk.error, moderateRisk.error, lowRisk.error, underInvestigation.error, resolved.error, activeSignals.error].find(Boolean);
     if (error) throw toAppError(error);
 
-    const stats = {
-      total: (data ?? []).length,
-      highRisk: 0,
-      moderateRisk: 0,
-      lowRisk: 0,
-      underInvestigation: 0,
-      resolved: 0,
-      activeSignals: 0,
+    return {
+      total: total.count ?? 0,
+      highRisk: highRisk.count ?? 0,
+      moderateRisk: moderateRisk.count ?? 0,
+      lowRisk: lowRisk.count ?? 0,
+      underInvestigation: underInvestigation.count ?? 0,
+      resolved: resolved.count ?? 0,
+      activeSignals: activeSignals.count ?? 0,
     };
+  },
 
-    for (const row of data ?? []) {
-      if (row.risk_level === 'HIGH' || row.risk_level === 'CRITICAL') stats.highRisk += 1;
-      if (row.risk_level === 'MODERATE') stats.moderateRisk += 1;
-      if (row.risk_level === 'LOW') stats.lowRisk += 1;
-      if (row.status === 'UNDER_REVIEW') stats.underInvestigation += 1;
-      if (row.status === 'RESOLVED') stats.resolved += 1;
-    }
-
-    const { data: signalRows, error: signalError } = await supabase.from('risk_signals').select('id');
-    if (signalError) throw toAppError(signalError);
-    stats.activeSignals = signalRows?.length ?? 0;
-
-    return stats;
+  async recomputeRiskAssessment(landRecordId: string): Promise<string> {
+    const { data, error } = await supabase.rpc('recompute_risk_assessment', {
+      p_land_record_id: landRecordId,
+    });
+    if (error) throw toAppError(error);
+    return data;
   },
 
   async updateRiskStatus(
     assessmentId: string,
     status: RiskAssessment['status'],
-    actorId: string,
-    actorRole: string,
-    notes?: string
+    notes?: string,
+    assignedTo?: string | null
   ) {
     if (!VALID_RISK_STATUS.has(status ?? 'ACTIVE')) {
       throw new Error(`Unsupported risk status: ${status}`);
     }
 
-    const { data: current, error: currentError } = await supabase
-      .from('risk_assessments')
-      .select('status, risk_level')
-      .eq('id', assessmentId)
-      .single();
-
-    if (currentError || !current) {
-      throw toAppError(currentError ?? new Error('Risk assessment not found'));
-    }
-
-    const { data, error } = await supabase
-      .from('risk_assessments')
-      .update({
-        status,
-        updated_at: new Date().toISOString(),
-      } as any)
-      .eq('id', assessmentId)
-      .select()
-      .single();
-
-    if (error) throw toAppError(error);
-
-    await auditService.log({
-      actor_id: actorId,
-      actor_role: actorRole,
-      action: `risk_assessment_${status?.toLowerCase() ?? 'updated'}`,
-      entity_type: 'risk_assessments',
-      entity_id: assessmentId,
-      before_state: { status: current.status },
-      after_state: { status },
-      metadata: { notes: notes ?? null },
+    const { data, error } = await supabase.rpc('update_risk_assessment_status', {
+      p_assessment_id: assessmentId,
+      p_status: status ?? 'ACTIVE',
+      p_notes: notes ?? null,
+      p_assigned_to: assignedTo ?? null,
     });
-
+    if (error) throw toAppError(error);
     return data as RiskAssessment;
   },
 };

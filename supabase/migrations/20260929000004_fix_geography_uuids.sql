@@ -13,7 +13,7 @@ BEGIN
     CREATE TEMP TABLE geo_mapping (
         table_name TEXT,
         old_id UUID,
-        new_id UUID DEFAULT public.uuid_generate_v4()
+        new_id UUID DEFAULT extensions.uuid_generate_v4()
     );
 
     -- 2. Populate mapping

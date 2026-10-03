@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   AlertTriangle,
   ChevronLeft,
@@ -11,6 +11,8 @@ import {
   Users,
 } from 'lucide-react';
 import { duplicateService } from '@/services/duplicateService';
+import { useAuth } from '@/hooks/auth/useAuth';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -23,7 +25,10 @@ const PAGE_SIZE = 10;
 
 export default function DuplicatesPage() {
   const navigate = useNavigate();
+  const { hasPermission } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
+  const queryClient = useQueryClient();
+  const [scanFeedback, setScanFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   const page = Number(searchParams.get('page') || '1');
   const search = searchParams.get('search') || '';
@@ -46,6 +51,18 @@ export default function DuplicatesPage() {
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ['duplicate-stats'],
     queryFn: () => duplicateService.getDuplicateStats(),
+  });
+
+  const scanMutation = useMutation({
+    mutationFn: () => duplicateService.scanDuplicateCandidates(),
+    onSuccess: (count) => {
+      setScanFeedback({ type: 'success', message: `Scan completed. ${count} candidate pairs were created or refreshed.` });
+      void queryClient.invalidateQueries({ queryKey: ['duplicate-candidates'] });
+      void queryClient.invalidateQueries({ queryKey: ['duplicate-stats'] });
+      void queryClient.invalidateQueries({ queryKey: ['risk-assessments'] });
+      void queryClient.invalidateQueries({ queryKey: ['risk-stats'] });
+    },
+    onError: (error: Error) => setScanFeedback({ type: 'error', message: error.message }),
   });
 
   const handleSearch = (event: React.FormEvent) => {
@@ -97,10 +114,31 @@ export default function DuplicatesPage() {
 
   return (
     <div className="flex h-full flex-col p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Duplicate Records</h1>
-        <p className="text-sm text-muted-foreground">Review persisted duplicate candidates and resolve matches using the live database records.</p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Duplicate Records</h1>
+          <p className="text-sm text-muted-foreground">Review persisted duplicate candidates and resolve matches using the live database records.</p>
+        </div>
+        {hasPermission('duplicate:scan') && (
+          <Button
+            type="button"
+            onClick={() => {
+              setScanFeedback(null);
+              scanMutation.mutate();
+            }}
+            disabled={scanMutation.isPending}
+          >
+            {scanMutation.isPending ? 'Scanning…' : 'Scan records'}
+          </Button>
+        )}
       </div>
+
+      {scanFeedback && (
+        <Alert variant={scanFeedback.type === 'error' ? 'destructive' : 'default'}>
+          <AlertTitle>{scanFeedback.type === 'error' ? 'Duplicate scan failed' : 'Duplicate scan complete'}</AlertTitle>
+          <AlertDescription>{scanFeedback.message}</AlertDescription>
+        </Alert>
+      )}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {statusCards.map(({ label, value, icon: Icon }) => (

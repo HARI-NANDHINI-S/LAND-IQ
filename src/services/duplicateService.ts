@@ -1,7 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
-import { auditService } from '@/services/audit/auditService';
 
 export type DuplicateCandidate = Database['public']['Tables']['duplicate_candidates']['Row'];
 
@@ -23,6 +22,20 @@ const VALID_DUPLICATE_STATUSES = new Set([
 ]);
 
 export const duplicateService = {
+  async getOpenDuplicateCandidates(pageSize = 8) {
+    const { data, error, count } = await supabase
+      .from('duplicate_candidates')
+      .select(
+        'id, status, similarity_score, created_at, record_a_id, record_b_id, record_a:land_records!record_a_id(record_number), record_b:land_records!record_b_id(record_number)',
+        { count: 'exact' }
+      )
+      .in('status', ['PENDING', 'UNDER_REVIEW'])
+      .order('created_at', { ascending: false })
+      .range(0, pageSize - 1);
+    if (error) throw toAppError(error);
+    return { data: data ?? [], total: count ?? 0 };
+  },
+
   async getDuplicateCandidates(filters: DuplicateCandidateFilters = {}) {
     const { status, minSimilarity, search, page = 1, pageSize = 10 } = filters;
     const from = (page - 1) * pageSize;
@@ -60,7 +73,7 @@ export const duplicateService = {
 
     return {
       data: filtered,
-      total: filtered.length || (count ?? 0),
+      total: term ? filtered.length : (count ?? filtered.length),
     };
   },
 
@@ -94,37 +107,29 @@ export const duplicateService = {
   },
 
   async getDuplicateStats() {
-    const { data, error } = await supabase.from('duplicate_candidates').select('status');
+    const [total, pending, underReview, confirmed, notDuplicate] = await Promise.all([
+      supabase.from('duplicate_candidates').select('id', { count: 'exact', head: true }),
+      supabase.from('duplicate_candidates').select('id', { count: 'exact', head: true }).eq('status', 'PENDING'),
+      supabase.from('duplicate_candidates').select('id', { count: 'exact', head: true }).eq('status', 'UNDER_REVIEW'),
+      supabase.from('duplicate_candidates').select('id', { count: 'exact', head: true }).eq('status', 'CONFIRMED'),
+      supabase.from('duplicate_candidates').select('id', { count: 'exact', head: true }).eq('status', 'FALSE_POSITIVE'),
+    ]);
+    const error = [total.error, pending.error, underReview.error, confirmed.error, notDuplicate.error].find(Boolean);
     if (error) throw toAppError(error);
 
-    const stats = {
-      pending: 0,
-      underReview: 0,
-      confirmed: 0,
-      notDuplicate: 0,
-      total: (data ?? []).length,
+    return {
+      total: total.count ?? 0,
+      pending: pending.count ?? 0,
+      underReview: underReview.count ?? 0,
+      confirmed: confirmed.count ?? 0,
+      notDuplicate: notDuplicate.count ?? 0,
     };
+  },
 
-    for (const row of data ?? []) {
-      switch (row.status) {
-        case 'PENDING':
-          stats.pending += 1;
-          break;
-        case 'UNDER_REVIEW':
-          stats.underReview += 1;
-          break;
-        case 'CONFIRMED':
-          stats.confirmed += 1;
-          break;
-        case 'FALSE_POSITIVE':
-          stats.notDuplicate += 1;
-          break;
-        default:
-          break;
-      }
-    }
-
-    return stats;
+  async scanDuplicateCandidates(): Promise<number> {
+    const { data, error } = await supabase.rpc('scan_duplicate_candidates');
+    if (error) throw toAppError(error);
+    return data ?? 0;
   },
 
   async getCandidateDocuments(recordId: string) {
@@ -138,67 +143,33 @@ export const duplicateService = {
     return (data ?? []) as any[];
   },
 
-  async startReview(candidateId: string, actorId: string, actorRole: string, notes?: string) {
-    return this.updateCandidateStatus(candidateId, 'UNDER_REVIEW', actorId, actorRole, notes);
+  async startReview(candidateId: string, notes?: string) {
+    return this.updateCandidateStatus(candidateId, 'UNDER_REVIEW', notes);
   },
 
-  async confirmDuplicate(candidateId: string, actorId: string, actorRole: string, notes?: string) {
-    return this.updateCandidateStatus(candidateId, 'CONFIRMED', actorId, actorRole, notes);
+  async confirmDuplicate(candidateId: string, notes?: string) {
+    return this.updateCandidateStatus(candidateId, 'CONFIRMED', notes);
   },
 
-  async markNotDuplicate(candidateId: string, actorId: string, actorRole: string, notes?: string) {
-    return this.updateCandidateStatus(candidateId, 'FALSE_POSITIVE', actorId, actorRole, notes);
+  async markNotDuplicate(candidateId: string, notes?: string) {
+    return this.updateCandidateStatus(candidateId, 'FALSE_POSITIVE', notes);
   },
 
   async updateCandidateStatus(
     candidateId: string,
     status: DuplicateCandidate['status'],
-    actorId: string,
-    actorRole: string,
     notes?: string
   ) {
     if (!VALID_DUPLICATE_STATUSES.has(status)) {
       throw new Error(`Unsupported duplicate status: ${status}`);
     }
 
-    const { data: existingCandidate, error: fetchError } = await supabase
-      .from('duplicate_candidates')
-      .select('status, resolution_notes')
-      .eq('id', candidateId)
-      .single();
-
-    if (fetchError || !existingCandidate) {
-      throw toAppError(fetchError ?? new Error('Duplicate candidate not found'));
-    }
-
-    const payload = {
-      status,
-      reviewed_by: actorId,
-      reviewed_at: new Date().toISOString(),
-      resolution_notes: notes ?? existingCandidate.resolution_notes ?? null,
-      updated_at: new Date().toISOString(),
-    };
-
-    const { data, error } = await supabase
-      .from('duplicate_candidates')
-      .update(payload as any)
-      .eq('id', candidateId)
-      .select()
-      .single();
-
-    if (error) throw toAppError(error);
-
-    await auditService.log({
-      actor_id: actorId,
-      actor_role: actorRole,
-      action: `duplicate_candidate_${status.toLowerCase()}`,
-      entity_type: 'duplicate_candidates',
-      entity_id: candidateId,
-      before_state: { status: existingCandidate.status },
-      after_state: { status },
-      metadata: { resolution_notes: notes ?? null },
+    const { data, error } = await supabase.rpc('update_duplicate_candidate_status', {
+      p_candidate_id: candidateId,
+      p_status: status,
+      p_notes: notes ?? null,
     });
-
+    if (error) throw toAppError(error);
     return data as DuplicateCandidate;
   },
 };

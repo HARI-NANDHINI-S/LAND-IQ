@@ -18,7 +18,6 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { supabase } from '@/lib/supabase';
-import { analyticsService } from '@/services/analyticsService';
 import { toAppError } from '@/utils/errorHandler';
 import { CommandCenterHero } from '@/components/dashboard/CommandCenterHero';
 import { StatCard } from '@/components/dashboard/StatCard';
@@ -47,14 +46,14 @@ export default function DashboardPage() {
     queryFn: async () => {
       const scopedLandRecordQuery = supabase
         .from('land_records')
-        .select('id, record_number, survey_number, patta_number, verification_status, record_status, land_type, created_at, district_id, state_id, village_id, districts(name), taluks(name), villages(name)')
+        .select('id, record_number, survey_number, patta_number, verification_status, record_status, land_type, created_at, district_id, state_id, village_id, districts(name), taluks(name), villages(name)', { count: 'exact' })
         .order('created_at', { ascending: false })
         .limit(5);
 
       if (scopedStateId) scopedLandRecordQuery.eq('state_id', scopedStateId);
       if (scopedDistrictId) scopedLandRecordQuery.eq('district_id', scopedDistrictId);
 
-      const [landRecords, documents, verification, duplicates, risk, alerts, watchlists, recentActivity, analyticSummary] = await Promise.all([
+      const [landRecords, documents, verification, duplicates, risk, alerts, watchlists, recentActivity] = await Promise.all([
         hasPermission('land_record:read')
           ? scopedLandRecordQuery
           : Promise.resolve({ data: [], error: null, count: 0 }),
@@ -88,12 +87,13 @@ export default function DashboardPage() {
               .from('watchlists')
               .select('id', { count: 'exact', head: true })
           : Promise.resolve({ data: [], error: null, count: 0 }),
-        supabase
-          .from('audit_logs')
-          .select('id, action, entity_type, entity_id, created_at, profiles!actor_id(full_name)')
-          .order('created_at', { ascending: false })
-          .limit(6),
-        hasPermission('analytics:read') ? analyticsService.getDashboardData({}) : Promise.resolve(null),
+        hasPermission('audit:read')
+          ? supabase
+              .from('audit_logs')
+              .select('id, action, entity_type, entity_id, created_at, profiles!actor_id(full_name)')
+              .order('created_at', { ascending: false })
+              .limit(6)
+          : Promise.resolve({ data: [], error: null }),
       ]);
 
       const errors = [
@@ -265,7 +265,15 @@ export default function DashboardPage() {
         recentRecords,
         recentActivity: recentActivity.data ?? [],
         priorityWork: dedupedPriority,
-        analyticsSummary: analyticSummary,
+        analyticsSummary: hasPermission('analytics:read') ? {
+          summary: {
+            totalLandRecords: landRecordsCount,
+            totalDocuments,
+            pendingVerificationTasks: pendingVerification.count ?? 0,
+            totalDuplicateCandidates: totalDuplicates,
+            activeAlerts: activeAlerts.count ?? 0,
+          },
+        } : null,
         scopedRecordIds,
       };
     },
@@ -472,7 +480,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="landiq-panel landiq-fade-up">
+        {hasPermission('audit:read') && <Card className="landiq-panel landiq-fade-up">
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
             <CardDescription>Latest system events and field actions recorded in the database.</CardDescription>
@@ -501,7 +509,7 @@ export default function DashboardPage() {
               </div>
             )}
           </CardContent>
-        </Card>
+        </Card>}
       </div>
 
       {hasPermission('analytics:read') && dashboardQuery.data?.analyticsSummary && (

@@ -1,7 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
-import { auditService } from '@/services/audit/auditService';
 
 export type VerificationTask = Database['public']['Tables']['verification_tasks']['Row'];
 
@@ -17,6 +16,17 @@ export interface VerificationTaskFilters {
 const VALID_TASK_STATUSES = new Set(['QUEUED', 'ASSIGNED', 'UNDER_REVIEW', 'APPROVED', 'REJECTED', 'CORRECTION_REQUIRED']);
 
 export const verificationService = {
+  async getPendingVerificationTasks(pageSize = 8) {
+    const { data, error, count } = await supabase
+      .from('verification_tasks')
+      .select('id, status, priority, created_at, land_record_id, land_records(id, record_number, survey_number)', { count: 'exact' })
+      .in('status', ['QUEUED', 'ASSIGNED'])
+      .order('created_at', { ascending: false })
+      .range(0, pageSize - 1);
+    if (error) throw toAppError(error);
+    return { data: data ?? [], total: count ?? 0 };
+  },
+
   async getVerificationTasks(filters: VerificationTaskFilters = {}) {
     const { status, priority, assigned_to, search, page = 1, pageSize = 10 } = filters;
     const from = (page - 1) * pageSize;
@@ -51,7 +61,7 @@ export const verificationService = {
 
     return {
       data: filtered,
-      total: filtered.length || (count ?? 0),
+      total: term ? filtered.length : (count ?? filtered.length),
     };
   },
 
@@ -90,105 +100,40 @@ export const verificationService = {
   },
 
   async getVerificationStats() {
-    const { data, error } = await supabase
-      .from('verification_tasks')
-      .select('status');
-
+    const [total, pending, inReview, approved, rejected] = await Promise.all([
+      supabase.from('verification_tasks').select('id', { count: 'exact', head: true }),
+      supabase.from('verification_tasks').select('id', { count: 'exact', head: true }).in('status', ['QUEUED', 'ASSIGNED']),
+      supabase.from('verification_tasks').select('id', { count: 'exact', head: true }).eq('status', 'UNDER_REVIEW'),
+      supabase.from('verification_tasks').select('id', { count: 'exact', head: true }).eq('status', 'APPROVED'),
+      supabase.from('verification_tasks').select('id', { count: 'exact', head: true }).eq('status', 'REJECTED'),
+    ]);
+    const error = [total.error, pending.error, inReview.error, approved.error, rejected.error].find(Boolean);
     if (error) throw toAppError(error);
 
-    const stats = {
-      pending: 0,
-      inReview: 0,
-      approved: 0,
-      rejected: 0,
-      total: (data ?? []).length,
+    return {
+      total: total.count ?? 0,
+      pending: pending.count ?? 0,
+      inReview: inReview.count ?? 0,
+      approved: approved.count ?? 0,
+      rejected: rejected.count ?? 0,
     };
-
-    for (const row of data ?? []) {
-      switch (row.status) {
-        case 'QUEUED':
-        case 'ASSIGNED':
-          stats.pending += 1;
-          break;
-        case 'UNDER_REVIEW':
-          stats.inReview += 1;
-          break;
-        case 'APPROVED':
-          stats.approved += 1;
-          break;
-        case 'REJECTED':
-          stats.rejected += 1;
-          break;
-        default:
-          break;
-      }
-    }
-
-    return stats;
   },
 
   async updateTaskStatus(
     taskId: string,
     status: string,
-    actorId: string,
-    actorRole: string,
     comment?: string
   ) {
     if (!VALID_TASK_STATUSES.has(status)) {
       throw new Error(`Unsupported verification status: ${status}`);
     }
 
-    const { data: existingTask, error: existingError } = await supabase
-      .from('verification_tasks')
-      .select('status, started_at, completed_at, assigned_to')
-      .eq('id', taskId)
-      .single();
-
-    if (existingError || !existingTask) {
-      throw toAppError(existingError ?? new Error('Verification task not found'));
-    }
-
-    const updatePayload: Record<string, string | null> = {
-      status,
-      updated_at: new Date().toISOString(),
-    };
-
-    if (status === 'UNDER_REVIEW') {
-      updatePayload.started_at = existingTask.started_at ?? new Date().toISOString();
-    }
-    if (status === 'APPROVED' || status === 'REJECTED') {
-      updatePayload.completed_at = existingTask.completed_at ?? new Date().toISOString();
-    }
-
-    const { data, error } = await supabase
-      .from('verification_tasks')
-      .update(updatePayload as any)
-      .eq('id', taskId)
-      .select()
-      .single();
-
-    if (error) throw toAppError(error);
-
-    const { error: actionError } = await supabase.from('verification_actions').insert({
-      verification_task_id: taskId,
-      actor_id: actorId,
-      action: status,
-      comment: comment ?? null,
-    } as any);
-
-    if (actionError) throw toAppError(actionError);
-
-    await auditService.log({
-      actor_id: actorId,
-      actor_role: actorRole,
-      action: `verification_task_${status.toLowerCase()}`,
-      entity_type: 'verification_tasks',
-      entity_id: taskId,
-      before_state: { status: existingTask.status },
-      after_state: { status },
-      metadata: { comment: comment ?? null },
+    const { data, error } = await supabase.rpc('update_verification_task_status', {
+      p_task_id: taskId,
+      p_status: status,
+      p_comment: comment ?? null,
     });
-
+    if (error) throw toAppError(error);
     return data as VerificationTask;
   },
 };

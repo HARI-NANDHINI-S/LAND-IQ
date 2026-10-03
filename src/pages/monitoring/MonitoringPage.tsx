@@ -1,8 +1,9 @@
-import { useDeferredValue, useState } from 'react';
+import { useDeferredValue, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Activity, Bell, ChevronLeft, ChevronRight, Eye, ListPlus, Search, ShieldAlert } from 'lucide-react';
 import { useAuth } from '@/hooks/auth/useAuth';
+import { supabase } from '@/lib/supabase';
 import { monitoringService } from '@/services/monitoring/monitoringService';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -42,6 +43,8 @@ function formatDate(value: string) {
 
 export default function MonitoringPage() {
   const { hasPermission } = useAuth();
+  const queryClient = useQueryClient();
+  const canRead = hasPermission('monitoring:read');
   const [search, setSearch] = useState('');
   const [priority, setPriority] = useState('ALL');
   const [status, setStatus] = useState('ALL');
@@ -66,6 +69,21 @@ export default function MonitoringPage() {
     queryFn: () => monitoringService.getAlertStats(),
     enabled: hasPermission('monitoring:read'),
   });
+
+  useEffect(() => {
+    if (!canRead) return;
+    const channel = supabase
+      .channel('monitoring-alert-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'alerts' }, () => {
+        void queryClient.invalidateQueries({ queryKey: ['monitoring-alerts'] });
+        void queryClient.invalidateQueries({ queryKey: ['monitoring-alert-stats'] });
+        void queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
+      })
+      .subscribe();
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [canRead, queryClient]);
 
   if (!hasPermission('monitoring:read')) {
     return <div className="p-6"><Alert variant="destructive"><AlertTitle>Access denied</AlertTitle><AlertDescription>You do not have permission to view monitoring alerts.</AlertDescription></Alert></div>;

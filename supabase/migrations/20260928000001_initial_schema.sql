@@ -17,6 +17,16 @@
 -- ============================================================
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Shared trigger function for automatically maintaining updated_at
+CREATE OR REPLACE FUNCTION public.set_updated_at()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$;
 
 
 -- ============================================================
@@ -24,7 +34,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.roles (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
     code TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
     description TEXT,
@@ -32,7 +42,7 @@ CREATE TABLE IF NOT EXISTS public.roles (
 );
 
 CREATE TABLE IF NOT EXISTS public.permissions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
     code TEXT UNIQUE NOT NULL,
     description TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -53,7 +63,7 @@ CREATE TABLE IF NOT EXISTS public.role_permissions (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.states (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
     name TEXT NOT NULL,
     code TEXT UNIQUE NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
@@ -62,7 +72,7 @@ CREATE TABLE IF NOT EXISTS public.states (
 );
 
 CREATE TABLE IF NOT EXISTS public.districts (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
     state_id UUID NOT NULL
         REFERENCES public.states(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
@@ -74,7 +84,7 @@ CREATE TABLE IF NOT EXISTS public.districts (
 );
 
 CREATE TABLE IF NOT EXISTS public.taluks (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
     district_id UUID NOT NULL
         REFERENCES public.districts(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
@@ -86,7 +96,7 @@ CREATE TABLE IF NOT EXISTS public.taluks (
 );
 
 CREATE TABLE IF NOT EXISTS public.villages (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
     taluk_id UUID NOT NULL
         REFERENCES public.taluks(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
@@ -258,7 +268,7 @@ TO authenticated;
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.land_records (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     record_number TEXT UNIQUE NOT NULL,
     survey_number TEXT NOT NULL,
@@ -314,7 +324,7 @@ CREATE TABLE IF NOT EXISTS public.land_records (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.land_owners (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     full_name TEXT NOT NULL,
     identification_reference TEXT,
@@ -326,7 +336,7 @@ CREATE TABLE IF NOT EXISTS public.land_owners (
 
 
 CREATE TABLE IF NOT EXISTS public.land_record_owners (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     land_record_id UUID NOT NULL
         REFERENCES public.land_records(id)
@@ -358,7 +368,7 @@ CREATE TABLE IF NOT EXISTS public.land_record_owners (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.documents (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     land_record_id UUID
         REFERENCES public.land_records(id),
@@ -387,7 +397,7 @@ CREATE TABLE IF NOT EXISTS public.documents (
 
 
 CREATE TABLE IF NOT EXISTS public.document_pages (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     document_id UUID NOT NULL
         REFERENCES public.documents(id)
@@ -408,7 +418,7 @@ CREATE TABLE IF NOT EXISTS public.document_pages (
 
 
 CREATE TABLE IF NOT EXISTS public.extracted_fields (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     document_id UUID NOT NULL
         REFERENCES public.documents(id)
@@ -446,7 +456,7 @@ CREATE TABLE IF NOT EXISTS public.extracted_fields (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.verification_tasks (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     document_id UUID NOT NULL
         REFERENCES public.documents(id)
@@ -490,7 +500,7 @@ CREATE TABLE IF NOT EXISTS public.verification_tasks (
 
 
 CREATE TABLE IF NOT EXISTS public.verification_actions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     verification_task_id UUID NOT NULL
         REFERENCES public.verification_tasks(id)
@@ -515,7 +525,7 @@ CREATE TABLE IF NOT EXISTS public.verification_actions (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.duplicate_candidates (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     record_a_id UUID NOT NULL
         REFERENCES public.land_records(id)
@@ -559,7 +569,7 @@ CREATE TABLE IF NOT EXISTS public.duplicate_candidates (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.risk_assessments (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     land_record_id UUID NOT NULL
         REFERENCES public.land_records(id)
@@ -594,7 +604,7 @@ CREATE TABLE IF NOT EXISTS public.risk_assessments (
 
 
 CREATE TABLE IF NOT EXISTS public.risk_signals (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     risk_assessment_id UUID NOT NULL
         REFERENCES public.risk_assessments(id)
@@ -616,7 +626,7 @@ CREATE TABLE IF NOT EXISTS public.risk_signals (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.record_changes (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     land_record_id UUID NOT NULL
         REFERENCES public.land_records(id)
@@ -652,7 +662,7 @@ CREATE TABLE IF NOT EXISTS public.record_changes (
 
 
 CREATE TABLE IF NOT EXISTS public.watchlists (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     land_record_id UUID NOT NULL
         REFERENCES public.land_records(id)
@@ -682,7 +692,7 @@ CREATE TABLE IF NOT EXISTS public.watchlists (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.alerts (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     land_record_id UUID
         REFERENCES public.land_records(id)
@@ -730,7 +740,7 @@ CREATE TABLE IF NOT EXISTS public.alerts (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.notifications (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     user_id UUID NOT NULL
         REFERENCES public.profiles(id)
@@ -756,7 +766,7 @@ CREATE TABLE IF NOT EXISTS public.notifications (
 -- ============================================================
 
 CREATE TABLE IF NOT EXISTS public.audit_logs (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT extensions.uuid_generate_v4(),
 
     actor_id UUID REFERENCES public.profiles(id),
     actor_role TEXT,

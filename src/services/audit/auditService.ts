@@ -3,8 +3,6 @@ import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
 
 export type AuditLog = Database['public']['Tables']['audit_logs']['Row'];
-export type AuditLogInsert = Database['public']['Tables']['audit_logs']['Insert'];
-
 export interface AuditFilters {
   search?: string;
   action?: string;
@@ -18,21 +16,6 @@ export interface AuditFilters {
 }
 
 export const auditService = {
-  async log(entry: Omit<AuditLogInsert, 'id' | 'created_at'>) {
-    try {
-      const { error } = await supabase.from('audit_logs').insert({
-        ...entry,
-        status: entry.status || 'SUCCESS',
-      } as AuditLogInsert);
-      
-      if (error) {
-        console.error('[Audit] Failed to write audit log:', error.message);
-      }
-    } catch (err) {
-      console.error('[Audit] Exception writing audit log:', err);
-    }
-  },
-
   async getAuditLogs(filters: AuditFilters = {}) {
     const { page = 1, pageSize = 50 } = filters;
     const from = (page - 1) * pageSize;

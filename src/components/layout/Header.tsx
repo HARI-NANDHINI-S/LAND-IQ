@@ -1,20 +1,65 @@
-import { Menu, Bell, LogOut, User } from 'lucide-react';
-import { useAuth } from '@/hooks/auth/useAuth';
-import { useAppStore } from '@/store/appStore';
-import { Button } from '@/components/ui/button';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Bell, LogOut, Menu, Settings, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { 
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, 
-  DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger 
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAuth } from '@/hooks/auth/useAuth';
+import { supabase } from '@/lib/supabase';
+import { notificationService } from '@/services/notifications/notificationService';
+import { useAppStore } from '@/store/appStore';
 
 export default function Header() {
   const { user, signOut } = useAuth();
   const { toggleSidebar } = useAppStore();
+  const queryClient = useQueryClient();
 
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-  };
+  const unreadQuery = useQuery({
+    queryKey: ['notifications-unread', user?.id],
+    queryFn: () => notificationService.getUnreadCount(user!.id),
+    enabled: Boolean(user?.id),
+    staleTime: 30_000,
+  });
+
+  useEffect(() => {
+    if (!user?.id) return;
+    const channel = supabase
+      .channel(`notifications-header-${user.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'notifications',
+          filter: `user_id=eq.${user.id}`,
+        },
+        () => {
+          void queryClient.invalidateQueries({ queryKey: ['notifications-unread', user.id] });
+          void queryClient.invalidateQueries({ queryKey: ['notifications', user.id] });
+        },
+      )
+      .subscribe();
+
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  }, [queryClient, user?.id]);
+
+  const getInitials = (name: string) =>
+    name
+      .split(' ')
+      .map((part) => part[0])
+      .join('')
+      .substring(0, 2)
+      .toUpperCase();
 
   const handleSignOut = async () => {
     await signOut();
@@ -27,17 +72,32 @@ export default function Header() {
           <Menu className="h-5 w-5" />
         </Button>
         <div className="hidden items-center gap-3 sm:flex">
-          <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_16px_rgba(34,197,94,0.65)]" />
-          <h1 className="truncate text-sm font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+          <div className="h-2.5 w-2.5 rounded-full bg-orange-500 shadow-[0_0_16px_rgba(249,115,22,0.5)]" />
+          <h1 className="truncate text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-600 dark:text-zinc-300">
             Land Records Administration
           </h1>
         </div>
       </div>
 
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="icon" className="landiq-icon-button relative text-muted-foreground hover:text-foreground">
-          <Bell className="h-4 w-4" />
-          <span className="absolute right-2 top-2 flex h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.9)]" />
+        <Button
+          asChild
+          variant="ghost"
+          size="icon"
+          className="landiq-icon-button relative text-zinc-600 hover:text-foreground dark:text-zinc-300"
+        >
+          <Link
+            to="/notifications"
+            aria-label={unreadQuery.isError ? 'Notifications unavailable' : `${unreadQuery.data ?? 0} unread notifications`}
+            title={unreadQuery.isError ? 'Notifications unavailable' : `${unreadQuery.data ?? 0} unread notifications`}
+          >
+            <Bell className="h-4 w-4" />
+            {(unreadQuery.data ?? 0) > 0 && (
+              <span className="absolute -right-1 -top-1 grid min-h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[9px] font-semibold leading-none text-primary-foreground">
+                {(unreadQuery.data ?? 0) > 99 ? '99+' : unreadQuery.data}
+              </span>
+            )}
+          </Link>
         </Button>
 
         <DropdownMenu>
@@ -55,14 +115,22 @@ export default function Header() {
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium leading-none">{user?.profile?.full_name}</p>
-                <p className="text-xs leading-none text-muted-foreground truncate">{user?.email}</p>
+                <p className="truncate text-xs leading-none text-muted-foreground">{user?.email}</p>
                 <p className="mt-1 text-xs font-medium text-primary">{user?.role?.name}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+            <DropdownMenuItem asChild>
+              <Link to={user?.permissions?.includes('settings:manage') ? '/settings' : '/dashboard'} className="flex w-full items-center">
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/dashboard" className="flex w-full items-center">
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive">
               <LogOut className="mr-2 h-4 w-4" />

@@ -24,7 +24,7 @@ export default function RiskDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { hasPermission, user } = useAuth();
+  const { hasPermission } = useAuth();
   const [note, setNote] = useState('');
 
   const { data: assessment, isLoading, isError, error } = useQuery({
@@ -35,8 +35,7 @@ export default function RiskDetailsPage() {
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ status, notes }: { status: string; notes?: string }) => {
-      if (!user?.id) throw new Error('User session is missing.');
-      return riskService.updateRiskStatus(id!, status, user.id, user.role?.code ?? 'VIEWER', notes);
+      return riskService.updateRiskStatus(id!, status, notes);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['risk-assessment', id] });

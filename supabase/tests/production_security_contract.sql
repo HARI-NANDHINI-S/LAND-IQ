@@ -10,6 +10,7 @@ DECLARE
     v_bucket_size BIGINT;
     v_function_count INTEGER;
     v_column TEXT;
+    v_unhardened_functions TEXT[];
 BEGIN
     SELECT ARRAY_AGG(required.table_name)
     INTO v_missing
@@ -19,7 +20,8 @@ BEGIN
         'verification_actions', 'duplicate_candidates', 'risk_assessments',
         'risk_signals', 'watchlists', 'alerts', 'notifications', 'record_changes',
         'audit_logs', 'roles', 'permissions', 'role_permissions', 'states',
-        'districts', 'taluks', 'villages'
+        'districts', 'taluks', 'villages', 'settings',
+        'bhoomivoice_sessions', 'bhoomivoice_messages', 'demo_data_policy'
     ]) AS required(table_name)
     LEFT JOIN pg_catalog.pg_class c
         ON c.relname = required.table_name
@@ -73,14 +75,102 @@ BEGIN
     WHERE n.nspname = 'public'
       AND p.proname = ANY(ARRAY[
           'user_role', 'user_district_id', 'user_state_id',
+          'user_village_id', 'can_access_geographic_scope', 'can_access_land_record',
           'has_permission', 'admin_update_profile_authorization'
       ])
       AND p.prosecdef
       AND p.proconfig @> ARRAY['search_path=public, pg_temp'];
 
-    IF v_function_count <> 5 THEN
-        RAISE EXCEPTION 'Expected five hardened authorization functions; found %.', v_function_count;
+        IF v_function_count <> 8 THEN
+                RAISE EXCEPTION 'Expected eight hardened authorization functions; found %.', v_function_count;
     END IF;
+
+        SELECT ARRAY_AGG(required.function_name)
+        INTO v_unhardened_functions
+        FROM unnest(ARRAY[
+            'trigger_log_audit', 'scan_duplicate_candidates', 'recompute_land_record_risk',
+            'recompute_risk_assessment', 'begin_document_processing', 'complete_document_processing',
+            'fail_document_processing', 'verify_extracted_field', 'update_verification_task_status',
+            'update_duplicate_candidate_status', 'update_risk_assessment_status', 'update_alert_status',
+            'import_land_record_geojson', 'demo_data_visible', 'is_demo_entity'
+        ]) AS required(function_name)
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM pg_catalog.pg_proc procedure
+            JOIN pg_catalog.pg_namespace namespace ON namespace.oid = procedure.pronamespace
+            WHERE namespace.nspname = 'public'
+              AND procedure.proname = required.function_name
+              AND procedure.prosecdef
+              AND procedure.proconfig @> ARRAY[
+                  CASE WHEN required.function_name = 'import_land_record_geojson'
+                       THEN 'search_path=public, extensions, pg_temp'
+                       ELSE 'search_path=public, pg_temp' END
+              ]
+        );
+
+        IF COALESCE(CARDINALITY(v_unhardened_functions), 0) > 0 THEN
+            RAISE EXCEPTION 'Privileged workflow functions are missing SECURITY DEFINER/search_path hardening: %.', v_unhardened_functions;
+        END IF;
+
+        IF NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'scan_duplicate_candidates'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, pg_temp']
+        ) OR NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'recompute_risk_assessment'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, pg_temp']
+        ) OR NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'update_verification_task_status'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, pg_temp']
+        ) OR NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'update_duplicate_candidate_status'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, pg_temp']
+        ) OR NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'update_risk_assessment_status'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, pg_temp']
+        ) OR NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'update_alert_status'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, pg_temp']
+        ) OR NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'import_land_record_geojson'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, extensions, pg_temp']
+        ) OR NOT EXISTS (
+                SELECT 1 FROM pg_catalog.pg_proc p
+                JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+                WHERE n.nspname = 'public'
+                    AND p.proname = 'verify_extracted_field'
+                    AND p.prosecdef
+                    AND p.proconfig @> ARRAY['search_path=public, pg_temp']
+        ) THEN
+                RAISE EXCEPTION 'A privileged workflow function is missing SECURITY DEFINER or an explicit search_path.';
+        END IF;
 
     FOREACH v_column IN ARRAY ARRAY[
         'role_id', 'state_id', 'district_id', 'village_id', 'is_active', 'email'
@@ -92,6 +182,73 @@ BEGIN
 
     IF has_table_privilege('authenticated', 'public.profiles', 'INSERT') THEN
         RAISE EXCEPTION 'authenticated retains direct INSERT on profiles.';
+    END IF;
+
+    IF has_table_privilege('authenticated', 'public.audit_logs', 'INSERT')
+       OR has_table_privilege('authenticated', 'public.audit_logs', 'UPDATE')
+       OR has_table_privilege('authenticated', 'public.audit_logs', 'DELETE')
+       OR has_table_privilege('authenticated', 'public.duplicate_candidates', 'INSERT')
+       OR has_table_privilege('authenticated', 'public.duplicate_candidates', 'UPDATE')
+       OR has_table_privilege('authenticated', 'public.duplicate_candidates', 'DELETE')
+       OR has_table_privilege('authenticated', 'public.risk_assessments', 'UPDATE')
+       OR has_table_privilege('authenticated', 'public.verification_tasks', 'UPDATE')
+       OR has_table_privilege('authenticated', 'public.verification_actions', 'INSERT')
+       OR has_table_privilege('authenticated', 'public.alerts', 'UPDATE')
+       OR has_table_privilege('authenticated', 'public.notifications', 'INSERT')
+       OR has_table_privilege('authenticated', 'public.notifications', 'UPDATE')
+       OR has_table_privilege('authenticated', 'public.extracted_fields', 'UPDATE') THEN
+        RAISE EXCEPTION 'Authenticated retains direct writes that must use hardened database workflows.';
+    END IF;
+
+    IF NOT has_column_privilege('authenticated', 'public.notifications', 'is_read', 'UPDATE')
+       OR has_column_privilege('authenticated', 'public.notifications', 'read_at', 'UPDATE')
+       OR has_column_privilege('authenticated', 'public.notifications', 'title', 'UPDATE') THEN
+        RAISE EXCEPTION 'Authenticated notification updates must be limited to marking their own rows read.';
+    END IF;
+
+    IF has_function_privilege(
+           'authenticated',
+           'public.complete_document_processing(uuid,text,jsonb)',
+           'EXECUTE'
+       )
+       OR has_function_privilege(
+           'authenticated',
+           'public.fail_document_processing(uuid,text)',
+           'EXECUTE'
+       )
+       OR has_function_privilege(
+           'authenticated',
+           'public.complete_document_processing(uuid,text,jsonb,uuid)',
+           'EXECUTE'
+       )
+       OR has_function_privilege(
+           'authenticated',
+           'public.fail_document_processing(uuid,text,uuid)',
+           'EXECUTE'
+       )
+       OR NOT has_function_privilege(
+           'service_role',
+           'public.complete_document_processing(uuid,text,jsonb,uuid)',
+           'EXECUTE'
+       )
+       OR NOT has_function_privilege(
+           'service_role',
+           'public.fail_document_processing(uuid,text,uuid)',
+           'EXECUTE'
+       ) THEN
+        RAISE EXCEPTION 'Only the trusted processing service may persist OCR results or processing failures.';
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_catalog.pg_trigger trigger_row
+        JOIN pg_catalog.pg_class table_row ON table_row.oid = trigger_row.tgrelid
+        JOIN pg_catalog.pg_namespace namespace ON namespace.oid = table_row.relnamespace
+        WHERE namespace.nspname = 'public'
+          AND table_row.relname = 'audit_logs'
+          AND trigger_row.tgname = 'prevent_audit_log_mutation'
+          AND NOT trigger_row.tgisinternal
+    ) THEN
+        RAISE EXCEPTION 'Append-only audit mutation trigger is missing.';
     END IF;
 
     IF NOT has_column_privilege('authenticated', 'public.profiles', 'full_name', 'UPDATE') THEN
@@ -129,6 +286,17 @@ BEGIN
           AND cmd = 'DELETE' AND qual ILIKE '%owner_id%'
     ) THEN
         RAISE EXCEPTION 'Expected scoped read, upload, and delete storage policies are missing.';
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_catalog.pg_proc p
+        JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+        WHERE n.nspname = 'public'
+          AND p.proname = 'get_spatial_land_record_extent'
+          AND p.prosecdef = FALSE
+          AND p.proconfig @> ARRAY['search_path=public, extensions, pg_temp']
+    ) THEN
+        RAISE EXCEPTION 'The RLS-respecting spatial extent query is missing.';
     END IF;
 
     IF NOT EXISTS (

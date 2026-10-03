@@ -39,7 +39,7 @@ export default function AlertDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { hasPermission, user } = useAuth();
+  const { hasPermission } = useAuth();
   const [actionMessage, setActionMessage] = useState<{ kind: 'success' | 'error'; text: string } | null>(null);
 
   const alertQuery = useQuery({
@@ -56,11 +56,9 @@ export default function AlertDetailsPage() {
   const actionMutation = useMutation({
     mutationFn: async (action: 'acknowledge' | 'resolve') => {
       if (!hasPermission('monitoring:manage')) throw new Error('You do not have permission to manage alerts.');
-      if (!user?.id) throw new Error('User session is missing.');
-      const actorRole = user.role?.code ?? '';
       return action === 'acknowledge'
-        ? monitoringService.acknowledgeAlert(id!, user.id, actorRole)
-        : monitoringService.resolveAlert(id!, user.id, actorRole);
+        ? monitoringService.acknowledgeAlert(id!)
+        : monitoringService.resolveAlert(id!);
     },
     onSuccess: (_data, action) => {
       setActionMessage({ kind: 'success', text: action === 'acknowledge' ? 'Alert acknowledged.' : 'Alert resolved.' });

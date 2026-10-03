@@ -26,7 +26,7 @@ export default function DuplicateDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { hasPermission, user } = useAuth();
+  const { hasPermission } = useAuth();
   const [confirmReason, setConfirmReason] = useState('');
   const [notDuplicateReason, setNotDuplicateReason] = useState('');
 
@@ -58,8 +58,7 @@ export default function DuplicateDetailsPage() {
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ status, notes }: { status: string; notes?: string }) => {
-      if (!user?.id) throw new Error('User session is missing.');
-      return duplicateService.updateCandidateStatus(id!, status, user.id, user.role?.code ?? 'VIEWER', notes);
+      return duplicateService.updateCandidateStatus(id!, status, notes);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['duplicate-candidate', id] });
@@ -199,7 +198,7 @@ export default function DuplicateDetailsPage() {
                 <Textarea value={notDuplicateReason} onChange={(event) => setNotDuplicateReason(event.target.value)} placeholder="Reason" className="min-h-[120px]" />
                 <DialogFooter>
                   <Button variant="outline">Cancel</Button>
-                  <Button variant="destructive" onClick={() => { updateStatusMutation.mutate({ status: 'FALSE_POSITIVE', notes: notDuplicateReason || undefined }); }} disabled={updateStatusMutation.isPending}>Mark as not duplicate</Button>
+                  <Button variant="destructive" onClick={() => { updateStatusMutation.mutate({ status: 'FALSE_POSITIVE', notes: notDuplicateReason.trim() }); }} disabled={updateStatusMutation.isPending || !notDuplicateReason.trim()}>Mark as not duplicate</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

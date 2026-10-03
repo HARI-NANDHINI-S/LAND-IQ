@@ -2,7 +2,6 @@ import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
 import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
-import { auditService } from '@/services/audit/auditService';
 
 export type DocumentRow = Database['public']['Tables']['documents']['Row'];
 
@@ -22,13 +21,24 @@ export interface DocumentFilters {
 }
 
 export const documentService = {
-  validateFile(file: File): string | null {
+  async validateFile(file: File): Promise<string | null> {
     const mimeType = file.type || '';
     if (!ALLOWED_MIME_TYPES.includes(mimeType)) {
       return 'Only PDF, JPG, JPEG, and PNG files are allowed.';
     }
     if (file.size > MAX_FILE_SIZE) {
       return 'File size must not exceed 25 MB.';
+    }
+
+    const signature = new Uint8Array(await file.slice(0, 8).arrayBuffer());
+    const isPdf = mimeType === 'application/pdf'
+      && signature[0] === 0x25 && signature[1] === 0x50 && signature[2] === 0x44 && signature[3] === 0x46 && signature[4] === 0x2d;
+    const isPng = mimeType === 'image/png'
+      && [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a].every((byte, index) => signature[index] === byte);
+    const isJpeg = (mimeType === 'image/jpeg' || mimeType === 'image/jpg')
+      && signature[0] === 0xff && signature[1] === 0xd8 && signature[2] === 0xff;
+    if (!isPdf && !isPng && !isJpeg) {
+      return 'The file contents do not match a supported PDF, JPG, JPEG, or PNG format.';
     }
     return null;
   },
@@ -51,13 +61,16 @@ export const documentService = {
       village_id?: string | null;
       land_record_id?: string | null;
       document_type: string;
-      uploaded_by: string;
     }
   ) {
-    const validationError = this.validateFile(file);
+    const validationError = await this.validateFile(file);
     if (validationError) {
       throw { name: 'AppError', message: validationError };
     }
+
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError) throw toAppError(authError);
+    if (!authData.user) throw new Error('Sign in to upload documents.');
 
     const docId = crypto.randomUUID();
     const storagePath = this.buildStoragePath(
@@ -91,7 +104,7 @@ export const documentService = {
       village_id: metadata.village_id ?? null,
       processing_status: 'PENDING',
       verification_status: 'PENDING',
-      uploaded_by: metadata.uploaded_by,
+      uploaded_by: authData.user.id,
     };
 
     const { data, error: dbError } = await supabase
@@ -107,16 +120,6 @@ export const documentService = {
       }
       throw toAppError(dbError);
     }
-
-    await auditService.log({
-      actor_id: metadata.uploaded_by,
-      actor_role: 'UNKNOWN',
-      action: 'document_uploaded',
-      entity_type: 'documents',
-      entity_id: data.id,
-      after_state: { original_filename: file.name, document_type: metadata.document_type, storage_path: storagePath },
-      status: 'SUCCESS',
-    });
 
     return data as DocumentRow;
   },
@@ -186,7 +189,45 @@ export const documentService = {
     return data.signedUrl;
   },
 
-  async deleteDocument(id: string, actorId?: string, actorRole?: string) {
+  async processDocument(documentId: string): Promise<{ processed_pages: number; provider: string }> {
+    const { data, error } = await supabase.functions.invoke('process-document', {
+      body: { document_id: documentId },
+    });
+    if (error) throw toAppError(error as any);
+    if (data?.error) throw new Error(String(data.error));
+    return data as { processed_pages: number; provider: string };
+  },
+
+  async getExtractedFields(documentId: string) {
+    const { data, error } = await supabase
+      .from('extracted_fields')
+      .select('*, document_pages(page_number, extraction_provider)')
+      .eq('document_id', documentId)
+      .order('created_at', { ascending: true });
+    if (error) throw toAppError(error);
+    return data ?? [];
+  },
+
+  async getDocumentPages(documentId: string) {
+    const { data, error } = await supabase
+      .from('document_pages')
+      .select('id, page_number, ocr_status, extracted_text, extraction_provider, processing_error, attempt_count')
+      .eq('document_id', documentId)
+      .order('page_number', { ascending: true });
+    if (error) throw toAppError(error);
+    return data ?? [];
+  },
+
+  async verifyExtractedField(fieldId: string, verifiedValue: string) {
+    const { data, error } = await supabase.rpc('verify_extracted_field', {
+      p_field_id: fieldId,
+      p_verified_value: verifiedValue,
+    });
+    if (error) throw toAppError(error);
+    return data;
+  },
+
+  async deleteDocument(id: string) {
     const { data: doc, error: docError } = await supabase
       .from('documents')
       .select('id, storage_path, land_record_id, original_filename, document_type')
@@ -203,18 +244,6 @@ export const documentService = {
       if (storageError) {
         throw new Error('Document metadata was deleted, but its storage file could not be removed. Contact an administrator.');
       }
-    }
-
-    if (actorId && actorRole) {
-      await auditService.log({
-        actor_id: actorId,
-        actor_role: actorRole,
-        action: 'document_deleted',
-        entity_type: 'documents',
-        entity_id: id,
-        before_state: { original_filename: doc.original_filename, document_type: doc.document_type, land_record_id: doc.land_record_id },
-        status: 'SUCCESS',
-      });
     }
 
     return { id: doc.id, land_record_id: doc.land_record_id };

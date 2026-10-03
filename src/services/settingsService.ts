@@ -1,17 +1,45 @@
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
-import { auditService } from '@/services/audit/auditService';
 
 export type SettingRow = Database['public']['Tables']['settings']['Row'];
 
+async function assertSettingsManageAccess() {
+  const { data: authData, error: authError } = await supabase.auth.getUser();
+  if (authError) throw toAppError(authError);
+  if (!authData.user) throw new Error('Sign in to manage platform settings.');
+
+  const { data: canManage, error: permissionError } = await supabase.rpc('has_permission', {
+    required_permission: 'settings:manage',
+  });
+
+  if (permissionError) throw toAppError(permissionError);
+  if (!canManage) throw new Error('You do not have permission to manage platform settings.');
+
+  return authData.user;
+}
+
 export const settingsService = {
   async getSettings() {
-    const { data, error } = await supabase
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError) throw toAppError(authError);
+    if (!authData.user) throw new Error('Sign in to view platform settings.');
+
+    const { data: canManage, error: permissionError } = await supabase.rpc('has_permission', {
+      required_permission: 'settings:manage',
+    });
+
+    if (permissionError) throw toAppError(permissionError);
+
+    const query = supabase
       .from('settings')
       .select('*')
       .order('key');
-      
+
+    const { data, error } = canManage
+      ? await query
+      : await query.eq('is_public', true);
+
     if (error) throw toAppError(error);
     return data as SettingRow[];
   },
@@ -22,18 +50,18 @@ export const settingsService = {
       .select('*')
       .eq('is_public', true)
       .order('key');
-      
+
     if (error) throw toAppError(error);
     return data as SettingRow[];
   },
 
-  async updateSetting(key: string, value: any, actorId: string, actorRole: string) {
-    const { data: beforeData } = await supabase.from('settings').select('*').eq('key', key).single();
+  async updateSetting(key: string, value: unknown) {
+    const user = await assertSettingsManageAccess();
 
     const payload = {
       value,
-      updated_by: actorId,
-      updated_at: new Date().toISOString()
+      updated_by: user.id,
+      updated_at: new Date().toISOString(),
     };
 
     const { data, error } = await supabase
@@ -42,20 +70,8 @@ export const settingsService = {
       .eq('key', key)
       .select('*')
       .single();
-      
+
     if (error) throw toAppError(error);
-
-    await auditService.log({
-      actor_id: actorId,
-      actor_role: actorRole,
-      action: 'setting_updated',
-      entity_type: 'settings',
-      entity_id: key,
-      before_state: beforeData,
-      after_state: payload as any,
-      status: 'SUCCESS',
-    });
-
     return data as SettingRow;
-  }
+  },
 };

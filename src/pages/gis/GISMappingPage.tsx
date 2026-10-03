@@ -1,9 +1,10 @@
-import { useDeferredValue, useState } from 'react';
+import { useDeferredValue, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { ArrowUpRight, ChevronLeft, ChevronRight, FileText, Layers3, MapPinned, MapPin, Search, ShieldAlert } from 'lucide-react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ArrowUpRight, ChevronLeft, ChevronRight, FileText, Layers3, MapPinned, MapPin, Search, ShieldAlert, Upload } from 'lucide-react';
 import { useAuth } from '@/hooks/auth/useAuth';
-import { gisService, type GeographyHierarchy } from '@/services/gisService';
+import { gisService, type GeographyHierarchy, type SpatialBounds } from '@/services/gisService';
+import LandRecordSpatialMap from '@/components/gis/LandRecordSpatialMap';
 import { landRecordService } from '@/services/land-records/landRecordService';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -52,6 +53,8 @@ function SummaryBreakdown({ title, values }: { title: string; values: Record<str
 
 export default function GISMappingPage() {
   const { user, hasPermission } = useAuth();
+  const queryClient = useQueryClient();
+  const geoJsonInputRef = useRef<HTMLInputElement | null>(null);
   const [stateId, setStateId] = useState('ALL');
   const [districtId, setDistrictId] = useState('ALL');
   const [talukId, setTalukId] = useState('ALL');
@@ -62,6 +65,10 @@ export default function GISMappingPage() {
   const [searchInput, setSearchInput] = useState('');
   const [page, setPage] = useState(1);
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
+  const [mapBounds, setMapBounds] = useState<SpatialBounds | null>(null);
+  const [nearbySearchEnabled, setNearbySearchEnabled] = useState(false);
+  const [nearbyPoint, setNearbyPoint] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [mapFeedback, setMapFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const search = useDeferredValue(searchInput.trim());
 
   const canRead = hasPermission('land_record:read');
@@ -101,6 +108,12 @@ export default function GISMappingPage() {
     queryFn: () => gisService.getSummary(filters),
     enabled: canRead,
   });
+  const spatialExtentQuery = useQuery({
+    queryKey: ['gis-spatial-extent'],
+    queryFn: () => gisService.getSpatialExtent(),
+    enabled: canRead,
+    staleTime: 60_000,
+  });
   const recordsQuery = useQuery({
     queryKey: ['gis-records', filters, page],
     queryFn: () => landRecordService.getLandRecords({ ...filters, page, pageSize: PAGE_SIZE }),
@@ -116,10 +129,40 @@ export default function GISMappingPage() {
     queryFn: () => landRecordService.getLandRecord(selectedRecordId!),
     enabled: !!selectedRecordId,
   });
+  const spatialQuery = useQuery({
+    queryKey: ['gis-spatial-records', filters, mapBounds],
+    queryFn: () => gisService.getSpatialLandRecords(mapBounds!, filters),
+    enabled: canRead && !!mapBounds && mapBounds.west < mapBounds.east,
+    staleTime: 30_000,
+  });
+  const nearbyQuery = useQuery({
+    queryKey: ['gis-nearby-records', nearbyPoint],
+    queryFn: () => gisService.getNearbyLandRecords(nearbyPoint!.latitude, nearbyPoint!.longitude),
+    enabled: canRead && !!nearbyPoint,
+    staleTime: 30_000,
+  });
   const recordContextQuery = useQuery({
     queryKey: ['gis-record-context', selectedRecordId],
     queryFn: () => gisService.getRecordContext(selectedRecordId!),
     enabled: !!selectedRecordId,
+  });
+  const importGeoJsonMutation = useMutation({
+    mutationFn: async (file: File) => {
+      if (file.size > 5 * 1024 * 1024) throw new Error('GeoJSON imports must be 5 MB or smaller.');
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(await file.text());
+      } catch {
+        throw new Error('The selected file is not valid JSON.');
+      }
+      return gisService.importParcelGeoJSON(parsed);
+    },
+    onSuccess: (count) => {
+      setMapFeedback({ type: 'success', message: `${count} parcel geometries imported from the selected GeoJSON.` });
+      void queryClient.invalidateQueries({ queryKey: ['gis-spatial-records'] });
+      void queryClient.invalidateQueries({ queryKey: ['gis-record-context'] });
+    },
+    onError: (error: Error) => setMapFeedback({ type: 'error', message: error.message }),
   });
 
   const resetPage = () => setPage(1);
@@ -163,9 +206,16 @@ export default function GISMappingPage() {
 
       <Alert>
         <MapPin className="h-4 w-4" />
-        <AlertTitle>Administrative geography view</AlertTitle>
-        <AlertDescription>The current database stores state, district, taluk, and village relationships, but no coordinates or boundary geometry. This view organizes records by those administrative areas; it does not show exact parcel locations.</AlertDescription>
+        <AlertTitle>Spatial data is evidence-based</AlertTitle>
+        <AlertDescription>Administrative areas are available for filtering. Parcel geometry and coordinates appear only when persisted from an authorized source; the map never estimates missing locations.</AlertDescription>
       </Alert>
+
+      {mapFeedback && (
+        <Alert variant={mapFeedback.type === 'error' ? 'destructive' : 'default'}>
+          <AlertTitle>{mapFeedback.type === 'error' ? 'GIS operation failed' : 'GIS operation complete'}</AlertTitle>
+          <AlertDescription>{mapFeedback.message}</AlertDescription>
+        </Alert>
+      )}
 
       {geographyQuery.isError && <Alert variant="destructive"><AlertTitle>Unable to load geography</AlertTitle><AlertDescription>{geographyQuery.error instanceof Error ? geographyQuery.error.message : 'Please retry.'}</AlertDescription></Alert>}
       <Card>
@@ -195,6 +245,85 @@ export default function GISMappingPage() {
             <Select value={recordStatus} onValueChange={(value) => { setRecordStatus(value); resetPage(); }}><SelectTrigger aria-label="Filter record status"><SelectValue placeholder="All record statuses" /></SelectTrigger><SelectContent><SelectItem value="ALL">All record statuses</SelectItem><SelectItem value="ACTIVE">Active</SelectItem><SelectItem value="INACTIVE">Inactive</SelectItem><SelectItem value="ARCHIVED">Archived</SelectItem></SelectContent></Select>
             <Select value={landType} onValueChange={(value) => { setLandType(value); resetPage(); }}><SelectTrigger aria-label="Filter land type"><SelectValue placeholder="All land types" /></SelectTrigger><SelectContent><SelectItem value="ALL">All land types</SelectItem>{landTypesQuery.data?.map((type) => <SelectItem key={type} value={type}>{type}</SelectItem>)}</SelectContent></Select>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2"><MapPinned className="h-4 w-4" /> Parcel map</CardTitle>
+            <CardDescription>Only imported parcel boundaries and recorded coordinates are shown.</CardDescription>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant={nearbySearchEnabled ? 'default' : 'outline'}
+              onClick={() => {
+                setNearbySearchEnabled((enabled) => !enabled);
+                setNearbyPoint(null);
+              }}
+              aria-pressed={nearbySearchEnabled}
+            >
+              <Search className="mr-2 h-4 w-4" /> {nearbySearchEnabled ? 'Cancel nearby search' : 'Search nearby'}
+            </Button>
+            {hasPermission('gis:import') && (
+              <>
+                <input
+                  ref={geoJsonInputRef}
+                  type="file"
+                  accept=".geojson,.json,application/geo+json,application/json"
+                  className="sr-only"
+                  aria-label="Select a GeoJSON parcel file"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) importGeoJsonMutation.mutate(file);
+                    event.target.value = '';
+                  }}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => geoJsonInputRef.current?.click()}
+                  disabled={importGeoJsonMutation.isPending}
+                >
+                  <Upload className="mr-2 h-4 w-4" /> {importGeoJsonMutation.isPending ? 'Importing…' : 'Import GeoJSON'}
+                </Button>
+              </>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {nearbySearchEnabled && <p className="text-sm text-muted-foreground">Select a point on the map to find records within 1 km.</p>}
+          <LandRecordSpatialMap
+            records={spatialQuery.data ?? []}
+            initialBounds={spatialExtentQuery.data ?? null}
+            onBoundsChange={setMapBounds}
+            onSelectRecord={setSelectedRecordId}
+            onMapClick={(latitude, longitude) => {
+              if (nearbySearchEnabled) setNearbyPoint({ latitude, longitude });
+            }}
+          />
+          {spatialQuery.isError && <Alert variant="destructive"><AlertTitle>Spatial records unavailable</AlertTitle><AlertDescription>{spatialQuery.error instanceof Error ? spatialQuery.error.message : 'Unable to load records for this map area.'}</AlertDescription></Alert>}
+          {spatialExtentQuery.isError && <Alert variant="destructive"><AlertTitle>Map extent unavailable</AlertTitle><AlertDescription>{spatialExtentQuery.error instanceof Error ? spatialExtentQuery.error.message : 'Unable to locate recorded spatial data.'}</AlertDescription></Alert>}
+          {!spatialQuery.isLoading && !spatialQuery.isError && !spatialQuery.data?.length && (
+            <p className="text-sm text-muted-foreground">Location unavailable for records in this map area. No persisted parcel geometry or coordinates were found for the current view.</p>
+          )}
+          {nearbyPoint && (
+            <div className="space-y-2 rounded-md border p-3" aria-live="polite">
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-sm font-medium">Nearby records within 1 km</h3>
+                <Button type="button" variant="ghost" size="sm" onClick={() => setNearbyPoint(null)}>Clear</Button>
+              </div>
+              {nearbyQuery.isLoading ? <Skeleton className="h-10 w-full" /> : nearbyQuery.isError ? (
+                <Alert variant="destructive"><AlertDescription>{nearbyQuery.error instanceof Error ? nearbyQuery.error.message : 'Nearby search failed.'}</AlertDescription></Alert>
+              ) : nearbyQuery.data?.length ? nearbyQuery.data.map((record) => (
+                <button key={record.id} type="button" className="flex w-full items-center justify-between gap-3 rounded-md border px-3 py-2 text-left text-sm hover:bg-muted" onClick={() => setSelectedRecordId(record.id)}>
+                  <span><span className="font-medium">{record.record_number}</span><span className="ml-2 text-muted-foreground">{record.survey_number}</span></span>
+                  <span className="text-muted-foreground">{Math.round(record.distance_meters)} m</span>
+                </button>
+              )) : <p className="text-sm text-muted-foreground">No records with spatial data were found within 1 km.</p>}
+            </div>
+          )}
         </CardContent>
       </Card>
 

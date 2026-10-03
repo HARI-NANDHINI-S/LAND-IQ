@@ -7,6 +7,7 @@ import { analyticsService, type AnalyticsDashboardData, type AnalyticsFilters, t
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -240,6 +241,14 @@ export default function AnalyticsPage() {
             </div>
           ) : (
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+              <label className="space-y-1 text-sm">
+                <span className="text-muted-foreground">Activity from</span>
+                <Input type="date" value={filters.created_from ?? ''} onChange={(event) => updateFilter('created_from', event.target.value || undefined)} aria-label="Analytics start date" />
+              </label>
+              <label className="space-y-1 text-sm">
+                <span className="text-muted-foreground">Activity to</span>
+                <Input type="date" value={filters.created_to ?? ''} onChange={(event) => updateFilter('created_to', event.target.value || undefined)} aria-label="Analytics end date" />
+              </label>
               <Select value={getSelectValue(filters.state_id)} onValueChange={(value) => updateFilter('state_id', value === 'all' ? undefined : value)}>
                 <SelectTrigger><SelectValue placeholder="State" /></SelectTrigger>
                 <SelectContent>

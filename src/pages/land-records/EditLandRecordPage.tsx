@@ -17,15 +17,16 @@ import {
   Select, SelectContent, SelectItem, 
   SelectTrigger, SelectValue 
 } from '@/components/ui/select';
+import { POSTGRES_UUID_PATTERN } from '@/utils/validation';
 
 const recordSchema = z.object({
   record_number: z.string().min(1, 'Record number is required'),
   survey_number: z.string().min(1, 'Survey number is required'),
   patta_number: z.string().optional(),
-  state_id: z.string().min(1, 'State is required').uuid('Invalid state'),
-  district_id: z.string().min(1, 'District is required').uuid('Invalid district'),
-  taluk_id: z.string().min(1, 'Taluk is required').uuid('Invalid taluk'),
-  village_id: z.string().min(1, 'Village is required').uuid('Invalid village'),
+  state_id: z.string().min(1, 'State is required').regex(POSTGRES_UUID_PATTERN, 'Invalid state'),
+  district_id: z.string().min(1, 'District is required').regex(POSTGRES_UUID_PATTERN, 'Invalid district'),
+  taluk_id: z.string().min(1, 'Taluk is required').regex(POSTGRES_UUID_PATTERN, 'Invalid taluk'),
+  village_id: z.string().min(1, 'Village is required').regex(POSTGRES_UUID_PATTERN, 'Invalid village'),
   land_area: z.number().min(0, 'Area must be positive').optional(),
   land_type: z.string().optional(),
 });

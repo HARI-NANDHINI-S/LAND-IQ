@@ -4,72 +4,53 @@
 
 @layer base {
   :root {
-    --background: 220 30% 97%;
-    --foreground: 220 26% 18%;
-
+    --background: 0 0% 97%;
+    --foreground: 0 0% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 220 26% 18%;
-
+    --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 26% 18%;
-
-    --primary: 145 35% 33%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 25 95% 50%;
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 210 18% 97%;
-    --secondary-foreground: 220 26% 18%;
-
-    --muted: 210 20% 96%;
-    --muted-foreground: 220 14% 42%;
-
-    --accent: 145 35% 33%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 12%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 37%;
+    --accent: 25 95% 50%;
     --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 72% 56%;
+    --destructive: 0 76% 52%;
     --destructive-foreground: 0 0% 100%;
-
-    --success: 146 58% 40%;
+    --success: 142 72% 40%;
     --success-foreground: 0 0% 100%;
-
     --warning: 38 92% 52%;
     --warning-foreground: 0 0% 10%;
-
-    --border: 210 20% 86%;
-    --input: 210 20% 90%;
-    --ring: 145 35% 33%;
-
-    --radius: 0.9rem;
-    --shadow-soft: 0 18px 40px -24px rgba(15, 23, 42, 0.28);
+    --border: 0 0% 86%;
+    --input: 0 0% 86%;
+    --ring: 25 95% 50%;
+    --radius: 0.85rem;
+    --shadow-soft: 0 18px 42px -26px rgba(15, 23, 42, 0.36);
   }
 
   .dark {
-    --background: 220 24% 10%;
-    --foreground: 210 20% 97%;
-
-    --card: 220 18% 13%;
-    --card-foreground: 210 20% 97%;
-
-    --popover: 220 18% 13%;
-    --popover-foreground: 210 20% 97%;
-
-    --primary: 145 52% 44%;
+    --background: 0 0% 7%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 11%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 25 96% 55%;
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 220 18% 18%;
-    --secondary-foreground: 210 20% 97%;
-
-    --muted: 220 15% 19%;
-    --muted-foreground: 210 12% 72%;
-
-    --accent: 145 52% 44%;
-    --accent-foreground: 210 20% 97%;
-
-    --destructive: 0 70% 53%;
-    --destructive-foreground: 210 20% 97%;
-
-    --border: 220 16% 22%;
-    --input: 220 16% 22%;
-    --ring: 145 52% 44%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 25 96% 55%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 0 0% 22%;
+    --input: 0 0% 18%;
+    --ring: 25 96% 55%;
   }
 }
 
@@ -84,11 +65,10 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif;
-    background-image:
-      radial-gradient(circle at top left, rgba(86, 163, 124, 0.12), transparent 28%),
-      radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 24%),
-      linear-gradient(180deg, rgba(255,255,255,0.65), rgba(248,250,252,0.96));
+    font-family: 'Manrope', 'Segoe UI', sans-serif;
+    background:
+      radial-gradient(circle at top, rgba(249, 115, 22, 0.08), transparent 25%),
+      linear-gradient(180deg, #f5f5f5 0%, #f8f8f8 100%);
     background-attachment: fixed;
     overflow-x: hidden;
   }
@@ -98,32 +78,31 @@
   }
 
   ::selection {
-    background: rgba(22, 163, 74, 0.18);
+    background: rgba(249, 115, 22, 0.2);
   }
 
   .dark body {
-    background-image:
-      radial-gradient(circle at top left, rgba(34, 110, 73, 0.2), transparent 30%),
-      radial-gradient(circle at top right, rgba(40, 97, 112, 0.12), transparent 25%),
-      linear-gradient(180deg, rgba(14, 24, 22, 0.98), rgba(15, 23, 28, 1));
+    background:
+      radial-gradient(circle at top, rgba(249, 115, 22, 0.12), transparent 26%),
+      linear-gradient(180deg, #0d0d0d 0%, #080808 100%);
   }
 }
 
 @layer components {
   .landiq-shell {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.86);
     backdrop-filter: blur(12px);
   }
 
   .landiq-content {
-    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(248,250,252,0.7));
+    background: rgba(248, 250, 252, 0.7);
     min-width: 0;
   }
 
   .landiq-main {
     background:
-      radial-gradient(circle at top, rgba(22, 163, 74, 0.08), transparent 25%),
-      linear-gradient(180deg, rgba(248,250,252,0.64), rgba(255,255,255,0.8));
+      linear-gradient(135deg, rgba(249, 115, 22, 0.04), transparent 38%),
+      linear-gradient(180deg, rgba(250, 250, 250, 0.94), rgba(255, 255, 255, 0.98));
     min-width: 0;
   }
 
@@ -132,26 +111,26 @@
   }
 
   .landiq-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.88), rgba(248,250,252,0.76));
-    border-color: rgba(119, 139, 128, 0.2);
-    box-shadow: 0 12px 30px -24px rgba(16, 36, 28, 0.42);
+    background: #ffffff;
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 12px 30px -24px rgba(15, 23, 42, 0.34);
     transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
   }
 
   .landiq-card:hover {
-    border-color: rgba(46, 125, 82, 0.3);
-    box-shadow: 0 18px 36px -26px rgba(16, 36, 28, 0.4);
+    border-color: rgba(249, 115, 22, 0.28);
+    box-shadow: 0 18px 36px -26px rgba(15, 23, 42, 0.42);
   }
 
   .dark .landiq-card {
-    background: linear-gradient(145deg, rgba(28, 43, 39, 0.94), rgba(23, 34, 36, 0.94));
-    border-color: rgba(148, 163, 184, 0.16);
-    box-shadow: 0 14px 34px -26px rgba(0, 0, 0, 0.8);
+    background: linear-gradient(145deg, #171717, #101010);
+    border-color: rgba(148, 163, 184, 0.18);
+    box-shadow: 0 14px 34px -26px rgba(0, 0, 0, 0.9);
   }
 
   .dark .landiq-card:hover {
-    border-color: rgba(74, 164, 112, 0.34);
-    box-shadow: 0 20px 42px -28px rgba(0, 0, 0, 0.9);
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: 0 18px 42px -28px rgba(0, 0, 0, 0.95);
   }
 
   .landiq-page {
@@ -160,34 +139,34 @@
   }
 
   .landiq-header {
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(10px);
-    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.06);
   }
 
   .dark .landiq-shell {
-    background: rgba(12, 21, 19, 0.76);
+    background: rgba(8, 8, 8, 0.96);
   }
 
   .dark .landiq-content {
-    background: linear-gradient(180deg, rgba(15, 28, 24, 0.28), rgba(13, 20, 23, 0.82));
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0.4), rgba(8, 8, 8, 0.94));
   }
 
   .dark .landiq-main {
     background:
-      radial-gradient(circle at top, rgba(47, 130, 82, 0.12), transparent 28%),
-      linear-gradient(180deg, rgba(16, 29, 25, 0.78), rgba(15, 23, 28, 0.92));
+      linear-gradient(135deg, rgba(249, 115, 22, 0.07), transparent 36%),
+      linear-gradient(180deg, rgba(18, 18, 18, 0.92), #080808);
   }
 
   .dark .landiq-header {
-    background: rgba(18, 29, 26, 0.82);
+    background: rgba(12, 12, 12, 0.94);
     box-shadow: 0 1px 0 rgba(148, 163, 184, 0.1);
   }
 
   .landiq-sidebar {
-    background: linear-gradient(180deg, rgba(11, 18, 32, 0.96), rgba(15, 23, 42, 0.94));
-    border-right: 1px solid rgba(148, 163, 184, 0.18);
-    box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
+    background: linear-gradient(180deg, #090909 0%, #17120f 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.02);
   }
 
   .landiq-nav-link {
@@ -199,7 +178,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(22, 163, 74, 0.12), transparent 80%);
+    background: linear-gradient(90deg, rgba(249, 115, 22, 0.18), transparent 80%);
     opacity: 0;
     transition: opacity 180ms ease;
   }
@@ -221,7 +200,7 @@
   .landiq-kicker {
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgb(22 163 74 / 0.8);
+    color: rgb(234 88 12 / 1);
     font-size: 0.68rem;
     font-weight: 700;
   }
@@ -237,22 +216,22 @@
 
   .landiq-panel:hover {
     transform: translateY(-1px);
-    border-color: rgba(34, 197, 94, 0.22);
+    border-color: rgba(194, 65, 12, 0.28);
     box-shadow: 0 18px 40px -26px rgba(15, 23, 42, 0.25);
   }
 
   .dark .landiq-panel,
   .dark .landiq-kpi-card {
-    background: linear-gradient(145deg, rgba(28, 43, 39, 0.94), rgba(23, 34, 36, 0.94));
+    background: linear-gradient(145deg, #171717, #101010);
     border-color: rgba(148, 163, 184, 0.16);
     box-shadow: 0 14px 34px -26px rgba(0, 0, 0, 0.8);
   }
 
   .landiq-kpi-card {
     position: relative;
-    background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(248,250,252,0.82));
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    box-shadow: 0 14px 24px -20px rgba(15, 23, 42, 0.28);
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 14px 24px -20px rgba(15, 23, 42, 0.3);
   }
 
   .landiq-kpi-card::before {
@@ -261,12 +240,12 @@
     inset: 0 auto auto 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, rgba(34, 197, 94, 0.5), rgba(59,130,246,0.4));
+    background: linear-gradient(90deg, rgba(249, 115, 22, 0.9), rgba(15, 23, 42, 0.7));
     opacity: 0.7;
   }
 
   .landiq-kpi-icon {
-    background: linear-gradient(135deg, rgba(147, 197, 253, 0.08), rgba(134,239,172,0.08));
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(255, 255, 255, 0.08));
   }
 
   .landiq-fade-up {
@@ -278,7 +257,7 @@
     overflow: hidden;
     border-radius: calc(var(--radius) + 0.35rem);
     border: 1px solid rgba(148, 163, 184, 0.22);
-    background: linear-gradient(135deg, rgba(10,18,31,0.94), rgba(24,42,62,0.96));
+    background: linear-gradient(135deg, rgba(10, 10, 10, 0.98), rgba(44, 22, 9, 0.96));
     box-shadow: var(--shadow-soft);
     animation: heroReveal 720ms ease both;
   }
@@ -287,8 +266,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
     background-size: 28px 28px;
     mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
     opacity: 0.6;
@@ -296,15 +275,7 @@
   }
 
   .landiq-hero__glow {
-    position: absolute;
-    inset: -40% auto auto -22%;
-    width: 18rem;
-    height: 18rem;
-    border-radius: 9999px;
-    background: radial-gradient(circle, rgba(48, 196, 142, 0.42), transparent 60%);
-    filter: blur(12px);
-    opacity: 0.8;
-    animation: pulse-soft 6s ease-in-out infinite;
+    display: none;
   }
 
   .landiq-hero__panel {
@@ -361,18 +332,18 @@
   .landiq-hero__visual svg {
     width: min(100%, 420px);
     height: auto;
-    filter: drop-shadow(0 18px 35px rgba(29, 78, 216, 0.2));
+    filter: drop-shadow(0 18px 35px rgba(234, 88, 12, 0.18));
   }
 
   .landiq-node__core {
-    fill: rgba(148, 255, 209, 0.18);
-    stroke: rgba(145, 247, 199, 0.96);
+    fill: rgba(249, 115, 22, 0.2);
+    stroke: rgba(251, 146, 60, 0.96);
     stroke-width: 1.2;
   }
 
   .landiq-node__halo {
-    fill: rgba(96, 165, 250, 0.08);
-    stroke: rgba(125, 211, 252, 0.25);
+    fill: rgba(249, 115, 22, 0.08);
+    stroke: rgba(249, 115, 22, 0.24);
     stroke-width: 1;
     animation: pulse-halo 4.5s ease-in-out infinite;
   }
@@ -394,7 +365,7 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, rgba(34, 197, 94, 0.9), rgba(59, 130, 246, 0.8));
+    background: linear-gradient(90deg, rgba(234, 88, 12, 0.94), rgba(17, 17, 17, 0.85));
     box-shadow: inset 0 0 12px rgba(255,255,255,0.2);
     transition: width 400ms ease;
   }
@@ -417,11 +388,11 @@
   }
 
   .landiq-risk-fill--medium {
-    background: linear-gradient(90deg, rgba(59, 130, 246, 0.9), rgba(96, 165, 250, 0.8));
+    background: linear-gradient(90deg, rgba(249, 115, 22, 0.9), rgba(194, 65, 12, 0.8));
   }
 
   .landiq-risk-fill--low {
-    background: linear-gradient(90deg, rgba(34, 197, 94, 0.9), rgba(20, 184, 166, 0.7));
+    background: linear-gradient(90deg, rgba(115, 115, 115, 0.9), rgba(38, 38, 38, 0.8));
   }
 
   .landiq-activity-item,
@@ -436,7 +407,7 @@
   .landiq-record-row:hover,
   .landiq-metric-box:hover {
     transform: translateX(2px);
-    border-color: rgba(59, 130, 246, 0.2);
+    border-color: rgba(194, 65, 12, 0.24);
   }
 
   .landiq-activity-dot {
@@ -444,8 +415,8 @@
     width: 0.62rem;
     height: 0.62rem;
     border-radius: 9999px;
-    background: #34d399;
-    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+    background: #f97316;
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.48);
     animation: statusPulse 2.8s ease-in-out infinite;
   }
 
@@ -476,7 +447,7 @@
 
   .landiq-quick-action:hover {
     transform: translateY(-1px);
-    border-color: rgba(34, 197, 94, 0.35);
+    border-color: rgba(194, 65, 12, 0.38);
     box-shadow: 0 10px 18px -18px rgba(15, 23, 42, 0.38);
   }
 
@@ -493,11 +464,11 @@
   }
 
   .landiq-main tbody tr:hover {
-    background-color: rgba(34, 95, 62, 0.045);
+    background-color: rgba(194, 65, 12, 0.045);
   }
 
   .dark .landiq-main tbody tr:hover {
-    background-color: rgba(87, 160, 112, 0.08);
+    background-color: rgba(249, 115, 22, 0.1);
   }
 }
 
@@ -533,9 +504,9 @@
 }
 
 @keyframes statusPulse {
-  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.54); }
-  70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.54); }
+  70% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

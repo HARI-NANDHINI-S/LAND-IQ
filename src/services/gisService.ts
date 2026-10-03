@@ -2,7 +2,6 @@ import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { landRecordService, type LandRecordFilters } from '@/services/land-records/landRecordService';
 import { toAppError } from '@/utils/errorHandler';
-import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
 
 export interface GISFilters extends LandRecordFilters {
   state_id?: string;
@@ -24,28 +23,90 @@ export interface GeographyHierarchy {
   villages: Array<Pick<Database['public']['Tables']['villages']['Row'], 'id' | 'taluk_id' | 'name' | 'code'>>;
 }
 
-const SUMMARY_BATCH_SIZE = 1000;
-
-function filteredRecordsQuery(filters: GISFilters) {
-  let query = supabase
-    .from('land_records')
-    .select('land_area, land_area_unit, verification_status, record_status, land_type')
-    .order('id');
-
-  if (filters.state_id) query = query.eq('state_id', filters.state_id);
-  if (filters.district_id) query = query.eq('district_id', filters.district_id);
-  if (filters.taluk_id) query = query.eq('taluk_id', filters.taluk_id);
-  if (filters.village_id) query = query.eq('village_id', filters.village_id);
-  if (filters.land_type?.trim()) query = query.ilike('land_type', filters.land_type.trim());
-  if (filters.verification_status) query = query.eq('verification_status', filters.verification_status);
-  if (filters.record_status) query = query.eq('record_status', filters.record_status);
-  if (filters.search?.trim()) {
-    query = query.or(buildIlikeOrFilter(['survey_number', 'patta_number', 'record_number'], filters.search));
-  }
-  return query;
+export interface SpatialBounds {
+  west: number;
+  south: number;
+  east: number;
+  north: number;
 }
 
+export interface SpatialLandRecord {
+  id: string;
+  record_number: string;
+  survey_number: string;
+  verification_status: string;
+  record_status: string;
+  risk_level: string | null;
+  has_duplicate: boolean;
+  is_watched: boolean;
+  geometry_geojson: Record<string, unknown> | null;
+  latitude: number | null;
+  longitude: number | null;
+}
+
+export interface NearbyLandRecord {
+  id: string;
+  record_number: string;
+  survey_number: string;
+  distance_meters: number;
+  geometry_geojson: Record<string, unknown> | null;
+}
+
+const SUMMARY_BATCH_SIZE = 1000;
+
 export const gisService = {
+  async getSpatialExtent(): Promise<SpatialBounds | null> {
+    const { data, error } = await supabase.rpc('get_spatial_land_record_extent');
+    if (error) throw toAppError(error);
+    const extent = data?.[0];
+    if (!extent) return null;
+    return {
+      west: extent.west,
+      south: extent.south,
+      east: extent.east,
+      north: extent.north,
+    };
+  },
+
+  async getSpatialLandRecords(bounds: SpatialBounds, filters: GISFilters = {}): Promise<SpatialLandRecord[]> {
+    const { data, error } = await supabase.rpc('get_spatial_land_records', {
+      p_west: bounds.west,
+      p_south: bounds.south,
+      p_east: bounds.east,
+      p_north: bounds.north,
+      p_state_id: filters.state_id ?? null,
+      p_district_id: filters.district_id ?? null,
+      p_taluk_id: filters.taluk_id ?? null,
+      p_village_id: filters.village_id ?? null,
+      p_land_type: filters.land_type ?? null,
+      p_verification_status: filters.verification_status ?? null,
+      p_record_status: filters.record_status ?? null,
+      p_search: filters.search?.trim() || null,
+      p_limit: 250,
+    });
+    if (error) throw toAppError(error);
+    return (data ?? []) as unknown as SpatialLandRecord[];
+  },
+
+  async getNearbyLandRecords(latitude: number, longitude: number, radiusMeters = 1000): Promise<NearbyLandRecord[]> {
+    const { data, error } = await supabase.rpc('get_nearby_land_records', {
+      p_latitude: latitude,
+      p_longitude: longitude,
+      p_radius_meters: radiusMeters,
+      p_limit: 100,
+    });
+    if (error) throw toAppError(error);
+    return (data ?? []) as unknown as NearbyLandRecord[];
+  },
+
+  async importParcelGeoJSON(featureCollection: unknown): Promise<number> {
+    const { data, error } = await supabase.rpc('import_land_record_geojson', {
+      p_feature_collection: featureCollection,
+    });
+    if (error) throw toAppError(error);
+    return data ?? 0;
+  },
+
   async getMapLandRecords(filters: GISFilters = {}) {
     return landRecordService.getLandRecords(filters);
   },
@@ -107,38 +168,46 @@ export const gisService = {
   },
 
   async getSummary(filters: GISFilters = {}): Promise<GISSummary> {
-    const summary: GISSummary = {
-      totalRecords: 0,
-      totalAreaByUnit: {},
-      verificationStatuses: {},
-      recordStatuses: {},
-      landTypes: {},
-    };
-
-    for (let offset = 0; ; offset += SUMMARY_BATCH_SIZE) {
-      const { data, error } = await filteredRecordsQuery(filters).range(offset, offset + SUMMARY_BATCH_SIZE - 1);
-      if (error) throw toAppError(error);
-      const rows = data ?? [];
-      summary.totalRecords += rows.length;
-
-      for (const row of rows) {
-        const verificationStatus = row.verification_status || 'UNKNOWN';
-        const recordStatus = row.record_status || 'UNKNOWN';
-        const landType = row.land_type || 'Unspecified';
-        summary.verificationStatuses[verificationStatus] = (summary.verificationStatuses[verificationStatus] ?? 0) + 1;
-        summary.recordStatuses[recordStatus] = (summary.recordStatuses[recordStatus] ?? 0) + 1;
-        summary.landTypes[landType] = (summary.landTypes[landType] ?? 0) + 1;
-
-        if (row.land_area != null) {
-          const unit = row.land_area_unit || 'Unspecified unit';
-          summary.totalAreaByUnit[unit] = (summary.totalAreaByUnit[unit] ?? 0) + Number(row.land_area);
-        }
-      }
-
-      if (rows.length < SUMMARY_BATCH_SIZE) break;
+    const { data, error } = await supabase.rpc('get_gis_land_record_summary', {
+      p_state_id: filters.state_id ?? null,
+      p_district_id: filters.district_id ?? null,
+      p_taluk_id: filters.taluk_id ?? null,
+      p_village_id: filters.village_id ?? null,
+      p_verification_status: filters.verification_status ?? null,
+      p_record_status: filters.record_status ?? null,
+      p_land_type: filters.land_type?.trim() || null,
+      p_search: filters.search?.trim() || null,
+    });
+    if (error) throw toAppError(error);
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+      throw new Error('GIS summary aggregation returned an invalid response.');
     }
 
-    return summary;
+    const result = data as Record<string, unknown>;
+    const readCounts = (value: unknown): Record<string, number> => {
+      if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        throw new Error('GIS summary aggregation returned invalid grouped counts.');
+      }
+      const counts = Object.entries(value).map(([key, count]) => {
+        if (typeof count !== 'number' || !Number.isFinite(count)) {
+          throw new Error('GIS summary aggregation returned a non-numeric count.');
+        }
+        return [key, count] as const;
+      });
+      return Object.fromEntries(counts);
+    };
+
+    if (typeof result.totalRecords !== 'number' || !Number.isFinite(result.totalRecords)) {
+      throw new Error('GIS summary aggregation returned an invalid total.');
+    }
+
+    return {
+      totalRecords: result.totalRecords,
+      totalAreaByUnit: readCounts(result.totalAreaByUnit),
+      verificationStatuses: readCounts(result.verificationStatuses),
+      recordStatuses: readCounts(result.recordStatuses),
+      landTypes: readCounts(result.landTypes),
+    };
   },
 
   async getRecordContext(landRecordId: string) {

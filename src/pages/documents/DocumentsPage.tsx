@@ -51,7 +51,7 @@ const PAGE_SIZE = 10;
 
 export default function DocumentsPage() {
   const navigate = useNavigate();
-  const { hasPermission, user } = useAuth();
+  const { hasPermission } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
@@ -136,7 +136,6 @@ export default function DocumentsPage() {
   const uploadMutation = useMutation({
     mutationFn: async () => {
       if (!selectedFile) throw new Error('Please choose a file to upload.');
-      if (!user?.id) throw new Error('You must be signed in to upload documents.');
       if (!documentForm.land_record_id && !documentForm.district_id) {
         throw new Error('Select a land record or district before uploading.');
       }
@@ -152,7 +151,6 @@ export default function DocumentsPage() {
         village_id: villageIdForUpload,
         land_record_id: documentForm.land_record_id || null,
         document_type: documentForm.document_type,
-        uploaded_by: user.id,
       });
     },
     onSuccess: (document) => {
@@ -166,6 +164,21 @@ export default function DocumentsPage() {
       setSelectedFile(null);
       setUploadError(null);
       setDocumentForm({ land_record_id: '', document_type: 'PATTA', district_id: '' });
+      if (hasPermission('document:process')) {
+        void documentService.processDocument(document.id)
+          .then(() => {
+            void queryClient.invalidateQueries({ queryKey: ['documents'] });
+            void queryClient.invalidateQueries({ queryKey: ['document', document.id] });
+            void queryClient.invalidateQueries({ queryKey: ['document-pages', document.id] });
+            void queryClient.invalidateQueries({ queryKey: ['document-extracted-fields', document.id] });
+          })
+          .catch((error: unknown) => {
+            const message = error instanceof Error ? error.message : 'OCR provider processing failed.';
+            setDocumentActionError(`The document was uploaded, but OCR did not complete: ${message}`);
+            void queryClient.invalidateQueries({ queryKey: ['documents'] });
+            void queryClient.invalidateQueries({ queryKey: ['document', document.id] });
+          });
+      }
     },
     onError: (error: Error) => {
       setUploadError(error.message);
@@ -356,7 +369,7 @@ export default function DocumentsPage() {
                 <SelectContent>
                   <SelectItem value="all">All processing</SelectItem>
                   <SelectItem value="PENDING">Pending</SelectItem>
-                  <SelectItem value="PROCESSING">Processing</SelectItem>
+                  <SelectItem value="OCR_PROCESSING">Processing</SelectItem>
                   <SelectItem value="COMPLETED">Completed</SelectItem>
                   <SelectItem value="FAILED">Failed</SelectItem>
                 </SelectContent>

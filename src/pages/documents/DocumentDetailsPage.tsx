@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   AlertCircle,
   ArrowLeft,
@@ -10,24 +11,64 @@ import {
   ShieldCheck,
   Calendar,
   User,
+  ScanText,
 } from 'lucide-react';
 import { documentService } from '@/services/documents/documentService';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function DocumentDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { hasPermission } = useAuth();
 
   const { data: document, isLoading, isError, error } = useQuery({
     queryKey: ['document', id],
     queryFn: () => documentService.getDocument(id!),
     enabled: !!id,
+  });
+
+  const pagesQuery = useQuery({
+    queryKey: ['document-pages', id],
+    queryFn: () => documentService.getDocumentPages(id!),
+    enabled: !!id,
+  });
+  const extractedFieldsQuery = useQuery({
+    queryKey: ['document-extracted-fields', id],
+    queryFn: () => documentService.getExtractedFields(id!),
+    enabled: !!id,
+  });
+  const processMutation = useMutation({
+    mutationFn: () => documentService.processDocument(id!),
+    onSuccess: (result) => {
+      queryClient.invalidateQueries({ queryKey: ['document', id] });
+      queryClient.invalidateQueries({ queryKey: ['document-pages', id] });
+      queryClient.invalidateQueries({ queryKey: ['document-extracted-fields', id] });
+      queryClient.invalidateQueries({ queryKey: ['verification-tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['analytics-dashboard'] });
+      setProcessFeedback(`Processed ${result.processed_pages} pages with ${result.provider}.`);
+    },
+    onError: (processError: Error) => setProcessFeedback(processError.message),
+  });
+  const [processFeedback, setProcessFeedback] = useState<string | null>(null);
+  const [downloadFeedback, setDownloadFeedback] = useState<string | null>(null);
+  const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
+  const [verificationFeedback, setVerificationFeedback] = useState<string | null>(null);
+  const canVerifyFields = hasPermission('verification:review') || hasPermission('verification:approve');
+  const verifyFieldMutation = useMutation({
+    mutationFn: ({ fieldId, value }: { fieldId: string; value: string }) => documentService.verifyExtractedField(fieldId, value),
+    onSuccess: () => {
+      setVerificationFeedback('Verified field saved.');
+      void queryClient.invalidateQueries({ queryKey: ['document-extracted-fields', id] });
+      void queryClient.invalidateQueries({ queryKey: ['verification-task'] });
+    },
+    onError: (verifyError: Error) => setVerificationFeedback(verifyError.message),
   });
 
   const getStatusBadge = (status: string | null | undefined) => {
@@ -55,8 +96,13 @@ export default function DocumentDetailsPage() {
 
   const handleDownload = async () => {
     if (!document?.storage_path) return;
-    const signedUrl = await documentService.getSignedUrl(document.storage_path);
-    window.open(signedUrl, '_blank', 'noopener,noreferrer');
+    setDownloadFeedback(null);
+    try {
+      const signedUrl = await documentService.getSignedUrl(document.storage_path);
+      window.open(signedUrl, '_blank', 'noopener,noreferrer');
+    } catch (downloadError) {
+      setDownloadFeedback(downloadError instanceof Error ? downloadError.message : 'Unable to download document.');
+    }
   };
 
   if (isLoading) {
@@ -104,6 +150,19 @@ export default function DocumentDetailsPage() {
         </div>
 
         <div className="flex items-center gap-2">
+          {hasPermission('document:process') && ['PENDING', 'FAILED'].includes(document.processing_status) && (
+            <Button
+              variant="outline"
+              onClick={() => {
+                setProcessFeedback(null);
+                processMutation.mutate();
+              }}
+              disabled={processMutation.isPending}
+            >
+              <ScanText className="mr-2 h-4 w-4" />
+              {processMutation.isPending ? 'Processing…' : document.processing_status === 'FAILED' ? 'Retry OCR' : 'Process OCR'}
+            </Button>
+          )}
           {hasPermission('document:download') && (
             <Button onClick={handleDownload}>
               <Download className="mr-2 h-4 w-4" /> Download
@@ -111,6 +170,27 @@ export default function DocumentDetailsPage() {
           )}
         </div>
       </div>
+
+      {processFeedback && (
+        <Alert variant={processMutation.isError ? 'destructive' : 'default'}>
+          <AlertTitle>{processMutation.isError ? 'Document processing failed' : 'Document processing'}</AlertTitle>
+          <AlertDescription>{processFeedback}</AlertDescription>
+        </Alert>
+      )}
+
+      {document.processing_error && (
+        <Alert variant="destructive">
+          <AlertTitle>Processing needs attention</AlertTitle>
+          <AlertDescription>{document.processing_error}</AlertDescription>
+        </Alert>
+      )}
+
+      {downloadFeedback && (
+        <Alert variant="destructive">
+          <AlertTitle>Download failed</AlertTitle>
+          <AlertDescription>{downloadFeedback}</AlertDescription>
+        </Alert>
+      )}
 
       {document.verification_status === 'REJECTED' && (
         <Alert variant="destructive">
@@ -209,6 +289,48 @@ export default function DocumentDetailsPage() {
             </div>
             <div className="font-medium">{document.document_year || 'Not set'}</div>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2"><ScanText className="h-4 w-4" /> OCR pages and extracted fields</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {pagesQuery.isLoading || extractedFieldsQuery.isLoading ? <Skeleton className="h-24 w-full" /> : null}
+          {(pagesQuery.isError || extractedFieldsQuery.isError) && (
+            <Alert variant="destructive"><AlertTitle>OCR data unavailable</AlertTitle><AlertDescription>{pagesQuery.error instanceof Error ? pagesQuery.error.message : extractedFieldsQuery.error instanceof Error ? extractedFieldsQuery.error.message : 'Unable to load OCR output.'}</AlertDescription></Alert>
+          )}
+
+          {verificationFeedback && (
+            <Alert variant={verifyFieldMutation.isError ? 'destructive' : 'default'}>
+              <AlertTitle>{verifyFieldMutation.isError ? 'Field verification failed' : 'Field verification'}</AlertTitle>
+              <AlertDescription>{verificationFeedback}</AlertDescription>
+            </Alert>
+          )}
+          {!pagesQuery.isLoading && !pagesQuery.isError && !pagesQuery.data?.length && (
+            <p className="text-sm text-muted-foreground">No OCR pages have been produced. Processing requires a configured provider; no sample extraction is shown.</p>
+          )}
+          {pagesQuery.data?.map((page) => (
+            <details key={page.id} className="rounded-md border p-3" open={pagesQuery.data?.length === 1}>
+              <summary className="cursor-pointer text-sm font-medium">Page {page.page_number} · {page.ocr_status || 'PENDING'} · {page.extraction_provider || 'Provider unavailable'}</summary>
+              <pre className="mt-3 max-h-72 overflow-auto whitespace-pre-wrap break-words text-xs">{page.extracted_text || page.processing_error || 'No page text is stored.'}</pre>
+            </details>
+          ))}
+          {extractedFieldsQuery.data?.length ? (
+            <div className="overflow-x-auto rounded-md border">
+              <table className="w-full min-w-[640px] text-sm">
+                <thead><tr className="border-b text-left"><th className="p-2">Field</th><th className="p-2">Extracted / verified value</th><th className="p-2">Confidence</th><th className="p-2">Verification</th>{canVerifyFields && <th className="p-2">Action</th>}</tr></thead>
+                <tbody>{extractedFieldsQuery.data.map((field) => <tr key={field.id} className="border-b last:border-0">
+                  <td className="p-2 font-medium">{field.field_name}</td>
+                  <td className="p-2">{canVerifyFields ? <Input aria-label={`Verified value for ${field.field_name}`} value={fieldValues[field.id] ?? field.verified_value ?? field.field_value ?? ''} onChange={(event) => setFieldValues((current) => ({ ...current, [field.id]: event.target.value }))} /> : field.verified_value ?? field.field_value ?? '—'}</td>
+                  <td className="p-2">{field.confidence_score == null ? '—' : `${field.confidence_score}%`}</td>
+                  <td className="p-2">{field.validation_status || 'PENDING'}</td>
+                  {canVerifyFields && <td className="p-2"><Button type="button" size="sm" variant="outline" disabled={verifyFieldMutation.isPending} onClick={() => { setVerificationFeedback(null); verifyFieldMutation.mutate({ fieldId: field.id, value: fieldValues[field.id] ?? field.verified_value ?? field.field_value ?? '' }); }}>Verify</Button></td>}
+                </tr>)}</tbody>
+              </table>
+            </div>
+          ) : null}
         </CardContent>
       </Card>
     </div>

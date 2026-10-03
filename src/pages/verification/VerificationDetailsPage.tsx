@@ -25,7 +25,7 @@ export default function VerificationDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { hasPermission, user } = useAuth();
+  const { hasPermission } = useAuth();
   const [rejectReason, setRejectReason] = useState('');
   const [isRejectOpen, setIsRejectOpen] = useState(false);
 
@@ -37,8 +37,7 @@ export default function VerificationDetailsPage() {
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ status, comment }: { status: string; comment?: string }) => {
-      if (!user?.id) throw new Error('User session is missing.');
-      return verificationService.updateTaskStatus(id!, status, user.id, user.role?.code ?? 'VIEWER', comment);
+      return verificationService.updateTaskStatus(id!, status, comment);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['verification-task', id] });

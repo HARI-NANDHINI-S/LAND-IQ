@@ -1,7 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
-import { auditService } from '@/services/audit/auditService';
 import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
 
 export type RecordChange = Database['public']['Tables']['record_changes']['Row'];
@@ -27,9 +26,18 @@ export interface WatchlistFilters {
   pageSize?: number;
 }
 
-const MANAGEMENT_ROLES = new Set(['SUPER_ADMIN', 'STATE_ADMIN', 'DISTRICT_OFFICER']);
-
 export const monitoringService = {
+  async getActiveAlerts(pageSize = 8) {
+    const { data, error, count } = await supabase
+      .from('alerts')
+      .select('*, land_records(id,record_number,survey_number)', { count: 'exact' })
+      .neq('status', 'RESOLVED')
+      .order('created_at', { ascending: false })
+      .range(0, pageSize - 1);
+    if (error) throw toAppError(error);
+    return { data: (data ?? []) as AlertListItem[], total: count ?? 0 };
+  },
+
   async getRecordChanges(filters: { land_record_id?: string; priority?: string; limit?: number } = {}) {
     let query = supabase
       .from('record_changes')
@@ -134,56 +142,21 @@ export const monitoringService = {
     };
   },
 
-  async acknowledgeAlert(alertId: string, actorId: string, actorRole: string) {
-    if (!MANAGEMENT_ROLES.has(actorRole)) throw new Error('Your role cannot manage alerts.');
-    const { data: current, error: currentError } = await supabase.from('alerts').select('status').eq('id', alertId).single();
-    if (currentError) throw toAppError(currentError);
-    if (current.status === 'RESOLVED') throw new Error('A resolved alert cannot be acknowledged.');
-
-    const acknowledgedAt = new Date().toISOString();
-    const { data, error } = await supabase
-      .from('alerts')
-      .update({ status: 'ACKNOWLEDGED', acknowledged_at: acknowledgedAt, updated_at: acknowledgedAt } as any)
-      .eq('id', alertId)
-      .select()
-      .single();
-    if (error) throw toAppError(error);
-
-    await auditService.log({
-      actor_id: actorId,
-      actor_role: actorRole,
-      action: 'alert_acknowledged',
-      entity_type: 'alerts',
-      entity_id: alertId,
-      before_state: { status: current.status },
-      after_state: { status: data.status },
+  async acknowledgeAlert(alertId: string) {
+    const { data, error } = await supabase.rpc('update_alert_status', {
+      p_alert_id: alertId,
+      p_status: 'ACKNOWLEDGED',
     });
+    if (error) throw toAppError(error);
     return data as Alert;
   },
 
-  async resolveAlert(alertId: string, actorId: string, actorRole: string) {
-    if (!MANAGEMENT_ROLES.has(actorRole)) throw new Error('Your role cannot manage alerts.');
-    const { data: current, error: currentError } = await supabase.from('alerts').select('status').eq('id', alertId).single();
-    if (currentError) throw toAppError(currentError);
-
-    const resolvedAt = new Date().toISOString();
-    const { data, error } = await supabase
-      .from('alerts')
-      .update({ status: 'RESOLVED', resolved_at: resolvedAt, updated_at: resolvedAt } as any)
-      .eq('id', alertId)
-      .select()
-      .single();
-    if (error) throw toAppError(error);
-
-    await auditService.log({
-      actor_id: actorId,
-      actor_role: actorRole,
-      action: 'alert_resolved',
-      entity_type: 'alerts',
-      entity_id: alertId,
-      before_state: { status: current.status },
-      after_state: { status: data.status },
+  async resolveAlert(alertId: string) {
+    const { data, error } = await supabase.rpc('update_alert_status', {
+      p_alert_id: alertId,
+      p_status: 'RESOLVED',
     });
+    if (error) throw toAppError(error);
     return data as Alert;
   },
 
@@ -235,29 +208,20 @@ export const monitoringService = {
     };
   },
 
-  async createWatchlist(entry: Database['public']['Tables']['watchlists']['Insert'], actorRole: string) {
-    if (!MANAGEMENT_ROLES.has(actorRole) && actorRole !== 'DATA_ENTRY_OFFICER' && actorRole !== 'VERIFICATION_OFFICER' && actorRole !== 'VIEWER') {
-      throw new Error('Your role cannot manage watchlists.');
-    }
-    const { data, error } = await supabase.from('watchlists').insert(entry).select().single();
+  async createWatchlist(entry: Omit<Database['public']['Tables']['watchlists']['Insert'], 'user_id'>) {
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError) throw toAppError(authError);
+    if (!authData.user) throw new Error('Sign in to create a watchlist entry.');
+
+    const { data, error } = await supabase.from('watchlists').insert({
+      ...entry,
+      user_id: authData.user.id,
+    }).select().single();
     if (error) throw toAppError(error);
-
-    await auditService.log({
-      actor_id: entry.user_id,
-      actor_role: actorRole,
-      action: 'watchlist_created',
-      entity_type: 'watchlists',
-      entity_id: data.id,
-      after_state: { land_record_id: entry.land_record_id, reason: entry.reason ?? null },
-      status: 'SUCCESS',
-    });
-
     return data as WatchlistEntry;
   },
 
-  async updateWatchlist(watchlistId: string, updates: Database['public']['Tables']['watchlists']['Update'], actorId?: string, actorRole?: string) {
-    const { data: beforeData } = await supabase.from('watchlists').select('status, reason').eq('id', watchlistId).single();
-
+  async updateWatchlist(watchlistId: string, updates: Database['public']['Tables']['watchlists']['Update']) {
     const { data, error } = await supabase
       .from('watchlists')
       .update({ ...updates, updated_at: new Date().toISOString() } as any)
@@ -265,41 +229,12 @@ export const monitoringService = {
       .select()
       .single();
     if (error) throw toAppError(error);
-
-    if (actorId && actorRole) {
-      await auditService.log({
-        actor_id: actorId,
-        actor_role: actorRole,
-        action: 'watchlist_updated',
-        entity_type: 'watchlists',
-        entity_id: watchlistId,
-        before_state: beforeData,
-        after_state: updates as any,
-        status: 'SUCCESS',
-      });
-    }
-
     return data as WatchlistEntry;
   },
 
-  async deleteWatchlist(watchlistId: string, actorId?: string, actorRole?: string) {
-    const { data: beforeData } = await supabase.from('watchlists').select('*').eq('id', watchlistId).single();
-
+  async deleteWatchlist(watchlistId: string) {
     const { data, error } = await supabase.from('watchlists').delete().eq('id', watchlistId).select().single();
     if (error) throw toAppError(error);
-
-    if (actorId && actorRole) {
-      await auditService.log({
-        actor_id: actorId,
-        actor_role: actorRole,
-        action: 'watchlist_deleted',
-        entity_type: 'watchlists',
-        entity_id: watchlistId,
-        before_state: beforeData,
-        status: 'SUCCESS',
-      });
-    }
-
     return data as WatchlistEntry;
   },
 };

@@ -4,6 +4,7 @@ import LoginPage from './pages/auth/LoginPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import AppShell from './components/layout/AppShell';
 import { useAuth } from './hooks/auth/useAuth';
+import AuthProvider from './providers/AuthProvider';
 
 // Land Records Module Pages
 import LandRecordsPage from './pages/land-records/LandRecordsPage';
@@ -38,13 +39,18 @@ const queryClient = new QueryClient({
 });
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading, error } = useAuth();
+  const { user, loading, error, phase } = useAuth();
   if (loading) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          <p className="text-sm text-muted-foreground">Loading application...</p>
+          <p className="text-sm text-muted-foreground">
+            {phase === 'loading_profile' && 'Loading your account profile...'}
+            {phase === 'loading_role' && 'Loading your assigned role...'}
+            {phase === 'loading_permissions' && 'Loading your access permissions...'}
+            {phase === 'authenticating' && 'Checking your session...'}
+          </p>
         </div>
       </div>
     );
@@ -58,11 +64,45 @@ function RiskIntelligenceDetailsRedirect() {
   return <Navigate to={id ? `/risk/${id}` : '/risk'} replace />;
 }
 
+function PermissionRoute({
+  permission,
+  role,
+  children,
+}: {
+  permission: string;
+  role?: string;
+  children: React.ReactNode;
+}) {
+  const { hasPermission, loading, user } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex h-full min-h-[40vh] items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (!hasPermission(permission) || (role && user?.role.code !== role)) {
+    return (
+      <div role="alert" className="flex h-full min-h-[40vh] items-center justify-center p-6">
+        <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-6 text-center">
+          <h1 className="font-semibold text-destructive">Access denied</h1>
+          <p className="mt-2 text-sm text-muted-foreground">You do not have permission to view this page.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return <>{children}</>;
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
           <Route path="/login" element={<LoginPage />} />
           
           <Route path="/" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
@@ -71,44 +111,44 @@ export default function App() {
             
             {/* Land Records Module */}
             <Route path="land-records">
-              <Route index element={<LandRecordsPage />} />
-              <Route path="new" element={<CreateLandRecordPage />} />
-              <Route path=":id" element={<LandRecordDetailsPage />} />
-              <Route path=":id/edit" element={<EditLandRecordPage />} />
+              <Route index element={<PermissionRoute permission="land_record:read"><LandRecordsPage /></PermissionRoute>} />
+              <Route path="new" element={<PermissionRoute permission="land_record:create"><CreateLandRecordPage /></PermissionRoute>} />
+              <Route path=":id" element={<PermissionRoute permission="land_record:read"><LandRecordDetailsPage /></PermissionRoute>} />
+              <Route path=":id/edit" element={<PermissionRoute permission="land_record:update"><EditLandRecordPage /></PermissionRoute>} />
             </Route>
 
             <Route path="documents">
-              <Route index element={<DocumentsPage />} />
-              <Route path=":id" element={<DocumentDetailsPage />} />
+              <Route index element={<PermissionRoute permission="document:read"><DocumentsPage /></PermissionRoute>} />
+              <Route path=":id" element={<PermissionRoute permission="document:read"><DocumentDetailsPage /></PermissionRoute>} />
             </Route>
             <Route path="verification">
-              <Route index element={<VerificationPage />} />
-              <Route path=":id" element={<VerificationDetailsPage />} />
+              <Route index element={<PermissionRoute permission="verification:read"><VerificationPage /></PermissionRoute>} />
+              <Route path=":id" element={<PermissionRoute permission="verification:read"><VerificationDetailsPage /></PermissionRoute>} />
             </Route>
             <Route path="duplicates">
-              <Route index element={<DuplicatesPage />} />
-              <Route path=":id" element={<DuplicateDetailsPage />} />
+              <Route index element={<PermissionRoute permission="duplicate:read"><DuplicatesPage /></PermissionRoute>} />
+              <Route path=":id" element={<PermissionRoute permission="duplicate:read"><DuplicateDetailsPage /></PermissionRoute>} />
             </Route>
             <Route path="risk">
-              <Route index element={<RiskIntelligencePage />} />
-              <Route path=":id" element={<RiskDetailsPage />} />
+              <Route index element={<PermissionRoute permission="risk:read"><RiskIntelligencePage /></PermissionRoute>} />
+              <Route path=":id" element={<PermissionRoute permission="risk:read"><RiskDetailsPage /></PermissionRoute>} />
             </Route>
             <Route path="risk-intelligence" element={<Navigate to="/risk" replace />} />
             <Route path="risk-intelligence/:id" element={<RiskIntelligenceDetailsRedirect />} />
             <Route path="monitoring">
-              <Route index element={<MonitoringPage />} />
-              <Route path="alerts/:id" element={<AlertDetailsPage />} />
-              <Route path="watchlists" element={<WatchlistsPage />} />
-              <Route path="watchlists/:id" element={<WatchlistDetailsPage />} />
+              <Route index element={<PermissionRoute permission="monitoring:read"><MonitoringPage /></PermissionRoute>} />
+              <Route path="alerts/:id" element={<PermissionRoute permission="monitoring:read"><AlertDetailsPage /></PermissionRoute>} />
+              <Route path="watchlists" element={<PermissionRoute permission="watchlist:read"><WatchlistsPage /></PermissionRoute>} />
+              <Route path="watchlists/:id" element={<PermissionRoute permission="watchlist:read"><WatchlistDetailsPage /></PermissionRoute>} />
             </Route>
-            <Route path="notifications" element={<NotificationsPage />} />
-            <Route path="gis" element={<GISMappingPage />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="audit-logs" element={<AuditLogsPage />} />
-            <Route path="users" element={<UsersPage />} />
-            <Route path="assistant" element={<BhoomiVoicePage />} />
-            <Route path="bhoomi-voice" element={<BhoomiVoicePage />} />
-            <Route path="settings" element={<SettingsPage />} />
+            <Route path="notifications" element={<PermissionRoute permission="monitoring:read"><NotificationsPage /></PermissionRoute>} />
+            <Route path="gis" element={<PermissionRoute permission="land_record:read"><GISMappingPage /></PermissionRoute>} />
+            <Route path="analytics" element={<PermissionRoute permission="analytics:read"><AnalyticsPage /></PermissionRoute>} />
+            <Route path="audit-logs" element={<PermissionRoute permission="audit:read"><AuditLogsPage /></PermissionRoute>} />
+            <Route path="users" element={<PermissionRoute permission="user:read" role="SUPER_ADMIN"><UsersPage /></PermissionRoute>} />
+            <Route path="assistant" element={<PermissionRoute permission="assistant:use"><BhoomiVoicePage /></PermissionRoute>} />
+            <Route path="bhoomi-voice" element={<PermissionRoute permission="assistant:use"><BhoomiVoicePage /></PermissionRoute>} />
+            <Route path="settings" element={<PermissionRoute permission="settings:manage"><SettingsPage /></PermissionRoute>} />
             
             <Route path="*" element={
               <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
@@ -117,8 +157,9 @@ export default function App() {
               </div>
             } />
           </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

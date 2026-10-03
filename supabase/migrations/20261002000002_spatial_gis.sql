@@ -1,0 +1,267 @@
+CREATE SCHEMA IF NOT EXISTS extensions;
+CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA extensions;
+
+DO $$
+DECLARE
+    v_extension_schema TEXT;
+BEGIN
+    SELECT namespace.nspname INTO v_extension_schema
+    FROM pg_catalog.pg_extension extension
+    JOIN pg_catalog.pg_namespace namespace ON namespace.oid = extension.extnamespace
+    WHERE extension.extname = 'postgis';
+    IF v_extension_schema IS DISTINCT FROM 'extensions' THEN
+        ALTER EXTENSION postgis SET SCHEMA extensions;
+    END IF;
+END;
+$$;
+
+ALTER TABLE public.land_records
+    ADD COLUMN IF NOT EXISTS latitude DOUBLE PRECISION,
+    ADD COLUMN IF NOT EXISTS longitude DOUBLE PRECISION,
+    ADD COLUMN IF NOT EXISTS parcel_geometry extensions.geometry(Geometry, 4326);
+
+ALTER TABLE public.land_records
+    ADD COLUMN IF NOT EXISTS point_geometry extensions.geometry(Point, 4326)
+        GENERATED ALWAYS AS (
+            CASE
+                WHEN latitude IS NOT NULL AND longitude IS NOT NULL
+                THEN extensions.ST_SetSRID(extensions.ST_MakePoint(longitude, latitude), 4326)
+                ELSE NULL
+            END
+        ) STORED;
+
+ALTER TABLE public.land_records
+    ADD COLUMN IF NOT EXISTS parcel_geography extensions.geography(Geometry, 4326)
+        GENERATED ALWAYS AS (parcel_geometry::extensions.geography) STORED,
+    ADD COLUMN IF NOT EXISTS point_geography extensions.geography(Point, 4326)
+        GENERATED ALWAYS AS (CASE WHEN latitude IS NOT NULL AND longitude IS NOT NULL THEN extensions.ST_SetSRID(extensions.ST_MakePoint(longitude, latitude), 4326)::extensions.geography ELSE NULL END) STORED;
+
+ALTER TABLE public.land_records
+    ADD CONSTRAINT land_records_latitude_range_check
+        CHECK (latitude IS NULL OR latitude BETWEEN -90 AND 90),
+    ADD CONSTRAINT land_records_longitude_range_check
+        CHECK (longitude IS NULL OR longitude BETWEEN -180 AND 180),
+    ADD CONSTRAINT land_records_coordinate_pair_check
+        CHECK ((latitude IS NULL) = (longitude IS NULL));
+
+CREATE INDEX IF NOT EXISTS land_records_parcel_geometry_gix
+    ON public.land_records USING GIST (parcel_geometry);
+CREATE INDEX IF NOT EXISTS land_records_point_geometry_gix
+    ON public.land_records USING GIST (point_geometry);
+CREATE INDEX IF NOT EXISTS land_records_parcel_geography_gix
+    ON public.land_records USING GIST (parcel_geography);
+CREATE INDEX IF NOT EXISTS land_records_point_geography_gix
+    ON public.land_records USING GIST (point_geography);
+
+INSERT INTO public.permissions (code, description)
+VALUES ('gis:import', 'Import authorized parcel geometry within the user geographic scope.')
+ON CONFLICT (code) DO NOTHING;
+
+INSERT INTO public.role_permissions (role_id, permission_id)
+SELECT role.id, permission.id
+FROM public.roles role
+CROSS JOIN public.permissions permission
+WHERE role.code IN ('SUPER_ADMIN', 'STATE_ADMIN', 'DISTRICT_OFFICER')
+  AND permission.code = 'gis:import'
+ON CONFLICT (role_id, permission_id) DO NOTHING;
+
+CREATE OR REPLACE FUNCTION public.get_spatial_land_records(
+    p_west DOUBLE PRECISION,
+    p_south DOUBLE PRECISION,
+    p_east DOUBLE PRECISION,
+    p_north DOUBLE PRECISION,
+    p_state_id UUID DEFAULT NULL,
+    p_district_id UUID DEFAULT NULL,
+    p_taluk_id UUID DEFAULT NULL,
+    p_village_id UUID DEFAULT NULL,
+    p_land_type TEXT DEFAULT NULL,
+    p_verification_status TEXT DEFAULT NULL,
+    p_record_status TEXT DEFAULT NULL,
+    p_search TEXT DEFAULT NULL,
+    p_limit INTEGER DEFAULT 250
+)
+RETURNS TABLE (
+    id UUID,
+    record_number TEXT,
+    survey_number TEXT,
+    verification_status TEXT,
+    record_status TEXT,
+    risk_level TEXT,
+    has_duplicate BOOLEAN,
+    is_watched BOOLEAN,
+    geometry_geojson JSONB,
+    latitude DOUBLE PRECISION,
+    longitude DOUBLE PRECISION
+)
+LANGUAGE plpgsql
+STABLE
+SECURITY INVOKER
+SET search_path = public, extensions, pg_temp
+AS $$
+DECLARE
+    v_bounds extensions.geometry;
+BEGIN
+    IF p_west IS NULL OR p_south IS NULL OR p_east IS NULL OR p_north IS NULL
+       OR p_west < -180 OR p_east > 180 OR p_south < -90 OR p_north > 90
+       OR p_west >= p_east OR p_south >= p_north THEN
+        RAISE EXCEPTION 'A valid map bounding box is required.';
+    END IF;
+
+    v_bounds := extensions.ST_MakeEnvelope(p_west, p_south, p_east, p_north, 4326);
+
+    RETURN QUERY
+    SELECT record.id,
+           record.record_number,
+           record.survey_number,
+           record.verification_status,
+           record.record_status,
+           assessment.risk_level,
+           EXISTS (
+               SELECT 1 FROM public.duplicate_candidates candidate
+               WHERE (candidate.record_a_id = record.id OR candidate.record_b_id = record.id)
+                 AND candidate.status IN ('PENDING', 'UNDER_REVIEW', 'CONFIRMED')
+           ),
+           EXISTS (
+               SELECT 1 FROM public.watchlists watchlist
+               WHERE watchlist.land_record_id = record.id
+                 AND watchlist.user_id = auth.uid()
+                 AND watchlist.status = 'ACTIVE'
+           ),
+           extensions.ST_AsGeoJSON(coalesce(record.parcel_geometry, record.point_geometry))::JSONB,
+           record.latitude,
+           record.longitude
+    FROM public.land_records record
+    LEFT JOIN LATERAL (
+        SELECT risk.risk_level
+        FROM public.risk_assessments risk
+        WHERE risk.land_record_id = record.id
+        ORDER BY risk.calculated_at DESC
+        LIMIT 1
+    ) assessment ON TRUE
+    WHERE coalesce(record.parcel_geometry, record.point_geometry) IS NOT NULL
+      AND (
+          (record.parcel_geometry IS NOT NULL
+           AND record.parcel_geometry && v_bounds
+           AND extensions.ST_Intersects(record.parcel_geometry, v_bounds))
+          OR
+          (record.point_geometry IS NOT NULL
+           AND record.point_geometry && v_bounds
+           AND extensions.ST_Intersects(record.point_geometry, v_bounds))
+      )
+      AND (p_state_id IS NULL OR record.state_id = p_state_id)
+      AND (p_district_id IS NULL OR record.district_id = p_district_id)
+      AND (p_taluk_id IS NULL OR record.taluk_id = p_taluk_id)
+      AND (p_village_id IS NULL OR record.village_id = p_village_id)
+      AND (p_land_type IS NULL OR record.land_type = p_land_type)
+      AND (p_verification_status IS NULL OR record.verification_status = p_verification_status)
+     AND (p_record_status IS NULL OR record.record_status = p_record_status)
+     AND (p_search IS NULL OR record.record_number ILIKE '%' || p_search || '%'
+         OR record.survey_number ILIKE '%' || p_search || '%'
+         OR record.patta_number ILIKE '%' || p_search || '%')
+    ORDER BY record.record_number
+    LIMIT greatest(1, least(coalesce(p_limit, 250), 500));
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.get_nearby_land_records(
+    p_latitude DOUBLE PRECISION,
+    p_longitude DOUBLE PRECISION,
+    p_radius_meters DOUBLE PRECISION DEFAULT 1000,
+    p_limit INTEGER DEFAULT 100
+)
+RETURNS TABLE (
+    id UUID,
+    record_number TEXT,
+    survey_number TEXT,
+    distance_meters DOUBLE PRECISION,
+    geometry_geojson JSONB
+)
+LANGUAGE plpgsql
+STABLE
+SECURITY INVOKER
+SET search_path = public, extensions, pg_temp
+AS $$
+DECLARE
+    v_origin extensions.geography;
+BEGIN
+     IF p_latitude IS NULL OR p_longitude IS NULL
+         OR p_latitude NOT BETWEEN -90 AND 90 OR p_longitude NOT BETWEEN -180 AND 180
+       OR p_radius_meters <= 0 OR p_radius_meters > 50000 THEN
+        RAISE EXCEPTION 'Nearby search requires valid coordinates and a radius from 1 to 50000 meters.';
+    END IF;
+
+    v_origin := extensions.ST_SetSRID(extensions.ST_MakePoint(p_longitude, p_latitude), 4326)::extensions.geography;
+    RETURN QUERY
+    SELECT record.id,
+           record.record_number,
+           record.survey_number,
+           extensions.ST_Distance(coalesce(record.parcel_geography, record.point_geography), v_origin),
+           extensions.ST_AsGeoJSON(coalesce(record.parcel_geometry, record.point_geometry))::JSONB
+    FROM public.land_records record
+    WHERE coalesce(record.parcel_geometry, record.point_geometry) IS NOT NULL
+            AND (
+                    (record.parcel_geography IS NOT NULL AND extensions.ST_DWithin(record.parcel_geography, v_origin, p_radius_meters))
+                    OR (record.point_geography IS NOT NULL AND extensions.ST_DWithin(record.point_geography, v_origin, p_radius_meters))
+            )
+        ORDER BY extensions.ST_Distance(coalesce(record.parcel_geography, record.point_geography), v_origin)
+    LIMIT greatest(1, least(coalesce(p_limit, 100), 250));
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.import_land_record_geojson(p_feature_collection JSONB)
+RETURNS INTEGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions, pg_temp
+AS $$
+DECLARE
+    v_feature JSONB;
+    v_record_id UUID;
+    v_geometry extensions.geometry;
+    v_updated INTEGER := 0;
+    v_row_count INTEGER;
+BEGIN
+    IF NOT public.has_permission('gis:import') THEN
+        RAISE EXCEPTION 'You do not have permission to import parcel geometry.';
+    END IF;
+    IF jsonb_typeof(p_feature_collection) <> 'object'
+       OR p_feature_collection->>'type' <> 'FeatureCollection'
+       OR jsonb_typeof(p_feature_collection->'features') <> 'array'
+       OR jsonb_array_length(p_feature_collection->'features') > 500 THEN
+        RAISE EXCEPTION 'Upload a GeoJSON FeatureCollection containing at most 500 features.';
+    END IF;
+
+    FOR v_feature IN SELECT value FROM jsonb_array_elements(p_feature_collection->'features') LOOP
+        IF v_feature->>'type' <> 'Feature' OR jsonb_typeof(v_feature->'geometry') <> 'object' THEN
+            RAISE EXCEPTION 'Each GeoJSON feature must contain a geometry.';
+        END IF;
+
+        v_record_id := coalesce(v_feature->>'id', v_feature->'properties'->>'land_record_id')::UUID;
+        v_geometry := extensions.ST_SetSRID(extensions.ST_GeomFromGeoJSON((v_feature->'geometry')::TEXT), 4326);
+        IF extensions.ST_GeometryType(v_geometry) NOT IN ('ST_Polygon', 'ST_MultiPolygon')
+           OR NOT extensions.ST_IsValid(v_geometry) THEN
+            RAISE EXCEPTION 'Parcel geometries must be valid Polygon or MultiPolygon features.';
+        END IF;
+
+        UPDATE public.land_records record
+        SET parcel_geometry = v_geometry,
+            updated_at = NOW()
+        WHERE record.id = v_record_id
+                    AND public.can_access_land_record(record.id);
+        GET DIAGNOSTICS v_row_count = ROW_COUNT;
+        IF v_row_count <> 1 THEN
+            RAISE EXCEPTION 'Feature references a missing or out-of-scope land record: %.', v_record_id;
+        END IF;
+        v_updated := v_updated + 1;
+    END LOOP;
+
+    RETURN v_updated;
+END;
+$$;
+
+REVOKE ALL ON FUNCTION public.get_spatial_land_records(DOUBLE PRECISION, DOUBLE PRECISION, DOUBLE PRECISION, DOUBLE PRECISION, UUID, UUID, UUID, UUID, TEXT, TEXT, TEXT, TEXT, INTEGER) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.get_nearby_land_records(DOUBLE PRECISION, DOUBLE PRECISION, DOUBLE PRECISION, INTEGER) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.import_land_record_geojson(JSONB) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.get_spatial_land_records(DOUBLE PRECISION, DOUBLE PRECISION, DOUBLE PRECISION, DOUBLE PRECISION, UUID, UUID, UUID, UUID, TEXT, TEXT, TEXT, TEXT, INTEGER) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.get_nearby_land_records(DOUBLE PRECISION, DOUBLE PRECISION, DOUBLE PRECISION, INTEGER) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.import_land_record_geojson(JSONB) TO authenticated;

@@ -4,10 +4,22 @@ import { toAppError, type AppError } from '@/utils/errorHandler';
 
 let currentUserLoad: { userId: string; promise: Promise<AuthUser | null> } | null = null;
 
-function loadCurrentUserForSession(userId: string) {
+export type AuthLoadingPhase =
+  | 'authenticating'
+  | 'loading_profile'
+  | 'loading_role'
+  | 'loading_permissions'
+  | 'ready'
+  | 'unauthenticated'
+  | 'error';
+
+function loadCurrentUserForSession(
+  userId: string,
+  onPhase: (phase: AuthLoadingPhase) => void,
+) {
   if (currentUserLoad?.userId === userId) return currentUserLoad.promise;
 
-  const promise = authService.getCurrentUser()
+  const promise = authService.getCurrentUser(onPhase)
     .then((user) => user?.id === userId ? user : null)
     .finally(() => {
       if (currentUserLoad?.promise === promise) currentUserLoad = null;
@@ -35,11 +47,12 @@ export const authService = {
     return data.session;
   },
 
-  async getCurrentUser(): Promise<AuthUser | null> {
+  async getCurrentUser(onPhase?: (phase: AuthLoadingPhase) => void): Promise<AuthUser | null> {
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError) throw toAppError(userError);
     if (!user) return null;
 
+    onPhase?.('loading_profile');
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*, roles(*)')
@@ -54,9 +67,11 @@ export const authService = {
     if (!profile) throw new Error('Your account profile could not be loaded. Contact an administrator.');
     if (!profile.is_active) throw new Error('This account is inactive. Contact an administrator.');
 
+    onPhase?.('loading_role');
     const role = (profile as Record<string, any>).roles;
     if (!role) throw new Error('Your account does not have an active role. Contact an administrator.');
     
+    onPhase?.('loading_permissions');
     const { data: rolePerms, error: permissionsError } = await supabase
       .from('role_permissions')
       .select('permissions(code)')
@@ -79,7 +94,13 @@ export const authService = {
     };
   },
 
-  onAuthStateChange(callback: (user: AuthUser | null, error?: AppError | Error, sessionUserId?: string | null, event?: string) => void) {
+  onAuthStateChange(callback: (
+    user: AuthUser | null,
+    error?: AppError | Error,
+    sessionUserId?: string | null,
+    event?: string,
+    phase?: AuthLoadingPhase,
+  ) => void) {
     let latestSessionUserId: string | null = null;
 
     return supabase.auth.onAuthStateChange((_event, session) => {
@@ -87,17 +108,21 @@ export const authService = {
       const sessionUserId = latestSessionUserId;
 
       if (!sessionUserId) {
-        callback(null, undefined, null, _event);
+        callback(null, undefined, null, _event, 'unauthenticated');
         return;
       }
 
+      callback(null, undefined, sessionUserId, _event, 'loading_profile');
       queueMicrotask(() => {
-        void loadCurrentUserForSession(sessionUserId)
+        const updatePhase = (phase: AuthLoadingPhase) => {
+          if (latestSessionUserId === sessionUserId) callback(null, undefined, sessionUserId, _event, phase);
+        };
+        void loadCurrentUserForSession(sessionUserId, updatePhase)
           .then((user) => {
-            if (latestSessionUserId === sessionUserId) callback(user, undefined, sessionUserId, _event);
+            if (latestSessionUserId === sessionUserId) callback(user, undefined, sessionUserId, _event, user ? 'ready' : 'unauthenticated');
           })
           .catch((error: unknown) => {
-            if (latestSessionUserId === sessionUserId) callback(null, toAppError(error), sessionUserId, _event);
+            if (latestSessionUserId === sessionUserId) callback(null, toAppError(error), sessionUserId, _event, 'error');
           });
       });
     });

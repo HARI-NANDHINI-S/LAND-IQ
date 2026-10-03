@@ -34,6 +34,14 @@ The `bhoomi-documents` bucket is private, limited to PDF/JPEG/PNG and 25 MiB. Do
 
 Several existing migrations contain seed data. In particular, `20260928000005_seed_business_data.sql` inserts synthetic land records and related operational fixtures. Those rows are useful for development and testing, not real government records. The migration is already part of the migration history; do not delete or replay it to clean a deployed database. Production rollout is blocked until the deployment owner confirms the target database's migration state and approves a safe demo-data strategy.
 
+The forward migration `20261002000006_demo_data_visibility.sql` tags the known synthetic rows and hides them through RLS-backed workflows by default. A SUPER_ADMIN can opt a development database into demo visibility with `UPDATE public.demo_data_policy SET development_data_enabled = TRUE, updated_by = auth.uid() WHERE singleton = TRUE;`; turn it off again with `FALSE`. Do not enable this on production. The rows remain physically present for migration-history safety; a deployment owner must separately approve any archival/deletion plan.
+
+Spatial support is added by `20261002000002_spatial_gis.sql`. It stores only explicitly imported verified coordinates/GeoJSON, uses PostGIS indexes and bounded queries, and never derives a parcel location from its village. The GeoJSON import accepts a FeatureCollection of Polygon/MultiPolygon features whose feature `id` or `properties.land_record_id` matches a scoped land-record UUID.
+
+Document OCR runs in the authenticated `process-document` Supabase Edge Function. Deploy it with JWT verification enabled, then set Edge Function secrets `OCR_PROVIDER_URL`, `OCR_PROVIDER_API_KEY`, and optionally `OCR_PROVIDER_NAME`. The provider must accept `{ document_id, document_url, mime_type, response_format: "land-iq-ocr-v1" }` and return `{ pages: [{ page_number, text, fields: [{ name, value, normalized_value, confidence }] }] }`; confidence is 0-100. No provider credentials are needed in `.env` or frontend variables. Without provider secrets, processing is marked `FAILED` with an explicit configuration error and can be retried after configuration.
+
+BhoomiVoice generation runs through the authenticated `bhoomivoice-chat` Supabase Edge Function. Configure `OPENAI_API_KEY` as an Edge Function secret and optionally set `OPENAI_MODEL` (defaults to `gpt-4o-mini`). Never place these values in frontend `.env` variables. The function checks `assistant:use`, retrieves only data permitted by the caller's database permissions and RLS, and returns an explicit configuration/provider error rather than a canned answer when inference is unavailable. Conversation text and permission-scoped LAND-IQ context are sent to the configured OpenAI API; deploy only where that processing is approved for the data classification.
+
 The local `supabase/config.toml` disables the nonexistent standalone `seed.sql` hook; demo fixtures are currently embedded in migrations. Its auth URL/password/signup settings apply to local Supabase CLI configuration, not automatically to the hosted project. Configure hosted Auth redirect URLs, password policy, signup policy, and Storage settings separately for each environment.
 
 ## Validation
@@ -44,7 +52,7 @@ npm run lint
 npm run test:supabase:connectivity
 ```
 
-`npm run test:supabase:connectivity` performs a read-only query against `roles` using `.env`. `supabase/tests/profile_security_behavior.sql` is a transaction-based profile security test for a privileged SQL editor. `supabase/tests/production_security_contract.sql` checks RLS, role grants, profile privileges, authorization function settings, and storage policy presence without writing rows. Neither SQL test has been executed automatically by the npm scripts.
+`npm run test:supabase:connectivity` performs a read-only query against `roles` using `.env`. The SQL scripts in `supabase/tests/` are privileged-operator checks: `profile_security_behavior.sql` tests profile authorization, `production_security_contract.sql` checks RLS/grants/policies, `intelligence_workflow_behavior.sql` exercises duplicate/risk/spatial behavior, `bhoomivoice_session_ownership.sql` tests cross-user session isolation, and `document_ocr_state_behavior.sql` checks truthful OCR failure/retry state without mock output. Run them in a privileged Supabase SQL editor after all migrations; the npm connectivity check does not execute them.
 
 ## Deployment
 
@@ -58,7 +66,7 @@ npm run test:supabase:connectivity
 
 ## Known Limitations And Blockers
 
-- Geography IDs in the existing seed data are UUID-shaped but not RFC-compliant v4 UUIDs; Zod v4 `z.uuid()` rejects them in Land Record Create/Edit. This is intentionally deferred.
+- Land Record Create/Edit validation accepts PostgreSQL's UUID text shape without requiring RFC version/variant bits, matching the database UUID type and existing geography IDs.
 - The current seeded dataset has synthetic Tamil Nadu geography, owners, records, and risk/alert fixtures. Do not represent it as live government data.
 - Full cross-role, cross-district RLS behavior tests require representative role/scope fixtures. Do not create temporary production users to manufacture those fixtures.
 - The current test suite is not a comprehensive browser or service test suite; see the actual validation results for what has been run.

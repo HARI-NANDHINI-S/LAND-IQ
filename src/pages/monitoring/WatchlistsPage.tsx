@@ -48,9 +48,8 @@ export default function WatchlistsPage() {
   const createMutation = useMutation({
     mutationFn: async () => {
       if (!hasPermission('watchlist:manage')) throw new Error('You do not have permission to manage watchlists.');
-      if (!user?.id) throw new Error('User session is missing.');
       if (!recordId) throw new Error('Select a land record to monitor.');
-      return monitoringService.createWatchlist({ land_record_id: recordId, user_id: user.id, reason: reason.trim() || null }, user.role?.code ?? '');
+      return monitoringService.createWatchlist({ land_record_id: recordId, reason: reason.trim() || null });
     },
     onSuccess: (entry) => {
       void queryClient.invalidateQueries({ queryKey: ['watchlists', user?.id] });
