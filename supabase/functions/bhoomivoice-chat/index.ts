@@ -32,14 +32,14 @@ Deno.serve(async (request: Request) => {
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL');
   const anonKey = Deno.env.get('SUPABASE_ANON_KEY');
-  const apiKey = Deno.env.get('OPENAI_API_KEY');
-  const model = Deno.env.get('OPENAI_MODEL') || 'gpt-4o-mini';
+  const apiKey = Deno.env.get('GROQ_API_KEY');
+  const model = Deno.env.get('GROQ_MODEL') || 'qwen/qwen3.8-27b';
   if (!supabaseUrl || !anonKey) {
     return jsonResponse({ error: 'BhoomiVoice Supabase function configuration is incomplete.' }, 500);
   }
   if (!apiKey) {
     return jsonResponse({
-      error: 'BhoomiVoice model is not configured. Set OPENAI_API_KEY in Supabase Edge Function secrets.',
+      error: 'BhoomiVoice model is not configured. Set GROQ_API_KEY in Supabase Edge Function secrets.',
       code: 'MODEL_NOT_CONFIGURED',
     }, 503);
   }
@@ -206,7 +206,7 @@ Deno.serve(async (request: Request) => {
 
   let modelResponse: Response;
   try {
-    modelResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    modelResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -216,12 +216,23 @@ Deno.serve(async (request: Request) => {
       signal: AbortSignal.timeout(60_000),
     });
   } catch (error) {
-    console.error('BhoomiVoice model request failed:', error);
-    return jsonResponse({ error: 'The configured BhoomiVoice model could not be reached.' }, 502);
+    console.error('BhoomiVoice Groq model request failed:', error);
+    return jsonResponse({ error: 'The configured BhoomiVoice model (Groq) could not be reached.' }, 502);
   }
   if (!modelResponse.ok) {
-    console.error('BhoomiVoice model returned HTTP', modelResponse.status);
-    return jsonResponse({ error: `The configured BhoomiVoice model returned HTTP ${modelResponse.status}.` }, 502);
+    let modelErrorDetail = '';
+    try {
+      const errBody = await modelResponse.json() as { error?: { type?: string; code?: string; message?: string } };
+      const e = errBody?.error;
+      modelErrorDetail = e ? `[${e.type ?? ''}/${e.code ?? ''}] ${e.message ?? ''}` : JSON.stringify(errBody).substring(0, 300);
+      console.error('BhoomiVoice model returned HTTP', modelResponse.status, modelErrorDetail);
+    } catch {
+      console.error('BhoomiVoice model returned HTTP', modelResponse.status, '(could not parse error body)');
+    }
+    return jsonResponse({
+      error: `The configured BhoomiVoice model returned HTTP ${modelResponse.status}.`,
+      detail: modelErrorDetail || undefined,
+    }, 502);
   }
 
   let modelBody: {
