@@ -26,3 +26,22 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+
+# Python & OCR service
+__pycache__/
+*.py[cod]
+*$py.class
+*.venv/
+venv/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# PaddleOCR & model caches
+.paddlex/
+.paddleocr/
+
+# Local testing scratch files
+scratch_*.mjs
+

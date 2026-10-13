@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { FunctionsHttpError } from '@supabase/supabase-js';
 import type { Database } from '@/types/database';
 import { toAppError } from '@/utils/errorHandler';
 import { buildIlikeOrFilter } from '@/utils/postgrestSearch';
@@ -190,88 +191,26 @@ export const documentService = {
   },
 
   async processDocument(documentId: string): Promise<{ processed_pages: number; provider: string }> {
-    const { data, error } = await supabase.rpc('begin_document_processing', {
-      p_document_id: documentId,
+    const { data, error } = await supabase.functions.invoke('process-document', {
+      body: { document_id: documentId },
     });
-    if (error) throw toAppError(error);
-    if (!data || !data.length) throw new Error('Document was not found or is outside your authorized scope.');
-    const document = data[0];
-
-    try {
-      const signedUrl = await this.getSignedUrl(document.storage_path, 300);
-      
-      const fileResponse = await fetch(signedUrl);
-      if (!fileResponse.ok) {
-        throw new Error('Could not download the document from storage for processing.');
-      }
-      
-      const blob = await fileResponse.blob();
-      const filename = document.storage_path.split('/').pop() || 'document.pdf';
-      const file = new File([blob], filename, { type: document.mime_type || blob.type });
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const rawOcrUrl = (import.meta.env.VITE_OCR_SERVICE_URL || 'http://127.0.0.1:8001').trim();
-      const ocrUrl = rawOcrUrl.endsWith('/ocr') ? rawOcrUrl : `${rawOcrUrl.replace(/\/$/, '')}/ocr`;
-
-      const headers: Record<string, string> = {};
-      const ocrApiKey = import.meta.env.VITE_OCR_API_KEY;
-      if (ocrApiKey) {
-        headers['X-API-Key'] = ocrApiKey;
-      }
-
-      let ocrResponse;
-      try {
-        ocrResponse = await fetch(ocrUrl, {
-          method: 'POST',
-          headers,
-          body: formData,
-        });
-      } catch {
-        throw new Error('OCR service is unavailable. Please verify the service is running and accessible.');
-      }
-
-      if (!ocrResponse.ok) {
-        let detail = '';
+    if (error) {
+      if (error instanceof FunctionsHttpError && error.context instanceof Response) {
+        const responseText = await error.context.clone().text();
+        let responseBody: any = null;
         try {
-          const errData = await ocrResponse.json();
-          detail = errData.detail || errData.error || errData.message || '';
+          responseBody = JSON.parse(responseText);
         } catch {
-          // ignore non-json error responses
+          // ignore parsing error
         }
-        throw new Error(detail ? `OCR processing failed: ${detail}` : `OCR processing failed with status ${ocrResponse.status}.`);
+        if (responseBody && typeof responseBody === 'object' && 'error' in responseBody && typeof responseBody.error === 'string') {
+          throw new Error(responseBody.error);
+        }
       }
-
-      const result = await ocrResponse.json();
-      
-      if (!result.pages || !Array.isArray(result.pages) || result.pages.length === 0) {
-        throw new Error('OCR provider returned zero pages or malformed data.');
-      }
-
-      const providerName = 'Local PaddleOCR';
-
-      const { data: completeData, error: completeError } = await supabase.rpc('complete_document_processing', {
-        p_document_id: documentId,
-        p_provider: providerName,
-        p_pages: result.pages,
-      });
-
-      if (completeError) throw toAppError(completeError);
-
-      return { processed_pages: completeData as number, provider: providerName };
-
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'OCR processing failed.';
-      const { error: failError } = await supabase.rpc('fail_document_processing', {
-        p_document_id: documentId,
-        p_error: message,
-      });
-      if (failError) {
-        console.error('Failed to mark document as failed:', failError);
-      }
-      throw error;
+      throw toAppError(error as any);
     }
+    if (data?.error) throw new Error(String(data.error));
+    return data as { processed_pages: number; provider: string };
   },
 
   async getExtractedFields(documentId: string) {

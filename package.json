@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "test:supabase:connectivity": "node test-supabase.mjs",
+    "test:ocr": ".\\ocr-service\\.venv\\Scripts\\python.exe ocr-service\\tests\\test_ocr_service.py",
     "preview": "vite preview"
   },
   "dependencies": {
