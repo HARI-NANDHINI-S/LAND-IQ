@@ -9,6 +9,8 @@
     "lint": "oxlint",
     "test:supabase:connectivity": "node test-supabase.mjs",
     "test:ocr": ".\\ocr-service\\.venv\\Scripts\\python.exe ocr-service\\tests\\test_ocr_service.py",
+    "test:ml": ".\\ocr-service\\.venv\\Scripts\\python.exe ocr-service\\tests\\test_ml_service.py",
+    "test:all": "npm run test:ocr && npm run test:ml",
     "preview": "vite preview"
   },
   "dependencies": {

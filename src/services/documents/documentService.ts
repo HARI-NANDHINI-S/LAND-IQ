@@ -12,6 +12,7 @@ const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
 export interface DocumentFilters {
   land_record_id?: string;
+  state_id?: string;
   district_id?: string;
   processing_status?: string;
   verification_status?: string;
@@ -142,6 +143,7 @@ export const documentService = {
   async getDocuments(filters: DocumentFilters = {}) {
     const {
       land_record_id,
+      state_id,
       district_id,
       processing_status,
       verification_status,
@@ -161,6 +163,7 @@ export const documentService = {
       .range(from, to);
 
     if (land_record_id) query = query.eq('land_record_id', land_record_id);
+    if (state_id) query = query.eq('state_id', state_id);
     if (district_id) query = query.eq('district_id', district_id);
     if (processing_status) query = query.eq('processing_status', processing_status);
     if (verification_status) query = query.eq('verification_status', verification_status);

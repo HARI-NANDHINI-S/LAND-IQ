@@ -20,6 +20,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { mlService } from '@/services/ml/mlService';
+import { AnomalyPriorityCard } from '@/components/ml/AnomalyPriorityCard';
 
 export default function VerificationDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -53,6 +55,24 @@ export default function VerificationDetailsPage() {
   const docs = useMemo(() => (task?.documents ? (Array.isArray(task.documents) ? task.documents : [task.documents]) : []), [task]);
   const extractedFields = useMemo(() => (task?.documents?.extracted_fields ? (Array.isArray(task.documents.extracted_fields) ? task.documents.extracted_fields : [task.documents.extracted_fields]) : []), [task]);
   const actions = useMemo(() => (task?.verification_actions ? (Array.isArray(task.verification_actions) ? task.verification_actions : [task.verification_actions]) : []), [task]);
+
+  const { data: mlPrediction, isLoading: isMlLoading } = useQuery({
+    queryKey: ['ml-prediction', task?.id, extractedFields.length],
+    queryFn: async () => {
+      if (!task) return null;
+      const confs = extractedFields.map((f: any) => Number(f.confidence) || 80);
+      const avgConf = confs.length ? confs.reduce((a: number, b: number) => a + b, 0) / confs.length : 85.0;
+      const minConf = confs.length ? Math.min(...confs) : 75.0;
+      return mlService.predictAnomaly({
+        ocr_avg_confidence: avgConf,
+        ocr_min_confidence: minConf,
+        missing_fields_count: Math.max(0, 5 - extractedFields.length),
+        document_type: task?.documents?.document_type || 'PATTA',
+        page_count: task?.documents?.page_count || 1,
+      });
+    },
+    enabled: !!task,
+  });
 
   const getStatusBadge = (status: string | null | undefined) => {
     const label = status || 'QUEUED';
@@ -162,6 +182,9 @@ export default function VerificationDetailsPage() {
           )}
         </div>
       </div>
+
+      {/* Machine Learning Land Record Anomaly & Review Priority */}
+      <AnomalyPriorityCard prediction={mlPrediction ?? null} isLoading={isMlLoading} />
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <Card>

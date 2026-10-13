@@ -36,6 +36,34 @@ export const authService = {
     return data;
   },
 
+  async signUp(
+    email: string,
+    password: string,
+    metadata?: { full_name?: string; state_id?: string; district_id?: string },
+  ) {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: metadata?.full_name?.trim() || '',
+          state_id: metadata?.state_id || '',
+          district_id: metadata?.district_id || '',
+        },
+      },
+    });
+    if (error) throw toAppError(error);
+    return data;
+  },
+
+  async resetPassword(email: string) {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/login`,
+    });
+    if (error) throw toAppError(error);
+    return data;
+  },
+
   async signOut() {
     const { error } = await supabase.auth.signOut();
     if (error) throw toAppError(error);

@@ -1,0 +1,84 @@
+{
+  "model_name": "Land Record Anomaly & Review Priority Classifier",
+  "model_version": "landiq-anomaly-classifier-v1.0.0",
+  "algorithm": "RandomForestClassifier(n_estimators=120, max_depth=7, class_weight='balanced')",
+  "feature_names": [
+    "ocr_avg_confidence",
+    "ocr_min_confidence",
+    "missing_fields_count",
+    "duplicate_similarity_score",
+    "identifier_syntax_mismatch",
+    "area_outlier_score",
+    "document_type_encoded",
+    "page_count",
+    "text_density_ratio"
+  ],
+  "priority_classes": [
+    "LOW",
+    "MEDIUM",
+    "HIGH"
+  ],
+  "class_mapping": {
+    "LOW": 0,
+    "MEDIUM": 1,
+    "HIGH": 2
+  },
+  "random_seed": 42,
+  "train_samples": 2000,
+  "test_samples": 500,
+  "total_samples": 2500,
+  "metrics": {
+    "accuracy": 0.862,
+    "precision_macro": 0.8645515602736081,
+    "precision_weighted": 0.8620796554023767,
+    "recall_macro": 0.8712144601971952,
+    "recall_weighted": 0.862,
+    "f1_macro": 0.8666177230334177,
+    "f1_weighted": 0.8606797074258368,
+    "roc_auc_ovr": 0.963412009812339,
+    "confusion_matrix": [
+      [
+        149,
+        17,
+        0
+      ],
+      [
+        30,
+        150,
+        14
+      ],
+      [
+        0,
+        8,
+        132
+      ]
+    ]
+  },
+  "baseline_comparison": {
+    "dummy_stratified": {
+      "accuracy": 0.338,
+      "f1_macro": 0.32755166560834575
+    },
+    "logistic_regression": {
+      "accuracy": 0.878,
+      "f1_macro": 0.8816032832161865
+    },
+    "random_forest_improvement_over_dummy_f1": 0.5390660574250719
+  },
+  "feature_importances": {
+    "area_outlier_score": 0.34036153512870404,
+    "missing_fields_count": 0.31165014701215127,
+    "identifier_syntax_mismatch": 0.12224437819087539,
+    "ocr_min_confidence": 0.07450847034143618,
+    "duplicate_similarity_score": 0.05597167555272027,
+    "ocr_avg_confidence": 0.04276041269348275,
+    "text_density_ratio": 0.027651743917596727,
+    "page_count": 0.015124209967208299,
+    "document_type_encoded": 0.009727427195825193
+  },
+  "safeguards": {
+    "dataset_nature": "Engineering validation dataset with deterministic empirical distributions",
+    "is_experimental": true,
+    "adjudication_notice": "Predictions from this classifier serve exclusively to prioritize human review queues and highlight inconsistencies. Predictions must never independently determine ownership, reject a citizen's land deed, or replace authoritative revenue verification."
+  }
+}

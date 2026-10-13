@@ -31,6 +31,7 @@ export default function LandRecordsPage() {
   // URL State
   const page = parseInt(searchParams.get('page') || '1', 10);
   const search = searchParams.get('search') || '';
+  const stateId = searchParams.get('state') || 'all';
   const districtId = searchParams.get('district') || 'all';
   const status = searchParams.get('status') || 'all';
 
@@ -38,19 +39,25 @@ export default function LandRecordsPage() {
 
   // Queries
   const { data: recordsData, isLoading, isError } = useQuery({
-    queryKey: ['land-records', page, search, districtId, status],
+    queryKey: ['land-records', page, search, stateId, districtId, status],
     queryFn: () => landRecordService.getLandRecords({
       page,
       pageSize: 10,
       search: search || undefined,
+      state_id: stateId !== 'all' ? stateId : undefined,
       district_id: districtId !== 'all' ? districtId : undefined,
       verification_status: status !== 'all' ? status : undefined,
     }),
   });
 
+  const { data: states } = useQuery({
+    queryKey: ['states'],
+    queryFn: () => geoService.getStates(),
+  });
+
   const { data: districts } = useQuery({
-    queryKey: ['districts'],
-    queryFn: () => geoService.getDistricts(),
+    queryKey: ['districts', stateId],
+    queryFn: () => geoService.getDistricts(stateId !== 'all' ? stateId : undefined),
   });
 
   const handleSearch = (e: React.FormEvent) => {
@@ -110,12 +117,36 @@ export default function LandRecordsPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
+              <Select 
+                value={stateId} 
+                onValueChange={(val) => {
+                  const newParams = new URLSearchParams(searchParams);
+                  if (val && val !== 'all') newParams.set('state', val);
+                  else newParams.delete('state');
+                  newParams.delete('district');
+                  newParams.set('page', '1');
+                  setSearchParams(newParams);
+                }}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="All States & UTs" />
+                </SelectTrigger>
+                <SelectContent className="max-h-56">
+                  <SelectItem value="all">All States & UTs</SelectItem>
+                  {states?.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.name} ({s.code})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
               <Select value={districtId} onValueChange={(val) => handleFilterChange('district', val)}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="All Districts" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-56">
                   <SelectItem value="all">All Districts</SelectItem>
                   {districts?.map(d => (
                     <SelectItem key={d.id} value={d.id}>{d.name}</SelectItem>

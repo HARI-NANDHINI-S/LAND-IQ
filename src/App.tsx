@@ -104,6 +104,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<LoginPage />} />
           
           <Route path="/" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
             <Route index element={<Navigate to="/dashboard" replace />} />

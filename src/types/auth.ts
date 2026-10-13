@@ -12,4 +12,14 @@ export interface AuthUser {
   permissions: string[];
 }
 
-export type UserRole = 'SUPER_ADMIN' | 'STATE_ADMIN' | 'DISTRICT_OFFICER' | 'DATA_ENTRY_OFFICER' | 'VERIFICATION_OFFICER' | 'VIEWER';
+export type UserRole =
+  | 'SUPER_ADMIN'
+  | 'STATE_ADMIN'
+  | 'DISTRICT_OFFICER'
+  | 'DATA_ENTRY_OFFICER'
+  | 'VERIFICATION_OFFICER'
+  | 'VIEWER'
+  | 'CUSTOMER'
+  | 'GIS_ANALYST'
+  | 'RISK_ANALYST'
+  | 'AUDITOR';

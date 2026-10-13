@@ -48,6 +48,32 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }
   }, []);
 
+  const signUp = useCallback(async (
+    email: string,
+    password: string,
+    metadata?: { full_name?: string; state_id?: string; district_id?: string },
+  ) => {
+    setError(null);
+    try {
+      await authService.signUp(email, password, metadata);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Registration failed.';
+      setError(message);
+      throw err;
+    }
+  }, []);
+
+  const resetPassword = useCallback(async (email: string) => {
+    setError(null);
+    try {
+      await authService.resetPassword(email);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Password reset failed.';
+      setError(message);
+      throw err;
+    }
+  }, []);
+
   const signOut = useCallback(async () => {
     try {
       await authService.signOut();
@@ -63,9 +89,11 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     loading,
     error,
     signIn,
+    signUp,
+    resetPassword,
     signOut,
     hasPermission: (permission) => phase === 'ready' && (user?.permissions.includes(permission) ?? false),
-  }), [user, phase, loading, error, signIn, signOut]);
+  }), [user, phase, loading, error, signIn, signUp, resetPassword, signOut]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

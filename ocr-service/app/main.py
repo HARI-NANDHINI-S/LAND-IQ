@@ -12,6 +12,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import httpx
 
 from app.ocr_engine import LandIQOCR
+from app.ml.inference import predict_review_priority, get_model_info
+from app.ml.features import RecordFeaturesInput
 
 # Configure safe structured logging (never log secrets, signed URLs, or document content)
 logging.basicConfig(
@@ -306,3 +308,28 @@ async def process_document_endpoint(
             status_code=400,
             detail="A file upload or a JSON body containing document_url is required.",
         )
+
+
+@app.get("/ml/model-info")
+async def model_info():
+    """
+    Returns public metadata, evaluation metrics, feature schema, and ethical safeguards
+    for the deployed Land Record Anomaly & Review Priority Classifier.
+    """
+    return get_model_info()
+
+
+@app.post("/ml/predict")
+async def predict_record_anomaly(payload: RecordFeaturesInput, request: Request):
+    """
+    Inference endpoint for Land Record Anomaly & Review Priority classification.
+    Predicts review priority (LOW, MEDIUM, HIGH), anomaly score, contributing factors,
+    and human-in-the-loop verification recommendation.
+    """
+    verify_authentication(request)
+    try:
+        result = predict_review_priority(payload)
+        return result
+    except Exception as e:
+        logger.error(f"ML inference error: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Inference error: {str(e)}")

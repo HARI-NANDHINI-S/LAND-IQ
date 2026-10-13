@@ -8,6 +8,8 @@ export interface AuthContextValue {
   loading: boolean;
   error: string | null;
   signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, metadata?: { full_name?: string; state_id?: string; district_id?: string }) => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
   hasPermission: (permission: string) => boolean;
 }
