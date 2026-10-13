@@ -212,19 +212,35 @@ export const documentService = {
       const formData = new FormData();
       formData.append('file', file);
 
-      const ocrUrl = import.meta.env.VITE_OCR_SERVICE_URL || 'http://127.0.0.1:8001/ocr';
+      const rawOcrUrl = (import.meta.env.VITE_OCR_SERVICE_URL || 'http://127.0.0.1:8001').trim();
+      const ocrUrl = rawOcrUrl.endsWith('/ocr') ? rawOcrUrl : `${rawOcrUrl.replace(/\/$/, '')}/ocr`;
+
+      const headers: Record<string, string> = {};
+      const ocrApiKey = import.meta.env.VITE_OCR_API_KEY;
+      if (ocrApiKey) {
+        headers['X-API-Key'] = ocrApiKey;
+      }
+
       let ocrResponse;
       try {
         ocrResponse = await fetch(ocrUrl, {
           method: 'POST',
+          headers,
           body: formData,
         });
       } catch {
-        throw new Error('Local OCR service is unavailable. Start the LAND-IQ OCR service and try again.');
+        throw new Error('OCR service is unavailable. Please verify the service is running and accessible.');
       }
 
       if (!ocrResponse.ok) {
-        throw new Error(`OCR processing failed with status ${ocrResponse.status}.`);
+        let detail = '';
+        try {
+          const errData = await ocrResponse.json();
+          detail = errData.detail || errData.error || errData.message || '';
+        } catch {
+          // ignore non-json error responses
+        }
+        throw new Error(detail ? `OCR processing failed: ${detail}` : `OCR processing failed with status ${ocrResponse.status}.`);
       }
 
       const result = await ocrResponse.json();

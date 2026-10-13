@@ -1,0 +1,14 @@
+# LAND-IQ OCR Microservice — Production Dependencies
+fastapi==0.142.2
+uvicorn[standard]==0.54.0
+paddleocr==3.7.0
+paddlepaddle==3.2.2
+paddlex==3.7.2
+pypdfium2==5.13.0
+pillow==12.1.0
+httpx==0.28.1
+python-multipart==0.0.32
+pydantic==2.13.5
+opencv-contrib-python==4.10.0.84
+numpy>=1.26.0,<3.0.0
+gunicorn==23.0.0

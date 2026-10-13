@@ -62,10 +62,28 @@ class LandIQOCR:
 
         full_text = "\n".join(text_lines)
 
+        raw_fields = self.extract_fields(full_text)
+        formatted_fields: list[dict[str, Any]] = []
+        for name, field_info in raw_fields.items():
+            if isinstance(field_info, dict):
+                val = str(field_info.get("value", "")).strip()
+                if not val:
+                    continue
+                conf = float(field_info.get("confidence", 0.8))
+                if conf <= 1.0:
+                    conf = conf * 100.0
+                conf = max(0.0, min(100.0, round(conf, 1)))
+                formatted_fields.append({
+                    "name": name,
+                    "value": val,
+                    "normalized_value": val,
+                    "confidence": conf,
+                })
+
         return {
             "page_number": page_number,
             "text": full_text,
-            "fields": self.extract_fields(full_text),
+            "fields": formatted_fields,
         }
 
     # ================================================================

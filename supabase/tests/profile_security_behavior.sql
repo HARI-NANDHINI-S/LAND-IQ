@@ -56,10 +56,10 @@ BEGIN
     FROM public.profiles p
     WHERE p.id = v_target_id;
 
-    SELECT public.admin_update_profile_authorization(
+    v_result := public.admin_update_profile_authorization(
         v_target_id,
         p_is_active => NOT v_before_active
-    ) INTO v_result;
+    );
 
     SELECT p.is_active INTO v_after_active
     FROM public.profiles p
@@ -125,7 +125,10 @@ BEGIN
     LIMIT 1;
 
     IF v_state_id IS NULL OR v_district_id IS NULL THEN
-        RAISE EXCEPTION 'C unavailable: need active state and district IDs from different states.';
+        INSERT INTO public.states (code, name, is_active)
+        VALUES ('TST', 'Test State', TRUE)
+        RETURNING id INTO v_state_id;
+        SELECT id INTO v_district_id FROM public.districts WHERE is_active = TRUE LIMIT 1;
     END IF;
 
     BEGIN
