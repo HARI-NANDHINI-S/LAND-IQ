@@ -164,21 +164,68 @@ All 8 tests execute within isolated rollback transactions (`BEGIN; ... ROLLBACK;
 
 ---
 
-## Authentication & Default Roles
+---
 
-Six roles are supported:
-- `SUPER_ADMIN`
-- `STATE_ADMIN`
-- `DISTRICT_OFFICER`
-- `DATA_ENTRY_OFFICER`
-- `VERIFICATION_OFFICER`
-- `VIEWER`
+## Role-Based Access Control (RBAC) Architecture
 
-Initial Super Admin credentials for testing:
-- **Email**: `admin@landiq.local`
-- **Role**: `SUPER_ADMIN`
+LAND-IQ implements a strict, server-side five-role authorization hierarchy enforced at every tier (Database RLS, PostgREST RPCs, Edge Functions, and Frontend Route Guards):
+
+| Role | Database Code | Key Permissions | Permitted Operational Scope | Restrictions |
+| :--- | :--- | :--- | :--- | :--- |
+| **Citizen** | `CITIZEN` / `CUSTOMER` | `application:create`, `application:read`, `land_record:read`, `assistant:use` | Self-service portal; own submissions, documents, and notifications | Cannot view other citizens' applications; cannot approve or edit official records |
+| **Registration Clerk** | `DATA_ENTRY_OFFICER` | `document:create`, `document:read`, `application:read`, `application:update`, `gis:validate`, `version:read` | Assigned geographic district/village; OCR extraction review | Cannot approve legal determinations; cannot overwrite immutable original OCR fields |
+| **Verification Officer** | `VERIFICATION_OFFICER` | `verification:review`, `verification:approve`, `application:decide`, `gis:resolve`, `version:read` | Authorized jurisdiction; full field review, GIS override, and final approval | Cannot bypass RPCs; cannot approve cases outside authorized jurisdiction |
+| **District Supervisor** | `DISTRICT_OFFICER` | `monitoring:read`, `risk:read`, `analytics:read`, `application:read`, `audit:read` | District-level aggregations, escalations, audit tracking, workload monitoring | Cannot alter verified records without standard verification workflow |
+| **System Administrator** | `SUPER_ADMIN` | `user:read`, `user:manage`, `settings:manage`, `audit:read` | User provisioning, role and geographic scope assignment, security auditing | Separated from legal verification; cannot independently approve property deeds |
+
+Initial Test Accounts:
+- **Administrator**: `admin@landiq.local` (Password: `Admin123!`)
+- **Verification Officer**: `officer@landiq.local` (Password: `Officer123!`)
+- **Registration Clerk**: `clerk@landiq.local` (Password: `Clerk123!`)
 
 ---
+
+## Three Advanced Land-Record Features
+
+### 1. Geospatial Land-Record Cross-Validation
+- **Cadastral Benchmark Integration**: PostGIS spatial tables (`cadastral_parcels`) store authoritative village cadastral polygons, areas, and survey identifiers.
+- **Automated Spatial Cross-Check**: RPC `perform_gis_cross_validation(land_record_id)` compares extracted document survey numbers, subdivisions, and recorded acreage against authoritative parcel boundaries.
+- **Standardized Validation Categories**: `MATCHED`, `POSSIBLE_MISMATCH`, `AMBIGUOUS_MATCH`, `NO_MATCH`, `SOURCE_DATA_UNAVAILABLE`, `NOT_YET_VALIDATED`.
+- **Conflict & Overlap Detection**: Detects overlapping parcel polygons (`has_geometry_overlap`) and duplicate survey references.
+- **Officer Resolution Workflow**: Authorized officers can resolve discrepancies with statutory rationale using `resolve_gis_discrepancy(...)` (`ACCEPTED_OVERRIDE`, `CONFIRMED_MATCH`, `REJECTED_DISCREPANCY`).
+
+### 2. Record Versioning & Change-Impact Tracking
+- **Append-Only Immutability**: `land_record_versions` captures point-in-time JSONB snapshots of all record attributes. Table security explicitly revokes `UPDATE` and `DELETE` permissions (`REVOKE UPDATE, DELETE FROM PUBLIC, anon, authenticated;`).
+- **Audit Lineage**: Every snapshot tracks the actor identity, operational role at action time, event type (`INITIAL_INGESTION`, `OCR_EXTRACTED`, `PROPOSED_CORRECTION`, `VERIFIED_APPROVAL`, `REJECTION`, `GIS_DISCREPANCY_RESOLVED`, `MANUAL_EDIT`), timestamp, and justification reason.
+- **Immutable Original OCR Preservation**: Original OCR extractions remain untouched in `extracted_fields`, with corrections recorded through `verify_extracted_field(...)` RPC.
+- **Interactive Diff Inspection**: `RecordVersionHistoryPanel` provides side-by-side snapshot comparison highlighting changed fields between any two version lineages.
+
+### 3. Citizen Application Tracking & Discrepancy Resolution
+- **End-to-End Application Lifecycle**: `SUBMITTED` → `OCR_PROCESSING` → `UNDER_REVIEW` → `ACTION_REQUIRED` → `RESUBMITTED` → `APPROVED` / `REJECTED`.
+- **Citizen Portal**: Citizens submit digitization, attribute correction, mutation, or title verification requests with supporting deed uploads.
+- **Interactive Clarification Loop**: When officers flag evidentiary discrepancies, applications move to `ACTION_REQUIRED`. Citizens receive real-time notifications and can respond with clarifying explanations and additional evidence documents (`RESUBMITTED`).
+- **Staff Case Queue**: Clerks and officers manage incoming citizen cases within their geographic jurisdiction with full documentary and timeline visibility.
+- **Chronological Case Timeline**: Immutable `application_timeline` events record each lifecycle transition without exposing sensitive internal ML debugging traces.
+
+---
+
+## Testing & Verification Commands
+
+Execute the test suites against the live environment:
+
+```sh
+# 1. Comprehensive RBAC, PostGIS GIS, Versioning & Citizen Workflow Test
+node scripts/test_rbac_and_advanced_features.mjs
+
+# 2. Live OCR / ML Microservice & Heuristic Fallback Integration Test
+node scripts/test_live_workflow.mjs
+
+# 3. Production Frontend Build & Typecheck
+npm run build
+
+# 4. ESLint / Oxlint Static Analysis
+npm run lint
+```
 
 ## Troubleshooting Common Issues
 
