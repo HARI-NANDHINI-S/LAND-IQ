@@ -22,6 +22,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { mlService, type FieldValidationResult } from '@/services/ml/mlService';
 import { AnomalyPriorityCard } from '@/components/ml/AnomalyPriorityCard';
 import { FieldReviewSection } from '@/components/ml/FieldReviewSection';
+import { GISCrossValidationPanel } from '@/components/gis/GISCrossValidationPanel';
+import { RecordVersionHistoryPanel } from '@/components/versioning/RecordVersionHistoryPanel';
 
 export default function VerificationDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -316,6 +318,21 @@ export default function VerificationDetailsPage() {
           void queryClient.invalidateQueries({ queryKey: ['document-extracted-fields'] });
         }}
       />
+
+      {/* Geospatial Land-Record Cross-Validation Panel */}
+      {(task.land_record_id || task.land_records?.id) && (
+        <GISCrossValidationPanel
+          landRecordId={task.land_record_id || task.land_records?.id}
+          documentId={task.document_id || task.documents?.id}
+        />
+      )}
+
+      {/* Immutable Record Version History & Change Audit */}
+      {(task.land_record_id || task.land_records?.id) && (
+        <RecordVersionHistoryPanel
+          landRecordId={task.land_record_id || task.land_records?.id}
+        />
+      )}
 
       <Card>
         <CardHeader>
