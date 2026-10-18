@@ -240,10 +240,11 @@ async function runTests() {
 
     assert(!!stateData && !!districtData && !!villageData, `Authoritative administrative geography loaded (${stateData?.name} -> ${districtData?.name} -> ${villageData?.name})`);
 
+    let appData = null;
     if (stateData && districtData && villageData) {
       // 1. Submit Application
       const testSurvey = `TEST-${Date.now().toString().slice(-4)}`;
-      const { data: appData, error: appErr } = await adminClient.rpc('submit_citizen_application', {
+      const { data: submittedApp, error: appErr } = await adminClient.rpc('submit_citizen_application', {
         p_request_type: 'CORRECTION',
         p_state_id: stateData.id,
         p_district_id: districtData.id,
@@ -256,6 +257,7 @@ async function runTests() {
       });
 
       if (appErr) console.error('  [DEBUG appErr]:', appErr);
+      appData = submittedApp;
 
       assert(!appErr && !!appData, `submit_citizen_application RPC executed: Created ${appData?.application_number}`);
       assert(appData?.status === 'SUBMITTED', 'Initial application status is SUBMITTED');
