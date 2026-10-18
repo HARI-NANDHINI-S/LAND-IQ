@@ -259,7 +259,6 @@ async function runTests() {
 
       assert(!appErr && !!appData, `submit_citizen_application RPC executed: Created ${appData?.application_number}`);
       assert(appData?.status === 'SUBMITTED', 'Initial application status is SUBMITTED');
-      testAppId = appData?.id;
 
       // Check timeline event
       const { data: timelineEvents } = await adminClient
@@ -360,12 +359,13 @@ async function runTests() {
     assert(!signInBErr && !!signInB?.user?.id, 'Citizen B authenticated successfully');
 
     // Citizen A submits an application
+    const surveyA = `SURV-CIT-A-${Date.now().toString().slice(-4)}`;
     const { data: appA, error: appAErr } = await citizenClientA.rpc('submit_citizen_application', {
       p_request_type: 'DIGITIZATION',
       p_state_id: stateData.id,
       p_district_id: districtData.id,
       p_village_id: villageData.id,
-      p_survey_number: 'SURV-CIT-A-01',
+      p_survey_number: surveyA,
       p_applicant_name: 'Audit Citizen User A',
       p_applicant_phone: '+91 91234 56789',
       p_description: 'Private citizen record request',
@@ -442,6 +442,188 @@ async function runTests() {
     assert(
       (staffGisSeenByCitizen || []).length === 0,
       'Security check: Citizen CANNOT read staff GIS cross-validation discrepancies table'
+    );
+
+    // -------------------------------------------------------------------------
+    // TEST SECTION 7: RIGOROUS ADVERSARIAL ATTACK & INTEGRITY HARDENING VERIFICATION
+    // -------------------------------------------------------------------------
+    console.log('\n--- 7. Rigorous Adversarial Attack & Integrity Hardening Verification ---');
+
+    // 7.1 Cross-User Document & Timeline Leakage (Horizontal Isolation)
+    const { data: bDocsOfA } = await citizenClientB
+      .from('application_documents')
+      .select('id, document_id')
+      .eq('application_id', appA.id);
+
+    assert((bDocsOfA || []).length === 0, 'Adversarial check: Citizen B CANNOT view Citizen A application documents');
+
+    const { data: bTimelineOfA } = await citizenClientB
+      .from('application_timeline')
+      .select('id, event_title')
+      .eq('application_id', appA.id);
+
+    assert((bTimelineOfA || []).length === 0, 'Adversarial check: Citizen B CANNOT view Citizen A application timeline');
+
+    const { data: bNotifsOfA } = await citizenClientB
+      .from('notifications')
+      .select('id, title')
+      .eq('user_id', signInA.user.id);
+
+    assert((bNotifsOfA || []).length === 0, 'Adversarial check: Citizen B CANNOT read Citizen A private notifications');
+
+    // 7.2 Invalid State Transitions & Repeated Decisions on Terminal Application
+    // We already approved appData in Section 5. Let's attempt repeated decision!
+    const { error: repeatDecideErr } = await adminClient.rpc('decide_citizen_application', {
+      p_application_id: appData.id,
+      p_decision: 'REJECT',
+      p_reason: 'Tamper attempt: Re-deciding already approved application',
+    });
+
+    assert(
+      !!repeatDecideErr && repeatDecideErr.message.includes('terminal status'),
+      `Adversarial check: Repeated decision on terminal application was REJECTED (${repeatDecideErr?.message})`
+    );
+
+    // Attempt requesting clarification on terminal application
+    const { error: clarifyTerminalErr } = await adminClient.rpc('request_application_clarification', {
+      p_application_id: appData.id,
+      p_message: 'Illegal attempt to reopen approved application',
+    });
+
+    assert(
+      !!clarifyTerminalErr && clarifyTerminalErr.message.includes('terminal status'),
+      `Adversarial check: Requesting clarification on terminal application was REJECTED (${clarifyTerminalErr?.message})`
+    );
+
+    // Attempt responding to clarification when status is NOT ACTION_REQUIRED
+    const { error: prematureRespErr } = await citizenClientA.rpc('respond_application_clarification', {
+      p_application_id: appA.id,
+      p_response: 'Premature response when status is SUBMITTED',
+    });
+
+    assert(
+      !!prematureRespErr && prematureRespErr.message.includes('expected ACTION_REQUIRED'),
+      `Adversarial check: Responding when not in ACTION_REQUIRED status was REJECTED (${prematureRespErr?.message})`
+    );
+
+    // Attempt decision with empty reason
+    const { error: emptyReasonErr } = await adminClient.rpc('decide_citizen_application', {
+      p_application_id: appA.id,
+      p_decision: 'APPROVE',
+      p_reason: '   ',
+    });
+
+    assert(
+      !!emptyReasonErr && emptyReasonErr.message.includes('decision reason is required'),
+      `Adversarial check: Decision with empty whitespace reason was REJECTED (${emptyReasonErr?.message})`
+    );
+
+    // 7.3 Foreign / Stolen Document Attachment Prevention
+    // Create a private document uploaded by Citizen B
+    const { data: bDoc } = await adminClient
+      .from('documents')
+      .insert({
+        state_id: stateData.id,
+        district_id: districtData.id,
+        village_id: villageData.id,
+        file_name: 'citizen_b_private_deed.pdf',
+        file_size_bytes: 1024,
+        mime_type: 'application/pdf',
+        storage_path: `documents/${districtData.id}/cit_b_private_${Date.now()}.pdf`,
+        uploaded_by: signInB.user.id,
+        processing_status: 'PENDING',
+      })
+      .select('id')
+      .single();
+
+    if (bDoc?.id) {
+      // Citizen A attempts to attach Citizen B's document to their application
+      const { error: stealDocErr } = await citizenClientA.rpc('submit_citizen_application', {
+        p_request_type: 'MUTATION',
+        p_state_id: stateData.id,
+        p_district_id: districtData.id,
+        p_village_id: villageData.id,
+        p_survey_number: 'SURV-STEAL-01',
+        p_applicant_name: 'Malicious Applicant A',
+        p_applicant_phone: '+91 99999 00000',
+        p_description: 'Attempting to attach stolen document',
+        p_document_ids: [bDoc.id],
+      });
+
+      assert(
+        !!stealDocErr && stealDocErr.message.includes('does not belong to you'),
+        `Adversarial check: Attaching foreign/stolen document was BLOCKED (${stealDocErr?.message})`
+      );
+    }
+
+    // 7.4 Duplicate Active Submission Prevention
+    const { error: dupSubmitErr } = await citizenClientA.rpc('submit_citizen_application', {
+      p_request_type: 'DIGITIZATION',
+      p_state_id: stateData.id,
+      p_district_id: districtData.id,
+      p_village_id: villageData.id,
+      p_survey_number: surveyA,
+      p_applicant_name: 'Audit Citizen User A',
+      p_applicant_phone: '+91 91234 56789',
+      p_description: 'Duplicate submission attempt',
+      p_document_ids: [],
+    });
+
+    assert(
+      !!dupSubmitErr && dupSubmitErr.message.includes('already pending review'),
+      `Adversarial check: Duplicate active submission for same survey was BLOCKED (${dupSubmitErr?.message})`
+    );
+
+    // 7.5 Unauthenticated Direct RPC Invocation Attacks
+    const { error: anonDecideErr } = await anonClient.rpc('decide_citizen_application', {
+      p_application_id: appA.id,
+      p_decision: 'APPROVE',
+      p_reason: 'Unauthenticated exploit attempt',
+    });
+    assert(!!anonDecideErr, 'Adversarial check: Anonymous call to decide_citizen_application was REJECTED');
+
+    const { error: anonVersionErr } = await anonClient.rpc('create_record_version', {
+      p_land_record_id: sampleRecord.id,
+      p_event_type: 'MANUAL_EDIT',
+      p_reason: 'Anonymous version injection',
+    });
+    assert(!!anonVersionErr, 'Adversarial check: Anonymous call to create_record_version was REJECTED');
+
+    const { error: anonGisRpcErr } = await anonClient.rpc('perform_gis_cross_validation', {
+      p_land_record_id: sampleRecord.id,
+    });
+    assert(!!anonGisRpcErr, 'Adversarial check: Anonymous call to perform_gis_cross_validation was REJECTED');
+
+    // 7.6 Record Versioning Input & Reason Validation
+    const { error: badEventErr } = await adminClient.rpc('create_record_version', {
+      p_land_record_id: sampleRecord.id,
+      p_event_type: 'UNAUTHORIZED_CUSTOM_EVENT',
+      p_reason: 'Testing invalid event enumeration',
+    });
+    assert(
+      !!badEventErr && badEventErr.message.includes('Invalid event type'),
+      `Adversarial check: Invalid event type enumeration was REJECTED (${badEventErr?.message})`
+    );
+
+    const { error: emptyVerReasonErr } = await adminClient.rpc('create_record_version', {
+      p_land_record_id: sampleRecord.id,
+      p_event_type: 'MANUAL_EDIT',
+      p_reason: '   ',
+    });
+    assert(
+      !!emptyVerReasonErr && emptyVerReasonErr.message.includes('reason is required'),
+      `Adversarial check: Manual edit version without reason was REJECTED (${emptyVerReasonErr?.message})`
+    );
+
+    // 7.7 GIS Discrepancy Resolution Note Requirement
+    const { error: emptyGisNotesErr } = await adminClient.rpc('resolve_gis_discrepancy', {
+      p_validation_id: '00000000-0000-0000-0000-000000000001',
+      p_resolution_status: 'ACCEPTED_OVERRIDE',
+      p_notes: '   ',
+    });
+    assert(
+      !!emptyGisNotesErr && emptyGisNotesErr.message.includes('notes are required'),
+      `Adversarial check: GIS resolution without notes was REJECTED (${emptyGisNotesErr?.message})`
     );
 
     console.log('\n========================================================================');
