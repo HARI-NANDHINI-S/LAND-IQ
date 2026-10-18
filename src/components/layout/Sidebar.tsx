@@ -6,6 +6,7 @@ import {
   CheckSquare,
   ChevronLeft,
   ChevronRight,
+  ClipboardList,
   FileText,
   Files,
   History,
@@ -26,42 +27,60 @@ export default function Sidebar() {
   const { hasPermission, user } = useAuth();
   const { sidebarCollapsed, toggleSidebar } = useAppStore();
 
-  const navigation = [
-    {
-      group: 'MAIN',
-      items: [{ name: 'Dashboard', to: '/dashboard', icon: LayoutDashboard, show: true }],
-    },
-    {
-      group: 'LAND RECORDS',
-      items: [
-        { name: 'Land Records', to: '/land-records', icon: FileText, show: hasPermission('land_record:read') },
-        { name: 'Documents', to: '/documents', icon: Files, show: hasPermission('document:read') },
-        { name: 'Verification', to: '/verification', icon: CheckSquare, show: hasPermission('verification:read') },
-        { name: 'Duplicates', to: '/duplicates', icon: Layers, show: hasPermission('duplicate:read') },
-      ],
-    },
-    {
-      group: 'INTELLIGENCE',
-      items: [
-        { name: 'Risk Intelligence', to: '/risk', icon: ShieldAlert, show: hasPermission('risk:read') },
-        { name: 'Monitoring', to: '/monitoring', icon: Activity, show: hasPermission('monitoring:read') },
-        { name: 'GIS Mapping', to: '/gis', icon: Map, show: hasPermission('land_record:read') },
-        { name: 'Analytics', to: '/analytics', icon: BarChart3, show: hasPermission('analytics:read') },
-      ],
-    },
-    {
-      group: 'ASSISTANT',
-      items: [{ name: 'BhoomiVoice', to: '/bhoomi-voice', icon: Bot, show: hasPermission('assistant:use') }],
-    },
-    {
-      group: 'GOVERNANCE',
-      items: [
-        { name: 'Audit Logs', to: '/audit-logs', icon: History, show: hasPermission('audit:read') },
-        { name: 'Users', to: '/users', icon: Users, show: user?.role?.code === 'SUPER_ADMIN' && hasPermission('user:read') },
-        { name: 'Settings', to: '/settings', icon: Settings, show: hasPermission('settings:manage') },
-      ],
-    },
-  ];
+  const isCitizen = user?.role?.code === 'CITIZEN' || user?.role?.code === 'CUSTOMER';
+
+  const navigation = isCitizen
+    ? [
+        {
+          group: 'CITIZEN SERVICES',
+          items: [
+            { name: 'Dashboard', to: '/dashboard', icon: LayoutDashboard, show: true },
+            { name: 'My Applications', to: '/citizen/applications', icon: ClipboardList, show: true },
+            { name: 'Land Records', to: '/land-records', icon: FileText, show: hasPermission('land_record:read') },
+          ],
+        },
+        {
+          group: 'ASSISTANT',
+          items: [{ name: 'BhoomiVoice', to: '/bhoomi-voice', icon: Bot, show: hasPermission('assistant:use') }],
+        },
+      ]
+    : [
+        {
+          group: 'MAIN',
+          items: [{ name: 'Dashboard', to: '/dashboard', icon: LayoutDashboard, show: true }],
+        },
+        {
+          group: 'LAND RECORDS',
+          items: [
+            { name: 'Applications Queue', to: '/applications', icon: ClipboardList, show: hasPermission('application:read') || hasPermission('verification:read') },
+            { name: 'Land Records', to: '/land-records', icon: FileText, show: hasPermission('land_record:read') },
+            { name: 'Documents', to: '/documents', icon: Files, show: hasPermission('document:read') },
+            { name: 'Verification', to: '/verification', icon: CheckSquare, show: hasPermission('verification:read') },
+            { name: 'Duplicates', to: '/duplicates', icon: Layers, show: hasPermission('duplicate:read') },
+          ],
+        },
+        {
+          group: 'INTELLIGENCE',
+          items: [
+            { name: 'Risk Intelligence', to: '/risk', icon: ShieldAlert, show: hasPermission('risk:read') },
+            { name: 'Monitoring', to: '/monitoring', icon: Activity, show: hasPermission('monitoring:read') },
+            { name: 'GIS Mapping', to: '/gis', icon: Map, show: hasPermission('land_record:read') },
+            { name: 'Analytics', to: '/analytics', icon: BarChart3, show: hasPermission('analytics:read') },
+          ],
+        },
+        {
+          group: 'ASSISTANT',
+          items: [{ name: 'BhoomiVoice', to: '/bhoomi-voice', icon: Bot, show: hasPermission('assistant:use') }],
+        },
+        {
+          group: 'GOVERNANCE',
+          items: [
+            { name: 'Audit Logs', to: '/audit-logs', icon: History, show: hasPermission('audit:read') },
+            { name: 'Users', to: '/users', icon: Users, show: user?.role?.code === 'SUPER_ADMIN' && hasPermission('user:read') },
+            { name: 'Settings', to: '/settings', icon: Settings, show: hasPermission('settings:manage') },
+          ],
+        },
+      ];
 
   return (
     <div
