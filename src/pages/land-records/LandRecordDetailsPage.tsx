@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { 
   ArrowLeft, Edit2, FileText, MapPin, Users, 
-  ShieldCheck, FileWarning, Clock 
+  ShieldCheck, FileWarning, Clock, Layers, History 
 } from 'lucide-react';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { landRecordService } from '@/services/land-records/landRecordService';
@@ -11,6 +11,8 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { GISCrossValidationPanel } from '@/components/gis/GISCrossValidationPanel';
+import { RecordVersionHistoryPanel } from '@/components/versioning/RecordVersionHistoryPanel';
 
 export default function LandRecordDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -93,6 +95,8 @@ export default function LandRecordDetailsPage() {
           <TabsTrigger value="overview"><FileText className="h-4 w-4 mr-2" /> Overview</TabsTrigger>
           <TabsTrigger value="owners"><Users className="h-4 w-4 mr-2" /> Owners ({(record.land_record_owners as any[])?.length || 0})</TabsTrigger>
           <TabsTrigger value="documents"><FileText className="h-4 w-4 mr-2" /> Documents ({(record.documents as any[])?.length || 0})</TabsTrigger>
+          <TabsTrigger value="gis"><Layers className="h-4 w-4 mr-2" /> GIS Validation</TabsTrigger>
+          <TabsTrigger value="history"><History className="h-4 w-4 mr-2" /> Version History</TabsTrigger>
           <TabsTrigger value="verification"><ShieldCheck className="h-4 w-4 mr-2" /> Verification</TabsTrigger>
         </TabsList>
         
@@ -216,6 +220,14 @@ export default function LandRecordDetailsPage() {
               )}
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="gis" className="mt-6 flex-1 space-y-6">
+          <GISCrossValidationPanel landRecordId={id!} />
+        </TabsContent>
+
+        <TabsContent value="history" className="mt-6 flex-1 space-y-6">
+          <RecordVersionHistoryPanel landRecordId={id!} />
         </TabsContent>
 
         <TabsContent value="verification" className="mt-6 flex-1">
