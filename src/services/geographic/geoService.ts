@@ -31,4 +31,20 @@ export const geoService = {
     if (error) throw toAppError(error);
     return data ?? [];
   },
+
+  async getVillagesByDistrict(districtId: string) {
+    const { data: taluks, error: talukError } = await supabase.from('taluks').select('id').eq('district_id', districtId);
+    if (talukError) throw toAppError(talukError);
+    const talukIds = (taluks ?? []).map((t) => t.id);
+    if (talukIds.length === 0) return [];
+
+    const { data, error } = await supabase
+      .from('villages')
+      .select('*')
+      .in('taluk_id', talukIds)
+      .eq('is_active', true)
+      .order('name');
+    if (error) throw toAppError(error);
+    return data ?? [];
+  },
 };
