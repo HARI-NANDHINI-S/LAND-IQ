@@ -20,6 +20,7 @@ export type UserRole =
   | 'VERIFICATION_OFFICER'
   | 'VIEWER'
   | 'CUSTOMER'
+  | 'CITIZEN'
   | 'GIS_ANALYST'
   | 'RISK_ANALYST'
   | 'AUDITOR';
