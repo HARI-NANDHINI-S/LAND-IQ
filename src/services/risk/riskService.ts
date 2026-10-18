@@ -46,9 +46,9 @@ export const riskService = {
           districts(name),
           taluks(name),
           villages(name),
-          land_record_owners(*, land_owners(*))
-        ),
-        verification_tasks(id, status, priority, created_at, assigned_to, profiles!assigned_to(full_name))`,
+          land_record_owners(*, land_owners(*)),
+          verification_tasks(id, status, priority, created_at, assigned_to, profiles!assigned_to(full_name))
+        )`,
         { count: 'exact' }
       )
       .order('calculated_at', { ascending: false })
@@ -106,18 +106,30 @@ export const riskService = {
           land_record_owners(*, land_owners(*)),
           documents(*),
           verification_tasks(*, profiles!assigned_to(full_name))
-        ),
-        duplicate_candidates(
-          *,
-          record_a:land_records!record_a_id(id, record_number, survey_number, patta_number, districts(name), taluks(name), villages(name)),
-          record_b:land_records!record_b_id(id, record_number, survey_number, patta_number, districts(name), taluks(name), villages(name))
         )`
       )
       .eq('id', assessmentId)
       .single();
 
     if (error) throw toAppError(error);
-    return data as any;
+
+    let duplicateCandidates: any[] = [];
+    if (data?.land_record_id) {
+      const { data: duplicates } = await supabase
+        .from('duplicate_candidates')
+        .select(
+          `*,
+          record_a:land_records!record_a_id(id, record_number, survey_number, patta_number, districts(name), taluks(name), villages(name)),
+          record_b:land_records!record_b_id(id, record_number, survey_number, patta_number, districts(name), taluks(name), villages(name))`
+        )
+        .or(`record_a_id.eq.${data.land_record_id},record_b_id.eq.${data.land_record_id}`);
+      duplicateCandidates = duplicates ?? [];
+    }
+
+    return {
+      ...data,
+      duplicate_candidates: duplicateCandidates,
+    } as any;
   },
 
   async getRiskStats() {

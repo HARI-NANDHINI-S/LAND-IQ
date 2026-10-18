@@ -45,3 +45,7 @@ htmlcov/
 # Local testing scratch files
 scratch_*.mjs
 
+# ML raw datasets and archives
+*.zip
+ocr-service/app/ml/data/raw/
+ml/data/raw/

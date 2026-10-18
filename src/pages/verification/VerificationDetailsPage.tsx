@@ -8,7 +8,6 @@ import {
   FileText,
   FileWarning,
   MapPin,
-  ShieldAlert,
   XCircle,
 } from 'lucide-react';
 import { verificationService } from '@/services/verification/verificationService';
@@ -20,8 +19,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { mlService } from '@/services/ml/mlService';
+import { mlService, type FieldValidationResult } from '@/services/ml/mlService';
 import { AnomalyPriorityCard } from '@/components/ml/AnomalyPriorityCard';
+import { FieldReviewSection } from '@/components/ml/FieldReviewSection';
 
 export default function VerificationDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -73,6 +73,29 @@ export default function VerificationDetailsPage() {
     },
     enabled: !!task,
   });
+
+  const { data: fieldValidationResults = {}, isLoading: isFieldValidating } = useQuery({
+    queryKey: ['ml-field-validations-task', task?.id, extractedFields.length],
+    queryFn: async () => {
+      if (!extractedFields.length) return {};
+      const batchReq = extractedFields.map((f: any) => ({
+        field_id: f.id,
+        field_name: f.field_name,
+        field_value: f.field_value || '',
+        confidence: f.confidence_score,
+      }));
+      const results = await mlService.validateFieldsBatch(batchReq);
+      const map: Record<string, FieldValidationResult> = {};
+      results.forEach((r) => {
+        if (r.field_id) map[r.field_id] = r;
+        map[r.field_name] = r;
+      });
+      return map;
+    },
+    enabled: !!extractedFields.length,
+  });
+
+  const canVerifyFields = hasPermission('verification:review') || hasPermission('verification:approve');
 
   const getStatusBadge = (status: string | null | undefined) => {
     const label = status || 'QUEUED';
@@ -280,29 +303,19 @@ export default function VerificationDetailsPage() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2"><ShieldAlert className="h-4 w-4" /> Extracted information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {!extractedFields.length ? (
-            <p className="text-sm text-muted-foreground">No extracted fields are available for this document yet.</p>
-          ) : (
-            <div className="space-y-3">
-              {extractedFields.map((field: any) => (
-                <div key={field.id} className="rounded-md border p-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="font-medium">{field.field_name}</div>
-                    <Badge variant="outline">{field.validation_status || 'PENDING'}</Badge>
-                  </div>
-                  <div className="mt-2 text-sm text-muted-foreground">Value: {field.field_value || '—'}</div>
-                  <div className="text-xs text-muted-foreground">Confidence: {field.confidence_score ?? 'N/A'}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      {/* ML-Based OCR Field Error Detection & Candidate Correction Review Section */}
+      <FieldReviewSection
+        fields={extractedFields as any}
+        validationResults={fieldValidationResults}
+        isLoading={isFieldValidating}
+        canVerify={canVerifyFields}
+        onVerifyField={async (fieldId, value) => {
+          await documentService.verifyExtractedField(fieldId, value);
+          void queryClient.invalidateQueries({ queryKey: ['verification-task', id] });
+          void queryClient.invalidateQueries({ queryKey: ['verification-tasks'] });
+          void queryClient.invalidateQueries({ queryKey: ['document-extracted-fields'] });
+        }}
+      />
 
       <Card>
         <CardHeader>

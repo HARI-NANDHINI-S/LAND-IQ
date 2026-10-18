@@ -436,7 +436,7 @@ export default function DocumentsPage() {
                 </TableRow>
               ) : (
                 documentsData.data.map((document: any) => (
-                  <TableRow key={document.id}>
+                  <TableRow key={document.id} className="animate-row-enter hover:bg-muted/40 transition-colors">
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div className="rounded-md bg-muted p-2">

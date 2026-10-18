@@ -346,15 +346,16 @@ export default function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {summaryCards.map((card, index) => {
             const CardIcon = card.icon;
+            const staggerClass = `animate-card-stagger-${Math.min(index + 1, 7)}`;
             return (
-              <Link key={card.title} to={card.href} className="block" style={{ animationDelay: `${index * 80}ms` }}>
+              <Link key={card.title} to={card.href} className={`block ${staggerClass} hover-card-elevate`}>
                 <StatCard
                   title={card.title}
                   value={isLoading ? undefined : card.value}
                   icon={<CardIcon className={card.tone === 'amber' ? 'text-amber-500' : card.tone === 'rose' ? 'text-rose-500' : card.tone === 'orange' ? 'text-orange-500' : card.tone === 'emerald' ? 'text-emerald-500' : 'text-blue-500'} />}
                   description={card.description}
                   loading={isLoading}
-                  className="landiq-fade-up"
+                  className="h-full"
                 />
               </Link>
             );

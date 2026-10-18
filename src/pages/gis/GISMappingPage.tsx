@@ -218,7 +218,7 @@ export default function GISMappingPage() {
       )}
 
       {geographyQuery.isError && <Alert variant="destructive"><AlertTitle>Unable to load geography</AlertTitle><AlertDescription>{geographyQuery.error instanceof Error ? geographyQuery.error.message : 'Please retry.'}</AlertDescription></Alert>}
-      <Card>
+      <Card className="animate-card-stagger-1 hover-card-elevate">
         <CardHeader className="pb-4"><CardTitle className="text-base">Geography and record filters</CardTitle><CardDescription>Options and matching records are read from Supabase within your access scope.</CardDescription></CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -248,7 +248,7 @@ export default function GISMappingPage() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="animate-card-stagger-2 hover-card-elevate">
         <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <CardTitle className="flex items-center gap-2"><MapPinned className="h-4 w-4" /> Parcel map</CardTitle>
@@ -303,10 +303,33 @@ export default function GISMappingPage() {
               if (nearbySearchEnabled) setNearbyPoint({ latitude, longitude });
             }}
           />
-          {spatialQuery.isError && <Alert variant="destructive"><AlertTitle>Spatial records unavailable</AlertTitle><AlertDescription>{spatialQuery.error instanceof Error ? spatialQuery.error.message : 'Unable to load records for this map area.'}</AlertDescription></Alert>}
-          {spatialExtentQuery.isError && <Alert variant="destructive"><AlertTitle>Map extent unavailable</AlertTitle><AlertDescription>{spatialExtentQuery.error instanceof Error ? spatialExtentQuery.error.message : 'Unable to locate recorded spatial data.'}</AlertDescription></Alert>}
+          {spatialQuery.isError && (
+            <Alert variant="destructive">
+              <AlertTitle>Spatial records unavailable</AlertTitle>
+              <AlertDescription className="flex items-center justify-between">
+                <span>{spatialQuery.error instanceof Error ? spatialQuery.error.message : 'Unable to load records for this map area.'}</span>
+                <Button variant="outline" size="sm" onClick={() => void spatialQuery.refetch()}>Retry</Button>
+              </AlertDescription>
+            </Alert>
+          )}
+          {spatialExtentQuery.isError && (
+            <Alert variant="destructive">
+              <AlertTitle>Map extent unavailable</AlertTitle>
+              <AlertDescription className="flex items-center justify-between">
+                <span>{spatialExtentQuery.error instanceof Error ? spatialExtentQuery.error.message : 'Unable to locate recorded spatial data.'}</span>
+                <Button variant="outline" size="sm" onClick={() => void spatialExtentQuery.refetch()}>Retry</Button>
+              </AlertDescription>
+            </Alert>
+          )}
           {!spatialQuery.isLoading && !spatialQuery.isError && !spatialQuery.data?.length && (
-            <p className="text-sm text-muted-foreground">Location unavailable for records in this map area. No persisted parcel geometry or coordinates were found for the current view.</p>
+            <div className="rounded-md border border-dashed p-3 text-xs text-muted-foreground flex items-center justify-between">
+              <span>No spatial records found in the current map viewport. Pan, zoom, or filter by administrative geography to locate parcels.</span>
+              {spatialExtentQuery.data && (
+                <Button variant="ghost" size="sm" className="h-7 text-xs text-primary" onClick={() => setMapBounds(spatialExtentQuery.data)}>
+                  Fit All Parcels
+                </Button>
+              )}
+            </div>
           )}
           {nearbyPoint && (
             <div className="space-y-2 rounded-md border p-3" aria-live="polite">
@@ -328,7 +351,7 @@ export default function GISMappingPage() {
       </Card>
 
       <section className="grid gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(20rem,0.75fr)]">
-        <Card>
+        <Card className="animate-card-stagger-3 hover-card-elevate">
           <CardHeader><CardTitle className="flex items-center gap-2"><Layers3 className="h-4 w-4" /> Administrative hierarchy</CardTitle><CardDescription>Selected path from real geography relationships</CardDescription></CardHeader>
           <CardContent>
             {geographyQuery.isLoading ? <div className="space-y-3"><Skeleton className="h-16 w-full" /><Skeleton className="h-16 w-5/6" /><Skeleton className="h-16 w-4/6" /></div> : (
@@ -349,7 +372,7 @@ export default function GISMappingPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="animate-card-stagger-4 hover-card-elevate">
           <CardHeader><CardTitle>Selected area summary</CardTitle><CardDescription>Counts and land area from records matching the filters</CardDescription></CardHeader>
           <CardContent className="space-y-5">
             {summaryQuery.isError ? <Alert variant="destructive"><AlertTitle>Summary unavailable</AlertTitle><AlertDescription>{summaryQuery.error instanceof Error ? summaryQuery.error.message : 'Could not calculate the summary.'}</AlertDescription></Alert> : summaryQuery.isLoading ? <div className="space-y-3"><Skeleton className="h-10 w-24" /><Skeleton className="h-16 w-full" /><Skeleton className="h-12 w-full" /></div> : <>
@@ -363,17 +386,28 @@ export default function GISMappingPage() {
         </Card>
       </section>
 
-      <Card>
+      <Card className="animate-card-stagger-5 hover-card-elevate">
         <CardHeader><CardTitle>Land records</CardTitle><CardDescription>{recordsQuery.data?.total ?? '—'} matching records in your RLS-authorized scope</CardDescription></CardHeader>
         <CardContent>
           {recordsQuery.isError ? <Alert variant="destructive"><AlertTitle>Unable to load land records</AlertTitle><AlertDescription>{recordsQuery.error instanceof Error ? recordsQuery.error.message : 'Please retry.'}</AlertDescription></Alert> : recordsQuery.isLoading ? <div className="space-y-2"><Skeleton className="h-10 w-full" /><Skeleton className="h-12 w-full" /><Skeleton className="h-12 w-full" /></div> : !recordsQuery.data?.data.length ? <div className="py-12 text-center"><MapPin className="mx-auto mb-3 h-9 w-9 text-muted-foreground/60" /><p className="font-medium">No records in this area</p><p className="mt-1 text-sm text-muted-foreground">No visible land records match the selected geography and filters.</p></div> : <>
             <div className="overflow-x-auto rounded-md border"><Table>
-              <TableHeader><TableRow><TableHead>Record</TableHead><TableHead>Survey / patta</TableHead><TableHead>Village / taluk</TableHead><TableHead>Area</TableHead><TableHead>Verification</TableHead><TableHead>Record status</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
-              <TableBody>{recordsQuery.data.data.map((record) => <TableRow key={record.id} data-state={selectedRecordId === record.id ? 'selected' : undefined}>
+              <TableHeader><TableRow><TableHead>Record</TableHead><TableHead>Survey / patta</TableHead><TableHead>Village / taluk</TableHead><TableHead>Area</TableHead><TableHead>Spatial</TableHead><TableHead>Verification</TableHead><TableHead>Record status</TableHead><TableHead className="text-right">Actions</TableHead></TableRow></TableHeader>
+              <TableBody>{recordsQuery.data.data.map((record) => <TableRow key={record.id} className="animate-row-enter hover:bg-muted/40 transition-colors" data-state={selectedRecordId === record.id ? 'selected' : undefined}>
                 <TableCell><button className="font-medium text-primary hover:underline" onClick={() => setSelectedRecordId(record.id)}>{record.record_number}</button></TableCell>
                 <TableCell>{record.survey_number} / {record.patta_number || '—'}</TableCell>
                 <TableCell>{(record as any).villages?.name || '—'}<div className="text-xs text-muted-foreground">{(record as any).taluks?.name || '—'}</div></TableCell>
                 <TableCell>{record.land_area == null ? '—' : `${record.land_area} ${record.land_area_unit || 'acres'}`}</TableCell>
+                <TableCell>
+                  {(record as any).latitude != null && (record as any).longitude != null ? (
+                    <Badge variant="outline" className="text-[11px] bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30 font-medium">
+                      <MapPin className="mr-1 h-3 w-3 inline" /> Mapped
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline" className="text-[11px] text-muted-foreground bg-muted/40 font-normal">
+                      Unmapped
+                    </Badge>
+                  )}
+                </TableCell>
                 <TableCell><Badge className={statusColor(record.verification_status)}>{record.verification_status.replace(/_/g, ' ')}</Badge></TableCell>
                 <TableCell><Badge className={statusColor(record.record_status)}>{record.record_status}</Badge></TableCell>
                 <TableCell className="text-right"><Button asChild size="sm" variant="outline"><Link to={`/land-records/${record.id}`}>View record <ArrowUpRight className="ml-2 h-3.5 w-3.5" /></Link></Button></TableCell>

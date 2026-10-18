@@ -10,7 +10,9 @@
     "test:supabase:connectivity": "node test-supabase.mjs",
     "test:ocr": ".\\ocr-service\\.venv\\Scripts\\python.exe ocr-service\\tests\\test_ocr_service.py",
     "test:ml": ".\\ocr-service\\.venv\\Scripts\\python.exe ocr-service\\tests\\test_ml_service.py",
-    "test:all": "npm run test:ocr && npm run test:ml",
+    "test:ml:fields": ".\\ocr-service\\.venv\\Scripts\\python.exe -m pytest ocr-service\\tests\\test_field_validator.py -v",
+    "test:services": "node scripts/test_risk_and_gis.mjs",
+    "test:all": "npm run test:ocr && npm run test:ml && npm run test:ml:fields && npm run test:services",
     "preview": "vite preview"
   },
   "dependencies": {

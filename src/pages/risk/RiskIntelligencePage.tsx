@@ -36,7 +36,7 @@ export default function RiskIntelligencePage() {
   const status = searchParams.get('status') || 'all';
   const [searchTerm, setSearchTerm] = useState(search);
 
-  const { data: assessmentsData, isLoading, isError } = useQuery({
+  const { data: assessmentsData, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['risk-assessments', page, search, riskLevel, status],
     queryFn: () =>
       riskService.getRiskAssessments({
@@ -135,13 +135,13 @@ export default function RiskIntelligencePage() {
       )}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {summaryCards.map(({ label, value, icon: Icon }) => (
-          <Card key={label}>
+        {summaryCards.map(({ label, value, icon: Icon }, index) => (
+          <Card key={label} className={`animate-card-stagger-${index + 1} hover-card-elevate`}>
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">{label}</p>
-                  <p className="mt-2 text-2xl font-bold">{statsLoading ? '—' : value}</p>
+                  <p className="mt-2 text-2xl font-bold tracking-tight">{statsLoading ? '—' : value}</p>
                 </div>
                 <div className="rounded-md bg-muted p-2">
                   <Icon className="h-5 w-5 text-muted-foreground" />
@@ -226,19 +226,36 @@ export default function RiskIntelligencePage() {
                 ))
               ) : isError ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="h-24 text-center text-destructive">
-                    Failed to load risk assessments.
+                  <TableCell colSpan={7} className="h-36 text-center">
+                    <div className="flex flex-col items-center justify-center space-y-2 text-destructive">
+                      <AlertTriangle className="h-6 w-6 text-rose-500" />
+                      <p className="font-semibold text-foreground">Failed to load risk assessments</p>
+                      <p className="text-xs text-muted-foreground max-w-md">
+                        {error instanceof Error ? error.message : 'A network or database issue prevented loading risk records.'}
+                      </p>
+                      <Button variant="outline" size="sm" onClick={() => void refetch()} className="mt-2 text-foreground">
+                        <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Retry Assessment Query
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ) : !assessmentsData?.data.length ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="h-32 text-center text-muted-foreground">
-                    No risk assessments available.
+                  <TableCell colSpan={7} className="h-36 text-center">
+                    <div className="flex flex-col items-center justify-center space-y-2 text-muted-foreground">
+                      <ShieldAlert className="h-8 w-8 text-muted-foreground/40" />
+                      <p className="font-medium text-foreground">No risk assessments available</p>
+                      <p className="text-xs max-w-sm">
+                        {search || riskLevel !== 'all' || status !== 'all'
+                          ? 'No assessments match the active filters. Try adjusting your search query or filter criteria.'
+                          : 'There are currently no flagged risk assessments for land records within your authorized scope.'}
+                      </p>
+                    </div>
                   </TableCell>
                 </TableRow>
               ) : (
                 assessmentsData.data.map((assessment: any) => (
-                  <TableRow key={assessment.id}>
+                  <TableRow key={assessment.id} className="animate-row-enter hover:bg-muted/40 transition-colors">
                     <TableCell>
                       <div className="font-medium">{assessment.land_records?.record_number || '—'}</div>
                       <div className="text-xs text-muted-foreground">{assessment.land_records?.survey_number || '—'}</div>

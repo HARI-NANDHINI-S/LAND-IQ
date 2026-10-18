@@ -1,0 +1,1078 @@
+{
+  "pipeline_version": "landiq-eval-pipeline-v3.0.0",
+  "evaluation_timestamp": "2026-10-18T06:25:49Z",
+  "model_version": "landiq-ocr-field-validator-v1.0.0",
+  "ocr_evaluation": {
+    "total_documents_evaluated": 18,
+    "evaluation_time_seconds": 90.01,
+    "overall_cer": 0.2957,
+    "overall_wer": 0.2983,
+    "by_quality": {
+      "clean": {
+        "count": 6,
+        "avg_cer": 0.2952,
+        "avg_wer": 0.2637
+      },
+      "medium": {
+        "count": 6,
+        "avg_cer": 0.2971,
+        "avg_wer": 0.2581
+      },
+      "degraded": {
+        "count": 6,
+        "avg_cer": 0.2948,
+        "avg_wer": 0.373
+      }
+    },
+    "by_document_type": {
+      "patta_chitta_extract": {
+        "count": 9,
+        "avg_cer": 0.2993,
+        "avg_wer": 0.3081
+      },
+      "tslr_extract": {
+        "count": 3,
+        "avg_cer": 0.2918,
+        "avg_wer": 0.2573
+      },
+      "sale_deed_extract": {
+        "count": 3,
+        "avg_cer": 0.3004,
+        "avg_wer": 0.3333
+      },
+      "settlement_deed_extract": {
+        "count": 3,
+        "avg_cer": 0.2842,
+        "avg_wer": 0.2749
+      }
+    },
+    "details": [
+      {
+        "doc_id": "EVAL-TN-COI-PATTA-001",
+        "quality": "clean",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.3005,
+        "wer": 0.3333,
+        "extracted_chars": 353,
+        "gt_chars": 541,
+        "extracted_fields_count": 10
+      },
+      {
+        "doc_id": "EVAL-TN-COI-PATTA-001",
+        "quality": "medium",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.305,
+        "wer": 0.2333,
+        "extracted_chars": 357,
+        "gt_chars": 541,
+        "extracted_fields_count": 10
+      },
+      {
+        "doc_id": "EVAL-TN-COI-PATTA-001",
+        "quality": "degraded",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.3005,
+        "wer": 0.3833,
+        "extracted_chars": 351,
+        "gt_chars": 541,
+        "extracted_fields_count": 10
+      },
+      {
+        "doc_id": "EVAL-TN-COI-TSLR-002",
+        "quality": "clean",
+        "doc_type": "tslr_extract",
+        "cer": 0.2911,
+        "wer": 0.193,
+        "extracted_chars": 369,
+        "gt_chars": 552,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-COI-TSLR-002",
+        "quality": "medium",
+        "doc_type": "tslr_extract",
+        "cer": 0.2911,
+        "wer": 0.193,
+        "extracted_chars": 369,
+        "gt_chars": 552,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-COI-TSLR-002",
+        "quality": "degraded",
+        "doc_type": "tslr_extract",
+        "cer": 0.2933,
+        "wer": 0.386,
+        "extracted_chars": 362,
+        "gt_chars": 552,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-SLM-SALEDEED-003",
+        "quality": "clean",
+        "doc_type": "sale_deed_extract",
+        "cer": 0.2989,
+        "wer": 0.2203,
+        "extracted_chars": 354,
+        "gt_chars": 539,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-SLM-SALEDEED-003",
+        "quality": "medium",
+        "doc_type": "sale_deed_extract",
+        "cer": 0.3034,
+        "wer": 0.2881,
+        "extracted_chars": 352,
+        "gt_chars": 539,
+        "extracted_fields_count": 7
+      },
+      {
+        "doc_id": "EVAL-TN-SLM-SALEDEED-003",
+        "quality": "degraded",
+        "doc_type": "sale_deed_extract",
+        "cer": 0.2989,
+        "wer": 0.4915,
+        "extracted_chars": 344,
+        "gt_chars": 539,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-TPR-SETTLE-004",
+        "quality": "clean",
+        "doc_type": "settlement_deed_extract",
+        "cer": 0.2857,
+        "wer": 0.2632,
+        "extracted_chars": 378,
+        "gt_chars": 564,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-TPR-SETTLE-004",
+        "quality": "medium",
+        "doc_type": "settlement_deed_extract",
+        "cer": 0.2835,
+        "wer": 0.2632,
+        "extracted_chars": 378,
+        "gt_chars": 564,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-TPR-SETTLE-004",
+        "quality": "degraded",
+        "doc_type": "settlement_deed_extract",
+        "cer": 0.2835,
+        "wer": 0.2982,
+        "extracted_chars": 376,
+        "gt_chars": 564,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-MDU-PATTA-005",
+        "quality": "clean",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.2953,
+        "wer": 0.3,
+        "extracted_chars": 365,
+        "gt_chars": 552,
+        "extracted_fields_count": 10
+      },
+      {
+        "doc_id": "EVAL-TN-MDU-PATTA-005",
+        "quality": "medium",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.2998,
+        "wer": 0.3167,
+        "extracted_chars": 363,
+        "gt_chars": 552,
+        "extracted_fields_count": 8
+      },
+      {
+        "doc_id": "EVAL-TN-MDU-PATTA-005",
+        "quality": "degraded",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.2953,
+        "wer": 0.3333,
+        "extracted_chars": 363,
+        "gt_chars": 552,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-COI-CHITTA-006",
+        "quality": "clean",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.2998,
+        "wer": 0.2727,
+        "extracted_chars": 352,
+        "gt_chars": 537,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-COI-CHITTA-006",
+        "quality": "medium",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.2998,
+        "wer": 0.2545,
+        "extracted_chars": 353,
+        "gt_chars": 537,
+        "extracted_fields_count": 9
+      },
+      {
+        "doc_id": "EVAL-TN-COI-CHITTA-006",
+        "quality": "degraded",
+        "doc_type": "patta_chitta_extract",
+        "cer": 0.2975,
+        "wer": 0.3455,
+        "extracted_chars": 349,
+        "gt_chars": 537,
+        "extracted_fields_count": 9
+      }
+    ]
+  },
+  "ml_classifier_evaluation": {
+    "test_samples_count": 704,
+    "accuracy": 0.929,
+    "precision_macro": 0.9371,
+    "recall_macro": 0.929,
+    "f1_macro": 0.9286,
+    "roc_auc": 0.9835,
+    "confusion_matrix": {
+      "true_negative_clean": 351,
+      "false_positive_alarm": 1,
+      "false_negative_missed": 49,
+      "true_positive_review": 303
+    },
+    "per_field_type": {
+      "taluk": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_answer_1": {
+        "samples": 12,
+        "accuracy": 1.0,
+        "tp": 6,
+        "fp": 0,
+        "tn": 6,
+        "fn": 0
+      },
+      "state": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_header_5": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_header_3": {
+        "samples": 8,
+        "accuracy": 0.875,
+        "tp": 3,
+        "fp": 0,
+        "tn": 4,
+        "fn": 1
+      },
+      "funsd_question_4": {
+        "samples": 46,
+        "accuracy": 0.9348,
+        "tp": 20,
+        "fp": 0,
+        "tn": 23,
+        "fn": 3
+      },
+      "funsd_question_33": {
+        "samples": 2,
+        "accuracy": 0.5,
+        "tp": 0,
+        "fp": 0,
+        "tn": 1,
+        "fn": 1
+      },
+      "funsd_header_7": {
+        "samples": 8,
+        "accuracy": 0.875,
+        "tp": 3,
+        "fp": 0,
+        "tn": 4,
+        "fn": 1
+      },
+      "funsd_question_5": {
+        "samples": 48,
+        "accuracy": 0.9167,
+        "tp": 21,
+        "fp": 1,
+        "tn": 23,
+        "fn": 3
+      },
+      "funsd_header_25": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_answer_4": {
+        "samples": 12,
+        "accuracy": 0.8333,
+        "tp": 4,
+        "fp": 0,
+        "tn": 6,
+        "fn": 2
+      },
+      "funsd_question_0": {
+        "samples": 54,
+        "accuracy": 0.9259,
+        "tp": 23,
+        "fp": 0,
+        "tn": 27,
+        "fn": 4
+      },
+      "funsd_question_3": {
+        "samples": 42,
+        "accuracy": 0.881,
+        "tp": 16,
+        "fp": 0,
+        "tn": 21,
+        "fn": 5
+      },
+      "funsd_question_2": {
+        "samples": 60,
+        "accuracy": 0.9667,
+        "tp": 28,
+        "fp": 0,
+        "tn": 30,
+        "fn": 2
+      },
+      "funsd_question_9": {
+        "samples": 10,
+        "accuracy": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "tn": 5,
+        "fn": 0
+      },
+      "funsd_question_13": {
+        "samples": 2,
+        "accuracy": 0.5,
+        "tp": 0,
+        "fp": 0,
+        "tn": 1,
+        "fn": 1
+      },
+      "survey_number": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_answer_0": {
+        "samples": 4,
+        "accuracy": 0.75,
+        "tp": 1,
+        "fp": 0,
+        "tn": 2,
+        "fn": 1
+      },
+      "funsd_question_1": {
+        "samples": 54,
+        "accuracy": 0.8889,
+        "tp": 21,
+        "fp": 0,
+        "tn": 27,
+        "fn": 6
+      },
+      "funsd_answer_5": {
+        "samples": 10,
+        "accuracy": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "tn": 5,
+        "fn": 0
+      },
+      "owner_name": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_header_1": {
+        "samples": 4,
+        "accuracy": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "tn": 2,
+        "fn": 0
+      },
+      "funsd_question_6": {
+        "samples": 30,
+        "accuracy": 0.9667,
+        "tp": 14,
+        "fp": 0,
+        "tn": 15,
+        "fn": 1
+      },
+      "extent": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_question_15": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_answer_6": {
+        "samples": 16,
+        "accuracy": 0.9375,
+        "tp": 7,
+        "fp": 0,
+        "tn": 8,
+        "fn": 1
+      },
+      "funsd_question_7": {
+        "samples": 22,
+        "accuracy": 1.0,
+        "tp": 11,
+        "fp": 0,
+        "tn": 11,
+        "fn": 0
+      },
+      "funsd_header_6": {
+        "samples": 8,
+        "accuracy": 0.875,
+        "tp": 3,
+        "fp": 0,
+        "tn": 4,
+        "fn": 1
+      },
+      "funsd_answer_7": {
+        "samples": 18,
+        "accuracy": 0.8333,
+        "tp": 6,
+        "fp": 0,
+        "tn": 9,
+        "fn": 3
+      },
+      "pattadar_passbook_number": {
+        "samples": 8,
+        "accuracy": 0.75,
+        "tp": 2,
+        "fp": 0,
+        "tn": 4,
+        "fn": 2
+      },
+      "funsd_question_30": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_question_8": {
+        "samples": 18,
+        "accuracy": 0.8889,
+        "tp": 7,
+        "fp": 0,
+        "tn": 9,
+        "fn": 2
+      },
+      "funsd_header_8": {
+        "samples": 12,
+        "accuracy": 0.9167,
+        "tp": 5,
+        "fp": 0,
+        "tn": 6,
+        "fn": 1
+      },
+      "funsd_header_0": {
+        "samples": 4,
+        "accuracy": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "tn": 2,
+        "fn": 0
+      },
+      "funsd_answer_3": {
+        "samples": 16,
+        "accuracy": 0.9375,
+        "tp": 7,
+        "fp": 0,
+        "tn": 8,
+        "fn": 1
+      },
+      "funsd_answer_8": {
+        "samples": 10,
+        "accuracy": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "tn": 5,
+        "fn": 0
+      },
+      "funsd_question_16": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_question_12": {
+        "samples": 4,
+        "accuracy": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "tn": 2,
+        "fn": 0
+      },
+      "funsd_answer_27": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_answer_12": {
+        "samples": 2,
+        "accuracy": 0.5,
+        "tp": 0,
+        "fp": 0,
+        "tn": 1,
+        "fn": 1
+      },
+      "funsd_answer_11": {
+        "samples": 4,
+        "accuracy": 0.75,
+        "tp": 1,
+        "fp": 0,
+        "tn": 2,
+        "fn": 1
+      },
+      "district": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "pattadar_name": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_header_4": {
+        "samples": 6,
+        "accuracy": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "tn": 3,
+        "fn": 0
+      },
+      "document_date": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_header_2": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_question_14": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_answer_35": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "patta_number": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_answer_34": {
+        "samples": 2,
+        "accuracy": 0.5,
+        "tp": 0,
+        "fp": 0,
+        "tn": 1,
+        "fn": 1
+      },
+      "village": {
+        "samples": 8,
+        "accuracy": 0.875,
+        "tp": 3,
+        "fp": 0,
+        "tn": 4,
+        "fn": 1
+      },
+      "funsd_question_10": {
+        "samples": 8,
+        "accuracy": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "tn": 4,
+        "fn": 0
+      },
+      "funsd_header_13": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_question_11": {
+        "samples": 4,
+        "accuracy": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "tn": 2,
+        "fn": 0
+      },
+      "document_number": {
+        "samples": 8,
+        "accuracy": 0.875,
+        "tp": 3,
+        "fp": 0,
+        "tn": 4,
+        "fn": 1
+      },
+      "funsd_answer_2": {
+        "samples": 6,
+        "accuracy": 0.8333,
+        "tp": 2,
+        "fp": 0,
+        "tn": 3,
+        "fn": 1
+      },
+      "funsd_header_9": {
+        "samples": 4,
+        "accuracy": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "tn": 2,
+        "fn": 0
+      },
+      "funsd_question_26": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_answer_16": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_header_11": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_question_28": {
+        "samples": 2,
+        "accuracy": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "tn": 1,
+        "fn": 0
+      },
+      "funsd_answer_9": {
+        "samples": 4,
+        "accuracy": 0.75,
+        "tp": 1,
+        "fp": 0,
+        "tn": 2,
+        "fn": 1
+      }
+    },
+    "per_corruption_type": {
+      "none": {
+        "samples": 352,
+        "accuracy": 0.9972
+      },
+      "syntax_corruption": {
+        "samples": 101,
+        "accuracy": 0.8911
+      },
+      "character_omission": {
+        "samples": 49,
+        "accuracy": 0.7143
+      },
+      "visual_confusion_5_for_S": {
+        "samples": 10,
+        "accuracy": 1.0
+      },
+      "character_insertion": {
+        "samples": 63,
+        "accuracy": 0.873
+      },
+      "digit_intruded_in_name": {
+        "samples": 4,
+        "accuracy": 1.0
+      },
+      "character_transposition": {
+        "samples": 64,
+        "accuracy": 0.8594
+      },
+      "visual_confusion_Q_for_O": {
+        "samples": 5,
+        "accuracy": 0.6
+      },
+      "visual_confusion_8_for_B": {
+        "samples": 3,
+        "accuracy": 1.0
+      },
+      "missing_cadastral_area_unit": {
+        "samples": 2,
+        "accuracy": 1.0
+      },
+      "visual_confusion_5_for_s": {
+        "samples": 5,
+        "accuracy": 1.0
+      },
+      "visual_confusion_l_for_I": {
+        "samples": 4,
+        "accuracy": 0.5
+      },
+      "visual_confusion_0_for_o": {
+        "samples": 6,
+        "accuracy": 1.0
+      },
+      "visual_confusion_1_for_I": {
+        "samples": 2,
+        "accuracy": 0.5
+      },
+      "duplicated_decimal_point": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "alphabetical_character_in_date": {
+        "samples": 3,
+        "accuracy": 1.0
+      },
+      "visual_confusion_|_for_1": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "visual_confusion_0_for_O": {
+        "samples": 8,
+        "accuracy": 0.875
+      },
+      "visual_confusion_B_for_8": {
+        "samples": 3,
+        "accuracy": 0.6667
+      },
+      "impossible_calendar_month": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "unstripped_ocr_label_prefix": {
+        "samples": 3,
+        "accuracy": 1.0
+      },
+      "incomplete_patta_token": {
+        "samples": 4,
+        "accuracy": 1.0
+      },
+      "visual_confusion_1_for_l": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "truncated_initials": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "visual_confusion_G_for_6": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "visual_confusion_O_for_0": {
+        "samples": 2,
+        "accuracy": 1.0
+      },
+      "visual_confusion_Z_for_2": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "underscore_noise_artifact": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "visual_confusion_l_for_1": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "visual_confusion_l_prefix": {
+        "samples": 1,
+        "accuracy": 1.0
+      },
+      "spurious_noise_symbol": {
+        "samples": 1,
+        "accuracy": 1.0
+      }
+    }
+  },
+  "threshold_tuning": {
+    "validation_samples": 675,
+    "thresholds_evaluated": [
+      {
+        "threshold": 0.2,
+        "tp": 405,
+        "fp": 34,
+        "tn": 226,
+        "fn": 10,
+        "recall_needs_review": 0.9759,
+        "precision_needs_review": 0.9226,
+        "f1_needs_review": 0.9485,
+        "false_positive_rate": 0.1308,
+        "missed_errors_fn": 10
+      },
+      {
+        "threshold": 0.25,
+        "tp": 402,
+        "fp": 22,
+        "tn": 238,
+        "fn": 13,
+        "recall_needs_review": 0.9687,
+        "precision_needs_review": 0.9481,
+        "f1_needs_review": 0.9583,
+        "false_positive_rate": 0.0846,
+        "missed_errors_fn": 13
+      },
+      {
+        "threshold": 0.3,
+        "tp": 397,
+        "fp": 5,
+        "tn": 255,
+        "fn": 18,
+        "recall_needs_review": 0.9566,
+        "precision_needs_review": 0.9876,
+        "f1_needs_review": 0.9718,
+        "false_positive_rate": 0.0192,
+        "missed_errors_fn": 18
+      },
+      {
+        "threshold": 0.35,
+        "tp": 392,
+        "fp": 2,
+        "tn": 258,
+        "fn": 23,
+        "recall_needs_review": 0.9446,
+        "precision_needs_review": 0.9949,
+        "f1_needs_review": 0.9691,
+        "false_positive_rate": 0.0077,
+        "missed_errors_fn": 23
+      },
+      {
+        "threshold": 0.4,
+        "tp": 388,
+        "fp": 1,
+        "tn": 259,
+        "fn": 27,
+        "recall_needs_review": 0.9349,
+        "precision_needs_review": 0.9974,
+        "f1_needs_review": 0.9652,
+        "false_positive_rate": 0.0038,
+        "missed_errors_fn": 27
+      },
+      {
+        "threshold": 0.45,
+        "tp": 385,
+        "fp": 0,
+        "tn": 260,
+        "fn": 30,
+        "recall_needs_review": 0.9277,
+        "precision_needs_review": 1.0,
+        "f1_needs_review": 0.9625,
+        "false_positive_rate": 0.0,
+        "missed_errors_fn": 30
+      },
+      {
+        "threshold": 0.5,
+        "tp": 382,
+        "fp": 0,
+        "tn": 260,
+        "fn": 33,
+        "recall_needs_review": 0.9205,
+        "precision_needs_review": 1.0,
+        "f1_needs_review": 0.9586,
+        "false_positive_rate": 0.0,
+        "missed_errors_fn": 33
+      },
+      {
+        "threshold": 0.55,
+        "tp": 380,
+        "fp": 0,
+        "tn": 260,
+        "fn": 35,
+        "recall_needs_review": 0.9157,
+        "precision_needs_review": 1.0,
+        "f1_needs_review": 0.956,
+        "false_positive_rate": 0.0,
+        "missed_errors_fn": 35
+      },
+      {
+        "threshold": 0.6,
+        "tp": 378,
+        "fp": 0,
+        "tn": 260,
+        "fn": 37,
+        "recall_needs_review": 0.9108,
+        "precision_needs_review": 1.0,
+        "f1_needs_review": 0.9533,
+        "false_positive_rate": 0.0,
+        "missed_errors_fn": 37
+      }
+    ],
+    "recommended_operational_threshold": 0.4,
+    "recommendation_rationale": "Threshold tau=0.40 minimizes missed legal errors (maximizing recall for NEEDS_REVIEW) while maintaining very low false alarm rates on legitimate clean land records."
+  },
+  "calibration": {
+    "brier_score": 0.0533,
+    "expected_calibration_error": 0.0594,
+    "bin_details": [
+      {
+        "bin": "[0.0-0.1]",
+        "count": 204,
+        "avg_predicted_prob": 0.0508,
+        "empirical_error_rate": 0.0049,
+        "calibration_gap": 0.0459
+      },
+      {
+        "bin": "[0.1-0.2]",
+        "count": 123,
+        "avg_predicted_prob": 0.1368,
+        "empirical_error_rate": 0.1301,
+        "calibration_gap": 0.0067
+      },
+      {
+        "bin": "[0.2-0.3]",
+        "count": 47,
+        "avg_predicted_prob": 0.2506,
+        "empirical_error_rate": 0.3617,
+        "calibration_gap": 0.1111
+      },
+      {
+        "bin": "[0.3-0.4]",
+        "count": 22,
+        "avg_predicted_prob": 0.3368,
+        "empirical_error_rate": 0.5455,
+        "calibration_gap": 0.2087
+      },
+      {
+        "bin": "[0.4-0.5]",
+        "count": 4,
+        "avg_predicted_prob": 0.4279,
+        "empirical_error_rate": 0.75,
+        "calibration_gap": 0.3221
+      },
+      {
+        "bin": "[0.5-0.6]",
+        "count": 5,
+        "avg_predicted_prob": 0.5436,
+        "empirical_error_rate": 0.8,
+        "calibration_gap": 0.2564
+      },
+      {
+        "bin": "[0.6-0.7]",
+        "count": 6,
+        "avg_predicted_prob": 0.6626,
+        "empirical_error_rate": 1.0,
+        "calibration_gap": 0.3374
+      },
+      {
+        "bin": "[0.7-0.8]",
+        "count": 8,
+        "avg_predicted_prob": 0.7339,
+        "empirical_error_rate": 1.0,
+        "calibration_gap": 0.2661
+      },
+      {
+        "bin": "[0.8-0.9]",
+        "count": 14,
+        "avg_predicted_prob": 0.8614,
+        "empirical_error_rate": 1.0,
+        "calibration_gap": 0.1386
+      },
+      {
+        "bin": "[0.9-1.0]",
+        "count": 271,
+        "avg_predicted_prob": 0.9514,
+        "empirical_error_rate": 1.0,
+        "calibration_gap": 0.0486
+      }
+    ]
+  },
+  "model_comparison": {
+    "dummy_most_frequent": {
+      "accuracy": 0.5,
+      "f1_macro": 0.3333
+    },
+    "rule_based_heuristic": {
+      "accuracy": 0.8821
+    },
+    "logistic_regression": {
+      "accuracy": 0.8892
+    },
+    "random_forest_deployed": {
+      "accuracy": 0.929,
+      "f1_macro": 0.9286,
+      "roc_auc": 0.9835
+    }
+  }
+}

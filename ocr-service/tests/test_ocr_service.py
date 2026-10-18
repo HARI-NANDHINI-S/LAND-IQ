@@ -1,7 +1,8 @@
 """
 LAND-IQ OCR Service Automated Test Suite
 Tests:
-- Health check
+- Health check (/health)
+- Readiness check (/ready)
 - Empty file handling (400)
 - Invalid/corrupt file handling (400)
 - Image OCR inference and field extraction
@@ -11,15 +12,53 @@ Tests:
 """
 
 import io
+import os
+import sys
 import time
+from typing import Any
 import requests
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
-OCR_BASE_URL = "http://127.0.0.1:8001"
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from starlette.testclient import TestClient
+from app.main import app
+
+OCR_BASE_URL = os.getenv("OCR_BASE_URL", "http://127.0.0.1:8001")
+
+_client_cache = None
+
+
+def get_client_mode():
+    global _client_cache
+    if _client_cache is not None:
+        return _client_cache
+    try:
+        r = requests.get(f"{OCR_BASE_URL}/health", timeout=0.8)
+        if r.status_code == 200:
+            _client_cache = ("live", None)
+            return _client_cache
+    except Exception:
+        pass
+    _client_cache = ("testclient", TestClient(app))
+    return _client_cache
+
+
+def api_get(path: str, **kwargs):
+    mode, tc = get_client_mode()
+    if mode == "live":
+        return requests.get(f"{OCR_BASE_URL}{path}", **kwargs)
+    return tc.get(path, **kwargs)
+
+
+def api_post(path: str, **kwargs):
+    mode, tc = get_client_mode()
+    if mode == "live":
+        return requests.post(f"{OCR_BASE_URL}{path}", **kwargs)
+    return tc.post(path, **kwargs)
 
 
 def test_health():
-    resp = requests.get(f"{OCR_BASE_URL}/health", timeout=5)
+    resp = api_get("/health", timeout=5)
     assert resp.status_code == 200, f"Health check failed with {resp.status_code}"
     data = resp.json()
     assert data["status"] == "ok"
@@ -27,16 +66,26 @@ def test_health():
     print("PASS: Health check passed.")
 
 
+def test_ready():
+    resp = api_get("/ready", timeout=5)
+    assert resp.status_code == 200, f"Ready check failed with {resp.status_code}"
+    data = resp.json()
+    assert data["status"] == "ready"
+    assert data["field_validator_loaded"] is True
+    assert data["anomaly_classifier_loaded"] is True
+    print("PASS: Readiness check passed.")
+
+
 def test_empty_file():
     files = {"file": ("empty.png", b"", "image/png")}
-    resp = requests.post(f"{OCR_BASE_URL}/ocr", files=files, timeout=5)
+    resp = api_post("/ocr", files=files, timeout=5)
     assert resp.status_code == 400, f"Expected 400 for empty file, got {resp.status_code}"
     print("PASS: Empty file correctly rejected with 400.")
 
 
 def test_corrupt_file():
     files = {"file": ("corrupt.png", b"NOT_A_VALID_IMAGE_OR_PDF_DATA", "image/png")}
-    resp = requests.post(f"{OCR_BASE_URL}/ocr", files=files, timeout=5)
+    resp = api_post("/ocr", files=files, timeout=5)
     assert resp.status_code == 400, f"Expected 400 for corrupt file header, got {resp.status_code}"
     print("PASS: Corrupt file header correctly rejected with 400.")
 
@@ -71,9 +120,9 @@ def create_test_image() -> bytes:
 def test_image_ocr():
     img_bytes = create_test_image()
     files = {"file": ("land_record.png", img_bytes, "image/png")}
-    
+
     t0 = time.time()
-    resp = requests.post(f"{OCR_BASE_URL}/ocr", files=files, timeout=30)
+    resp = api_post("/ocr", files=files, timeout=30)
     elapsed = time.time() - t0
 
     assert resp.status_code == 200, f"Image OCR failed with {resp.status_code}: {resp.text}"
@@ -81,7 +130,7 @@ def test_image_ocr():
 
     assert "pages" in data, "Response missing 'pages' key"
     assert len(data["pages"]) == 1, f"Expected 1 page, got {len(data['pages'])}"
-    
+
     page = data["pages"][0]
     assert page["page_number"] == 1
     assert isinstance(page["text"], str) and len(page["text"]) > 0
@@ -117,9 +166,9 @@ def create_test_pdf() -> bytes:
 def test_pdf_ocr():
     pdf_bytes = create_test_pdf()
     files = {"file": ("two_page_record.pdf", pdf_bytes, "application/pdf")}
-    
+
     t0 = time.time()
-    resp = requests.post(f"{OCR_BASE_URL}/ocr", files=files, timeout=60)
+    resp = api_post("/ocr", files=files, timeout=60)
     elapsed = time.time() - t0
 
     assert resp.status_code == 200, f"PDF OCR failed with {resp.status_code}: {resp.text}"
@@ -127,7 +176,7 @@ def test_pdf_ocr():
 
     assert "pages" in data
     assert len(data["pages"]) == 2, f"Expected 2 pages, got {len(data['pages'])}"
-    
+
     for i, page in enumerate(data["pages"], 1):
         assert page["page_number"] == i
         assert isinstance(page["text"], str)
@@ -140,6 +189,7 @@ def test_pdf_ocr():
 if __name__ == "__main__":
     print("Running LAND-IQ OCR service test suite...")
     test_health()
+    test_ready()
     test_empty_file()
     test_corrupt_file()
     test_image_ocr()

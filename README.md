@@ -8,7 +8,8 @@ LAND-IQ is an AI-powered land-record digitization, validation, and intelligence 
 
 - **Frontend**: Single-page application using React 19 and TanStack Query. Communicates directly with Supabase via the public `anon` key, bounded by PostgreSQL RLS.
 - **Database & Storage**: Hosted Supabase PostgreSQL database with 28 RLS-protected tables, strict role-based access control (RBAC), and private document storage (`bhoomi-documents`).
-- **OCR Microservice**: Python FastAPI service running local PaddleOCR (`PP-OCRv6`, `UVDoc`, `PP-LCNet`). Supports both multipart file uploads and secure remote fetching via signed URLs.
+- **OCR & ML Microservice**: Python FastAPI service running local PaddleOCR (`PP-OCRv6`, `UVDoc`, `PP-LCNet`) and Random Forest ML Field Error Detection & Candidate Correction Validator. Supports both multipart file uploads and secure remote fetching via signed URLs.
+- **ML Field Validator & Deployment Guide**: See [DEPLOYMENT_AND_RELEASE_GUIDE.md](DEPLOYMENT_AND_RELEASE_GUIDE.md) for complete evaluation metrics, reproducible benchmarks, Docker configuration, and statutory safeguards.
 - **Edge Functions**:
   - `process-document`: Server-side trusted OCR processing gateway utilizing `service_role` privileges to validate scopes and persist extracted data.
   - `bhoomivoice-chat`: Natural language assistant using Groq LLM integration (`qwen/qwen3.8-27b`) scoped to the caller's database permissions.
@@ -29,16 +30,15 @@ LAND-IQ is an AI-powered land-record digitization, validation, and intelligence 
 
 All secrets must remain private. Never commit actual API keys or service role secrets.
 
-### 1. Frontend (`.env`)
+### 1. Frontend (`.env` — Public Browser Variables)
 
 | Variable | Description | Example / Default |
 | :--- | :--- | :--- |
-| `VITE_SUPABASE_URL` | Supabase Project URL | `https://your-project.supabase.co` |
-| `VITE_SUPABASE_ANON_KEY` | Supabase Public Anon Key | `eyJhbGciOi...` |
-| `VITE_OCR_SERVICE_URL` | OCR Microservice URL | `http://127.0.0.1:8001` (local) or `https://ocr.yourdomain.com` (prod) |
-| `VITE_OCR_API_KEY` | Optional OCR API Key | `your-ocr-api-key` (optional in local dev) |
+| `VITE_SUPABASE_URL` | Supabase Project URL (Public) | `https://your-project.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | Supabase Public Anon Key (Bound by RLS) | `eyJhbGciOi...` |
+| `VITE_OCR_SERVICE_URL` | OCR Microservice URL (Client endpoint) | `http://127.0.0.1:8001` (local) or `https://ocr.yourdomain.com` (prod) |
 
-> ⚠️ **SECURITY RULE**: Never place `SUPABASE_SERVICE_ROLE_KEY` or database passwords in frontend `.env` files.
+> ⚠️ **CRITICAL SECURITY RULE**: Never place private backend secrets (`OCR_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, or DB credentials) in `VITE_*` variables. Any variable prefixed with `VITE_` is bundled into compiled client JavaScript. Server-to-server keys belong strictly in backend microservice configs and Supabase Edge Function secrets.
 
 ### 2. OCR Microservice Environment (`ocr-service/.env` or Docker)
 

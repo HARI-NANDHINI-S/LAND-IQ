@@ -1,0 +1,167 @@
+{
+  "model_name": "LAND-IQ OCR Field Error Detection & Validation Classifier",
+  "model_version": "landiq-ocr-field-validator-v1.0.0",
+  "algorithm": "RandomForestClassifier(n_estimators=100, max_depth=8, class_weight='balanced')",
+  "feature_names": [
+    "ocr_confidence",
+    "field_type_encoded",
+    "char_length",
+    "digit_ratio",
+    "alpha_ratio",
+    "special_char_ratio",
+    "uppercase_ratio",
+    "whitespace_ratio",
+    "has_digit",
+    "has_alpha",
+    "has_special",
+    "char_entropy",
+    "format_pattern_match",
+    "has_ocr_confusion_chars",
+    "num_words",
+    "is_empty_or_whitespace"
+  ],
+  "target_labels": [
+    "LIKELY_CORRECT",
+    "NEEDS_REVIEW"
+  ],
+  "label_mapping": {
+    "LIKELY_CORRECT": 0,
+    "NEEDS_REVIEW": 1
+  },
+  "random_seed": 42,
+  "train_samples": 3376,
+  "test_samples": 704,
+  "metrics": {
+    "accuracy": 0.9289772727272727,
+    "precision_macro": 0.9371052631578947,
+    "precision_weighted": 0.9371052631578948,
+    "recall_macro": 0.9289772727272727,
+    "recall_weighted": 0.9289772727272727,
+    "f1_macro": 0.9286455630513752,
+    "f1_weighted": 0.9286455630513752,
+    "roc_auc": 0.9834791451446282,
+    "confusion_matrix": [
+      [
+        351,
+        1
+      ],
+      [
+        49,
+        303
+      ]
+    ],
+    "labels_order": [
+      "LIKELY_CORRECT (0)",
+      "NEEDS_REVIEW (1)"
+    ]
+  },
+  "baseline_comparison": {
+    "dummy_most_frequent": {
+      "accuracy": 0.5,
+      "f1_macro": 0.3333333333333333
+    },
+    "rule_based_heuristic": {
+      "accuracy": 0.8821022727272727,
+      "precision_macro": 0.9045977011494253,
+      "recall_macro": 0.8821022727272727,
+      "f1_macro": 0.8804404094719547
+    },
+    "logistic_regression": {
+      "accuracy": 0.8892045454545454,
+      "f1_macro": 0.8890290037831021
+    },
+    "rf_improvement_over_rules_f1": 0.0482,
+    "rf_improvement_over_dummy_f1": 0.5953
+  },
+  "per_field_type_breakdown": {
+    "taluk": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "funsd_form_field": {
+      "samples": 608,
+      "accuracy": 0.9243,
+      "f1_macro": 0.9239
+    },
+    "state": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "survey_number": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "owner_name": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "extent": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "pattadar_passbook_number": {
+      "samples": 8,
+      "accuracy": 0.75,
+      "f1_macro": 0.7333
+    },
+    "district": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "pattadar_name": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "document_date": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "patta_number": {
+      "samples": 8,
+      "accuracy": 1.0,
+      "f1_macro": 1.0
+    },
+    "village": {
+      "samples": 8,
+      "accuracy": 0.875,
+      "f1_macro": 0.873
+    },
+    "document_number": {
+      "samples": 8,
+      "accuracy": 0.875,
+      "f1_macro": 0.873
+    }
+  },
+  "feature_importances": {
+    "ocr_confidence": 0.8083,
+    "alpha_ratio": 0.0444,
+    "special_char_ratio": 0.0388,
+    "char_entropy": 0.0219,
+    "char_length": 0.0171,
+    "uppercase_ratio": 0.0161,
+    "has_special": 0.016,
+    "digit_ratio": 0.013,
+    "format_pattern_match": 0.0078,
+    "has_digit": 0.0056,
+    "whitespace_ratio": 0.0036,
+    "field_type_encoded": 0.0023,
+    "has_alpha": 0.0022,
+    "has_ocr_confusion_chars": 0.0015,
+    "num_words": 0.0013,
+    "is_empty_or_whitespace": 0.0
+  },
+  "safeguards": {
+    "dataset_nature": "Empirical validation dataset constructed from FUNSD scanned documents and authentic South Indian cadastral formats with partitioned document-level splitting",
+    "is_experimental": true,
+    "adjudication_notice": "Field-level predictions prioritize OCR fields for verification officer review and highlighting. The model never automatically modifies title, alters registry ownership, or invalidates documents.",
+    "synthetic_limitations": "Evaluation was performed on empirical document splits with simulated optical degradations. Real-world field documents may have additional physical degradation (water damage, torn parchment, wax seals) requiring mandatory human supervision."
+  }
+}

@@ -73,12 +73,30 @@ class LandIQOCR:
                 if conf <= 1.0:
                     conf = conf * 100.0
                 conf = max(0.0, min(100.0, round(conf, 1)))
-                formatted_fields.append({
+                field_entry: dict[str, Any] = {
                     "name": name,
                     "value": val,
                     "normalized_value": val,
                     "confidence": conf,
-                })
+                }
+                try:
+                    from app.ml.field_validator_service import validate_single_field, SingleFieldValidationInput
+                    val_res = validate_single_field(SingleFieldValidationInput(
+                        field_name=name,
+                        field_value=val,
+                        confidence=conf,
+                    ))
+                    field_entry["review_classification"] = val_res.get("review_classification", "LIKELY_CORRECT")
+                    field_entry["review_reasons"] = val_res.get("review_reasons", [])
+                    field_entry["suggested_correction"] = val_res.get("suggested_correction")
+                    field_entry["correction_rationale"] = val_res.get("correction_rationale")
+                except Exception:
+                    field_entry["review_classification"] = "LIKELY_CORRECT"
+                    field_entry["review_reasons"] = []
+                    field_entry["suggested_correction"] = None
+                    field_entry["correction_rationale"] = None
+
+                formatted_fields.append(field_entry)
 
         return {
             "page_number": page_number,

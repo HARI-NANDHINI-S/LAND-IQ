@@ -217,7 +217,7 @@ export default function LandRecordsPage() {
                 </TableRow>
               ) : (
                 recordsData.data.map((record: any) => (
-                  <TableRow key={record.id}>
+                  <TableRow key={record.id} className="animate-row-enter hover:bg-muted/40 transition-colors">
                     <TableCell className="font-medium">{record.record_number}</TableCell>
                     <TableCell>
                       <div className="font-medium">{record.survey_number}</div>

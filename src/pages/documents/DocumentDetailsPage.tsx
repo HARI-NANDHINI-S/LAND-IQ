@@ -18,9 +18,10 @@ import { useAuth } from '@/hooks/auth/useAuth';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { mlService, type FieldValidationResult } from '@/services/ml/mlService';
+import { FieldReviewSection } from '@/components/ml/FieldReviewSection';
 
 export default function DocumentDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -44,6 +45,28 @@ export default function DocumentDetailsPage() {
     queryFn: () => documentService.getExtractedFields(id!),
     enabled: !!id,
   });
+
+  const { data: fieldValidationResults = {} } = useQuery({
+    queryKey: ['ml-field-validations', id, extractedFieldsQuery.data?.length],
+    queryFn: async () => {
+      const fields = extractedFieldsQuery.data ?? [];
+      if (!fields.length) return {};
+      const batchReq = fields.map((f: any) => ({
+        field_id: f.id,
+        field_name: f.field_name,
+        field_value: f.field_value || '',
+        confidence: f.confidence_score,
+      }));
+      const results = await mlService.validateFieldsBatch(batchReq);
+      const map: Record<string, FieldValidationResult> = {};
+      results.forEach((r) => {
+        if (r.field_id) map[r.field_id] = r;
+        map[r.field_name] = r;
+      });
+      return map;
+    },
+    enabled: !!extractedFieldsQuery.data?.length,
+  });
   const processMutation = useMutation({
     mutationFn: () => documentService.processDocument(id!),
     onSuccess: (result) => {
@@ -58,7 +81,6 @@ export default function DocumentDetailsPage() {
   });
   const [processFeedback, setProcessFeedback] = useState<string | null>(null);
   const [downloadFeedback, setDownloadFeedback] = useState<string | null>(null);
-  const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const [verificationFeedback, setVerificationFeedback] = useState<string | null>(null);
   const canVerifyFields = hasPermission('verification:review') || hasPermission('verification:approve');
   const verifyFieldMutation = useMutation({
@@ -318,18 +340,15 @@ export default function DocumentDetailsPage() {
             </details>
           ))}
           {extractedFieldsQuery.data?.length ? (
-            <div className="overflow-x-auto rounded-md border">
-              <table className="w-full min-w-[640px] text-sm">
-                <thead><tr className="border-b text-left"><th className="p-2">Field</th><th className="p-2">Extracted / verified value</th><th className="p-2">Confidence</th><th className="p-2">Verification</th>{canVerifyFields && <th className="p-2">Action</th>}</tr></thead>
-                <tbody>{extractedFieldsQuery.data.map((field) => <tr key={field.id} className="border-b last:border-0">
-                  <td className="p-2 font-medium">{field.field_name}</td>
-                  <td className="p-2">{canVerifyFields ? <Input aria-label={`Verified value for ${field.field_name}`} value={fieldValues[field.id] ?? field.verified_value ?? field.field_value ?? ''} onChange={(event) => setFieldValues((current) => ({ ...current, [field.id]: event.target.value }))} /> : field.verified_value ?? field.field_value ?? '—'}</td>
-                  <td className="p-2">{field.confidence_score == null ? '—' : `${field.confidence_score}%`}</td>
-                  <td className="p-2">{field.validation_status || 'PENDING'}</td>
-                  {canVerifyFields && <td className="p-2"><Button type="button" size="sm" variant="outline" disabled={verifyFieldMutation.isPending} onClick={() => { setVerificationFeedback(null); verifyFieldMutation.mutate({ fieldId: field.id, value: fieldValues[field.id] ?? field.verified_value ?? field.field_value ?? '' }); }}>Verify</Button></td>}
-                </tr>)}</tbody>
-              </table>
-            </div>
+            <FieldReviewSection
+              fields={extractedFieldsQuery.data as any}
+              validationResults={fieldValidationResults}
+              isLoading={extractedFieldsQuery.isLoading}
+              canVerify={canVerifyFields}
+              onVerifyField={async (fieldId, value) => {
+                await verifyFieldMutation.mutateAsync({ fieldId, value });
+              }}
+            />
           ) : null}
         </CardContent>
       </Card>

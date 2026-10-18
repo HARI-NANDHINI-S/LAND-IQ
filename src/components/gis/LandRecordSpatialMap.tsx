@@ -31,7 +31,7 @@ export default function LandRecordSpatialMap({
   useEffect(() => {
     if (!hostRef.current) return;
 
-    const map = L.map(hostRef.current, { preferCanvas: true, worldCopyJump: true }).setView([0, 0], 2);
+    const map = L.map(hostRef.current, { preferCanvas: true, worldCopyJump: true }).setView([20.5937, 78.9629], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors',
@@ -133,7 +133,23 @@ export default function LandRecordSpatialMap({
     layer.clearLayers();
 
     const features: GeoJSON.Feature[] = records.flatMap((record) => {
-      if (!record.geometry_geojson || typeof record.geometry_geojson !== 'object') return [];
+      let geometry: GeoJSON.Geometry | null = null;
+      if (record.geometry_geojson && typeof record.geometry_geojson === 'object') {
+        geometry = record.geometry_geojson as unknown as GeoJSON.Geometry;
+      } else if (
+        record.longitude != null &&
+        record.latitude != null &&
+        Number.isFinite(record.longitude) &&
+        Number.isFinite(record.latitude)
+      ) {
+        geometry = {
+          type: 'Point',
+          coordinates: [record.longitude, record.latitude],
+        };
+      }
+
+      if (!geometry) return [];
+
       return [{
         type: 'Feature' as const,
         properties: {
@@ -144,7 +160,7 @@ export default function LandRecordSpatialMap({
           hasDuplicate: record.has_duplicate,
           isWatched: record.is_watched,
         },
-        geometry: record.geometry_geojson as unknown as GeoJSON.Geometry,
+        geometry,
       }];
     });
 

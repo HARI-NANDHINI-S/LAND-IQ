@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+app/ml/data/raw/
+app/ml/data/realistic_land_records/images/
+tests/__pycache__/
+.git/
+.gitignore
+.env
+.DS_Store

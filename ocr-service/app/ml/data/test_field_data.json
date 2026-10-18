@@ -1,0 +1,6338 @@
+[
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "taluk",
+    "original_value": "Melur",
+    "ocr_value": "Melur",
+    "confidence": 92.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_1",
+    "original_value": "Displays",
+    "ocr_value": "Displays!",
+    "confidence": 76.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "state",
+    "original_value": "Tamil Nadu",
+    "ocr_value": "Tamil Nadu",
+    "confidence": 93.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_5",
+    "original_value": "COMMUNICATION",
+    "ocr_value": "COMMUNICATION",
+    "confidence": 86.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_header_3",
+    "original_value": "Invitations:",
+    "ocr_value": "Invitations:",
+    "confidence": 80.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_4",
+    "original_value": "DATE",
+    "ocr_value": "DAT",
+    "confidence": 70.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_33",
+    "original_value": "NG DOCUMENTS WERE FOUND WITHIN THE ORIGINAL:",
+    "ocr_value": "NG DOCUMENTS WERE FOUND WITHIN THE ORIGINAL:",
+    "confidence": 89.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_4",
+    "original_value": "REPORTED",
+    "ocr_value": "REPORTED",
+    "confidence": 98.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_header_7",
+    "original_value": "Responsibility",
+    "ocr_value": "Responsibility",
+    "confidence": 86.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_5",
+    "original_value": "SPACE:",
+    "ocr_value": "5PACE:",
+    "confidence": 80.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_header_25",
+    "original_value": "BROWN & WILLAMSON 1994 COLLECTION PROTOCOPYING VARIANCE FORM",
+    "ocr_value": "BROWN@ & WILLAMSON 1994 COLLECTION PROTOCOPYING VARIANCE FORM",
+    "confidence": 34.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_4",
+    "original_value": "10%",
+    "ocr_value": "10%",
+    "confidence": 92.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_0",
+    "original_value": "Name",
+    "ocr_value": "Nam@e",
+    "confidence": 46.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_3",
+    "original_value": "Adjustment",
+    "ocr_value": "Adjustment",
+    "confidence": 86.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_2",
+    "original_value": "Commercial:",
+    "ocr_value": "Commercial:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_9",
+    "original_value": "cc:",
+    "ocr_value": "cc:",
+    "confidence": 89.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_5",
+    "original_value": "Date",
+    "ocr_value": "Dte",
+    "confidence": 77.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_13",
+    "original_value": "Approved;",
+    "ocr_value": "Approved;",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "survey_number",
+    "original_value": "200/1A",
+    "ocr_value": "200/1A",
+    "confidence": 89.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_0",
+    "original_value": "31",
+    "ocr_value": "31!",
+    "confidence": 36.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_1",
+    "original_value": "DATE",
+    "ocr_value": "DTE",
+    "confidence": 84.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_5",
+    "original_value": "Toluene",
+    "ocr_value": "Toluene",
+    "confidence": 86.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "owner_name",
+    "original_value": "Basavaraj Patil",
+    "ocr_value": "B4savaraj Patil",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "digit_intruded_in_name"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_1",
+    "original_value": "PRODUCT",
+    "ocr_value": "PRODUCT",
+    "confidence": 96.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_1",
+    "original_value": "SPECIFICS:",
+    "ocr_value": "PSECIFICS:",
+    "confidence": 36.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_question_3",
+    "original_value": "Technician",
+    "ocr_value": "Technician",
+    "confidence": 95.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_9",
+    "original_value": "TELEPHONE:",
+    "ocr_value": "TELEPHONE:",
+    "confidence": 97.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_1",
+    "original_value": "80%",
+    "ocr_value": "80%",
+    "confidence": 89.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_question_1",
+    "original_value": "NONMENTHOL:",
+    "ocr_value": "NO#NMENTHOL:",
+    "confidence": 81.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_5",
+    "original_value": "Chicago:",
+    "ocr_value": "Chicago:",
+    "confidence": 90.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "taluk",
+    "original_value": "Devanahalli",
+    "ocr_value": "Devanaha#lli",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_6",
+    "original_value": "no",
+    "ocr_value": "no!",
+    "confidence": 54.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_question_2",
+    "original_value": "NONFILTER:",
+    "ocr_value": "NONFITLER:",
+    "confidence": 40.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_1",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 86.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_5",
+    "original_value": "MENIHOL",
+    "ocr_value": "MENIHOL",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "extent",
+    "original_value": "1.20 Acres",
+    "ocr_value": "1.20 Acres",
+    "confidence": 96.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_15",
+    "original_value": "CAPITAL",
+    "ocr_value": "CAPITAL!",
+    "confidence": 50.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_5",
+    "original_value": "DATE",
+    "ocr_value": "DATE!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_6",
+    "original_value": "Displays",
+    "ocr_value": "Displays",
+    "confidence": 88.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_3",
+    "original_value": "FROM:",
+    "ocr_value": "FROM:",
+    "confidence": 82.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_7",
+    "original_value": "ALTERNATIVES:",
+    "ocr_value": "ALETRNATIVES:",
+    "confidence": 45.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_1",
+    "original_value": "FROM:",
+    "ocr_value": "RFOM:",
+    "confidence": 33.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_header_6",
+    "original_value": "AARBERG -STRAHAN INKS & COATINGS CORP.",
+    "ocr_value": "AARBERG -STRAHAN INKS&  COATINGS CORP.",
+    "confidence": 43.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_4",
+    "original_value": "REPORTED",
+    "ocr_value": "REPORTE",
+    "confidence": 85.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_0",
+    "original_value": "PROJECT",
+    "ocr_value": "/PROJECT",
+    "confidence": 56.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_6",
+    "original_value": "RSS",
+    "ocr_value": "R-SS",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_5",
+    "original_value": "Counter",
+    "ocr_value": "Counter",
+    "confidence": 93.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_1",
+    "original_value": "B&W",
+    "ocr_value": "B&W",
+    "confidence": 94.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_answer_7",
+    "original_value": "R. H. ORCUTT",
+    "ocr_value": "R. H. ORCUTT",
+    "confidence": 95.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_6",
+    "original_value": "Displays",
+    "ocr_value": "Dsplays",
+    "confidence": 86.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_3",
+    "original_value": "Color",
+    "ocr_value": "Colro",
+    "confidence": 77.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_7",
+    "original_value": "12",
+    "ocr_value": "12!",
+    "confidence": 30.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_6",
+    "original_value": "Floor",
+    "ocr_value": "Floor",
+    "confidence": 95.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "TNPB-2019-5512",
+    "ocr_value": "TNPB-2019-5512",
+    "confidence": 90.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_2",
+    "original_value": "INVESTIGATOR(S)",
+    "ocr_value": "INVSETIGATOR(S)",
+    "confidence": 65.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_answer_4",
+    "original_value": "Outdoor",
+    "ocr_value": "Qutdoor",
+    "confidence": 82.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_Q_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_answer_7",
+    "original_value": "R. H. ORCUTT",
+    "ocr_value": "R. H. ORCUTT!",
+    "confidence": 83.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_5",
+    "original_value": "20's",
+    "ocr_value": "20's",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_0",
+    "original_value": "LOCATION",
+    "ocr_value": "OLCATION",
+    "confidence": 57.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_1",
+    "original_value": "From:",
+    "ocr_value": "Fro@m:",
+    "confidence": 42.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_30",
+    "original_value": "PAGE NUMBER(S) WERE MISSING IN THE ORIGINAL.",
+    "ocr_value": "PAGE NUM8ER(S) WERE MISSING IN THE ORIGINAL.",
+    "confidence": 38.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_8_for_B"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_8",
+    "original_value": "Jan",
+    "ocr_value": "Jan!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_0",
+    "original_value": "November",
+    "ocr_value": "Noveber",
+    "confidence": 78.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_4",
+    "original_value": "Posters",
+    "ocr_value": "Posters",
+    "confidence": 96.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_6",
+    "original_value": "DATE:",
+    "ocr_value": "DATE:!",
+    "confidence": 57.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_header_8",
+    "original_value": "DIVISION:",
+    "ocr_value": "IVISION:",
+    "confidence": 80.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "extent",
+    "original_value": "1.85 Acres",
+    "ocr_value": "1.85",
+    "confidence": 46.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "missing_cadastral_area_unit"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_5",
+    "original_value": "Company:",
+    "ocr_value": "C ompany:",
+    "confidence": 84.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_answer_7",
+    "original_value": "Autodial",
+    "ocr_value": "Autodia",
+    "confidence": 42.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_header_7",
+    "original_value": "Responsibility",
+    "ocr_value": "Re5ponsibility",
+    "confidence": 45.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_s"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_0",
+    "original_value": "RE",
+    "ocr_value": "RE ",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_0",
+    "original_value": "SPECIFICS",
+    "ocr_value": "SPECIFICS",
+    "confidence": 89.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_0",
+    "original_value": "November",
+    "ocr_value": "November",
+    "confidence": 97.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_8",
+    "original_value": "SPECIAL EVENT INFORMATION SHEET",
+    "ocr_value": "5PECIAL EVENT INFORMATION SHEET",
+    "confidence": 36.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_4",
+    "original_value": "Message:",
+    "ocr_value": "Message:",
+    "confidence": 94.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_7",
+    "original_value": "Posters",
+    "ocr_value": "osters",
+    "confidence": 34.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_0",
+    "original_value": "TO:",
+    "ocr_value": "TO:",
+    "confidence": 92.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_answer_3",
+    "original_value": "Triumph",
+    "ocr_value": "Triumph!",
+    "confidence": 46.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_6",
+    "original_value": "QUANTITY",
+    "ocr_value": "QUANTlTY",
+    "confidence": 27.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_l_for_I"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_answer_8",
+    "original_value": "336",
+    "ocr_value": "336",
+    "confidence": 97.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_2",
+    "original_value": "FAX",
+    "ocr_value": "/FAX",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_2",
+    "original_value": "SUBJECT:",
+    "ocr_value": "SUBJECT:",
+    "confidence": 88.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_16",
+    "original_value": "EXPENSE",
+    "ocr_value": "EXPENSE",
+    "confidence": 88.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_12",
+    "original_value": "Sep",
+    "ocr_value": "Sep",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_3",
+    "original_value": "MEDIUM",
+    "ocr_value": "MEDIUM",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_1",
+    "original_value": "B&W",
+    "ocr_value": "8&W",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_8_for_B"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_7",
+    "original_value": "92",
+    "ocr_value": "92",
+    "confidence": 97.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_7",
+    "original_value": "209",
+    "ocr_value": "209",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_1",
+    "original_value": "From:",
+    "ocr_value": "From:",
+    "confidence": 97.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_8",
+    "original_value": "EPB:",
+    "ocr_value": "EPB:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_7",
+    "original_value": "Date",
+    "ocr_value": "Date",
+    "confidence": 91.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_3",
+    "original_value": "1985",
+    "ocr_value": "1/985",
+    "confidence": 40.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_answer_27",
+    "original_value": "6708105266",
+    "ocr_value": "6708105266",
+    "confidence": 98.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_1",
+    "original_value": "DESCRIPTION",
+    "ocr_value": "ESCRIPTION",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_12",
+    "original_value": "11",
+    "ocr_value": "11!",
+    "confidence": 83.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_1",
+    "original_value": "on",
+    "ocr_value": "on",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "taluk",
+    "original_value": "Coimbatore South",
+    "ocr_value": "C0imbatore South",
+    "confidence": 33.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_o"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_3",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 90.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_0",
+    "original_value": "CLIENT:",
+    "ocr_value": "CLEINT:",
+    "confidence": 80.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_4",
+    "original_value": "From:",
+    "ocr_value": " From:",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_5",
+    "original_value": "20's",
+    "ocr_value": "20'",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_0",
+    "original_value": "SPECIFICS",
+    "ocr_value": "SP#ECIFICS",
+    "confidence": 27.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_8",
+    "original_value": "2,303",
+    "ocr_value": "2,303",
+    "confidence": 83.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_answer_6",
+    "original_value": "Files",
+    "ocr_value": "Files",
+    "confidence": 90.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_4",
+    "original_value": "REGION:",
+    "ocr_value": "REGION:!",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_6",
+    "original_value": "RSS",
+    "ocr_value": "RSS",
+    "confidence": 98.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_2",
+    "original_value": "MEDIUM",
+    "ocr_value": "MDEIUM",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_8",
+    "original_value": "CQA",
+    "ocr_value": "CQA",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_3",
+    "original_value": "COMMENTS:",
+    "ocr_value": "COMMNTS:",
+    "confidence": 37.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "taluk",
+    "original_value": "Madanapalle",
+    "ocr_value": "Madanapalle",
+    "confidence": 98.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_8",
+    "original_value": "CREATIVE INPUT DOCUMENT",
+    "ocr_value": "CREATIVE INPUTDOCUMENT",
+    "confidence": 38.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_3",
+    "original_value": "FROM:",
+    "ocr_value": "RFOM:",
+    "confidence": 31.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_answer_11",
+    "original_value": "Induction of Hepatic Enzymes in rats (B202)",
+    "ocr_value": "1nduction of Hepatic Enzymes in rats (B202)",
+    "confidence": 80.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_1_for_I"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_3",
+    "original_value": "#:",
+    "ocr_value": "#:",
+    "confidence": 97.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Date:!",
+    "confidence": 81.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_6",
+    "original_value": "YES",
+    "ocr_value": "YES",
+    "confidence": 87.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "district",
+    "original_value": "Chittoor",
+    "ocr_value": "Chittoor",
+    "confidence": 37.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_3",
+    "original_value": "5%",
+    "ocr_value": "5%",
+    "confidence": 99.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_4",
+    "original_value": "State",
+    "ocr_value": "State!",
+    "confidence": 87.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "pattadar_name",
+    "original_value": "V. Venkata Rao",
+    "ocr_value": "V. V3nkata Rao",
+    "confidence": 69.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "digit_intruded_in_name"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_0",
+    "original_value": "COMPOUND",
+    "ocr_value": "COMPOUN/D",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_5",
+    "original_value": "yes",
+    "ocr_value": "yes!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "owner_name",
+    "original_value": "K. Meenakshi Sundaram",
+    "ocr_value": "K. Meenakshi Sundaram",
+    "confidence": 91.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE",
+    "ocr_value": "DATE!",
+    "confidence": 51.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "extent",
+    "original_value": "2400 Sq.Ft",
+    "ocr_value": "2400 Sq..Ft",
+    "confidence": 54.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "duplicated_decimal_point"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_3",
+    "original_value": "Nicotine",
+    "ocr_value": "Nicotine",
+    "confidence": 90.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_1",
+    "original_value": "COMPANY:",
+    "ocr_value": "COMAPNY:",
+    "confidence": 71.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_2",
+    "original_value": "From:",
+    "ocr_value": "Fro:",
+    "confidence": 50.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_5",
+    "original_value": "COMMUNICATION",
+    "ocr_value": "OCMMUNICATION",
+    "confidence": 34.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_7",
+    "original_value": "RDC",
+    "ocr_value": "RDC!",
+    "confidence": 29.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_2",
+    "original_value": "SUBJECT:",
+    "ocr_value": "UBJECT:",
+    "confidence": 67.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_5",
+    "original_value": "To:",
+    "ocr_value": "To:",
+    "confidence": 95.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_1",
+    "original_value": "Job#:",
+    "ocr_value": "Job#:",
+    "confidence": 92.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_header_4",
+    "original_value": "REGION:",
+    "ocr_value": "ERGION:",
+    "confidence": 40.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_4",
+    "original_value": "TARGET",
+    "ocr_value": "TARGET",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_answer_6",
+    "original_value": "141",
+    "ocr_value": "141!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_1",
+    "original_value": "Draw",
+    "ocr_value": "Dra",
+    "confidence": 41.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_5",
+    "original_value": "Counter",
+    "ocr_value": "Co/unter",
+    "confidence": 29.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_8",
+    "original_value": "Approved",
+    "ocr_value": "Approved",
+    "confidence": 80.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_1",
+    "original_value": "SOURCE",
+    "ocr_value": "SOUR_CE",
+    "confidence": 85.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_4",
+    "original_value": "DATE",
+    "ocr_value": "ADTE",
+    "confidence": 30.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_3",
+    "original_value": "PUBLICATION",
+    "ocr_value": "PUBLICATION",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_1",
+    "original_value": "Displays",
+    "ocr_value": "Displays",
+    "confidence": 83.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "document_date",
+    "original_value": "30/04/2021",
+    "ocr_value": "3O/O4/2O21",
+    "confidence": 38.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "alphabetical_character_in_date"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_1",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 88.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_2",
+    "original_value": "DESCRIPTION",
+    "ocr_value": "DESCRIPITON",
+    "confidence": 33.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_5",
+    "original_value": "FO",
+    "ocr_value": "FO!",
+    "confidence": 76.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_6",
+    "original_value": "PLATFORM",
+    "ocr_value": "PLATFO_RM",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_4",
+    "original_value": "King",
+    "ocr_value": "Knig",
+    "confidence": 48.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_8",
+    "original_value": "HEADLINE:",
+    "ocr_value": "HEADLINE:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "pattadar_name",
+    "original_value": "K. Senthil Nathan",
+    "ocr_value": "K. Senthil Nathan",
+    "confidence": 90.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_answer_3",
+    "original_value": "Triumph",
+    "ocr_value": "Triumph",
+    "confidence": 87.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_4",
+    "original_value": "DATE:",
+    "ocr_value": "DATE:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "survey_number",
+    "original_value": "210/4A2",
+    "ocr_value": "210/4A2",
+    "confidence": 90.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_header_2",
+    "original_value": "TOBACCO",
+    "ocr_value": "TOBACCO",
+    "confidence": 99.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "KAPB-2020-1289",
+    "ocr_value": "KAPB-2020-1289",
+    "confidence": 89.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_header_7",
+    "original_value": "Cigarettes",
+    "ocr_value": "Cigarettes",
+    "confidence": 89.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_14",
+    "original_value": "TOTAL",
+    "ocr_value": "TQTAL",
+    "confidence": 55.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_Q_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_4",
+    "original_value": "ference.",
+    "ocr_value": "ference.",
+    "confidence": 83.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_answer_7",
+    "original_value": "14",
+    "ocr_value": "14",
+    "confidence": 98.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_8",
+    "original_value": "23",
+    "ocr_value": "23",
+    "confidence": 87.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_8",
+    "original_value": "EPB:",
+    "ocr_value": "EP8:",
+    "confidence": 84.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_8_for_B"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_3",
+    "original_value": "GEOGRAPHY",
+    "ocr_value": "GEORAPHY",
+    "confidence": 81.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_5",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 93.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_5",
+    "original_value": "NAME:",
+    "ocr_value": "N@AME:",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_answer_35",
+    "original_value": "REDROPE EXPANDABLE FILE",
+    "ocr_value": "REDROPE EXPANDABLE FILE",
+    "confidence": 86.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_1",
+    "original_value": "Firm:",
+    "ocr_value": "Firm: ",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_3",
+    "original_value": "DATE",
+    "ocr_value": "DATE!",
+    "confidence": 47.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "TNPB-2019-5512",
+    "ocr_value": "TNPB-2019-512",
+    "confidence": 85.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "patta_number",
+    "original_value": "5521",
+    "ocr_value": "5521",
+    "confidence": 85.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_2",
+    "original_value": "Commercial:",
+    "ocr_value": "Commercial:!",
+    "confidence": 82.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_6",
+    "original_value": "PARTIAL",
+    "ocr_value": "PARTIAL",
+    "confidence": 84.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_answer_34",
+    "original_value": "FILE FOLDER",
+    "ocr_value": "FILE FOLDER",
+    "confidence": 85.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "village",
+    "original_value": "Alagar Kovil",
+    "ocr_value": "Alagar Kovil",
+    "confidence": 86.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_6",
+    "original_value": "no",
+    "ocr_value": "no",
+    "confidence": 89.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_1",
+    "original_value": "DATE",
+    "ocr_value": "DATE!",
+    "confidence": 74.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_3",
+    "original_value": "Export",
+    "ocr_value": "Export",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "PB-982341",
+    "ocr_value": "PB-982341",
+    "confidence": 85.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_question_1",
+    "original_value": "Execution:",
+    "ocr_value": "Execution:",
+    "confidence": 83.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_5",
+    "original_value": "FO",
+    "ocr_value": "FO",
+    "confidence": 96.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_header_8",
+    "original_value": "SUBMISSION DATE:",
+    "ocr_value": "SUBMISSION DATE:",
+    "confidence": 96.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_2",
+    "original_value": "APPROVALS",
+    "ocr_value": "AP/PROVALS",
+    "confidence": 71.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_1",
+    "original_value": "1818",
+    "ocr_value": "1818",
+    "confidence": 97.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_2",
+    "original_value": "FAX",
+    "ocr_value": "FAX",
+    "confidence": 96.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_5",
+    "original_value": "100%",
+    "ocr_value": "100%!",
+    "confidence": 26.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_7",
+    "original_value": "NO.",
+    "ocr_value": "NQ.",
+    "confidence": 71.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_Q_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_5",
+    "original_value": "FULL",
+    "ocr_value": "FULL",
+    "confidence": 90.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_5",
+    "original_value": "TESTED",
+    "ocr_value": "TESTED",
+    "confidence": 95.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "state",
+    "original_value": "Tamil Nadu",
+    "ocr_value": "Tamil Nadu",
+    "confidence": 94.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_3",
+    "original_value": "Massachusetts",
+    "ocr_value": "Massachusetts",
+    "confidence": 36.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_question_10",
+    "original_value": "EVENT NAME:",
+    "ocr_value": "EVENT NAME:",
+    "confidence": 89.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "village",
+    "original_value": "Ondipudur",
+    "ocr_value": "Ondipudur",
+    "confidence": 92.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "state",
+    "original_value": "Tamil Nadu",
+    "ocr_value": "Tmil Nadu",
+    "confidence": 85.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE:",
+    "ocr_value": "DATE:",
+    "confidence": 79.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_0",
+    "original_value": "RE",
+    "ocr_value": "RE",
+    "confidence": 82.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_9",
+    "original_value": "Feb",
+    "ocr_value": "Fe/b",
+    "confidence": 34.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_8",
+    "original_value": "PRICE",
+    "ocr_value": "PRlCE",
+    "confidence": 84.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_l_for_I"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_5",
+    "original_value": "19",
+    "ocr_value": "19",
+    "confidence": 97.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_question_5",
+    "original_value": "*Note:",
+    "ocr_value": "*Note:",
+    "confidence": 84.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_4",
+    "original_value": "Message:",
+    "ocr_value": "eMssage:",
+    "confidence": 63.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_1",
+    "original_value": "Draw",
+    "ocr_value": "Draw",
+    "confidence": 99.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_4",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 91.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_4",
+    "original_value": "Reason:",
+    "ocr_value": "Reason:!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "patta_number",
+    "original_value": "9120",
+    "ocr_value": "9120",
+    "confidence": 94.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_5",
+    "original_value": "100'S",
+    "ocr_value": "|00'S",
+    "confidence": 83.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_|_for_1"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_header_13",
+    "original_value": "APPROVALS",
+    "ocr_value": "APPR0VALS",
+    "confidence": 29.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_33",
+    "original_value": "NG DOCUMENTS WERE FOUND WITHIN THE ORIGINAL:",
+    "ocr_value": "NG DOCUMENTS WERE FOUND IWTHIN THE ORIGINAL:",
+    "confidence": 86.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_4",
+    "original_value": "RECASING",
+    "ocr_value": "RECASING",
+    "confidence": 98.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "state",
+    "original_value": "Andhra Pradesh",
+    "ocr_value": "Andhr aPradesh",
+    "confidence": 51.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_3",
+    "original_value": "DISTRIBUTION:",
+    "ocr_value": "DISTRIBUTION:",
+    "confidence": 92.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_9",
+    "original_value": "FROM:",
+    "ocr_value": "RFOM:",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_header_3",
+    "original_value": "Purpose",
+    "ocr_value": "P urpose",
+    "confidence": 62.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_11",
+    "original_value": "Aug",
+    "ocr_value": "Aug!",
+    "confidence": 33.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_5",
+    "original_value": "SPACE:",
+    "ocr_value": "SPACE:",
+    "confidence": 93.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_question_2",
+    "original_value": "Media:",
+    "ocr_value": "Meida:",
+    "confidence": 32.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_answer_7",
+    "original_value": "14",
+    "ocr_value": "14!",
+    "confidence": 61.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_6",
+    "original_value": "PARTIAL",
+    "ocr_value": "PARTIAL!",
+    "confidence": 82.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_answer_3",
+    "original_value": "Novato",
+    "ocr_value": "Novato",
+    "confidence": 93.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_4",
+    "original_value": "Recipient(s):",
+    "ocr_value": "Recipient(5):",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_s"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_4",
+    "original_value": "24",
+    "ocr_value": "24!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_header_4",
+    "original_value": "GEOGRAPHY",
+    "ocr_value": "GEOGRAPHY",
+    "confidence": 96.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_answer_4",
+    "original_value": "Outdoor",
+    "ocr_value": "Outdoor",
+    "confidence": 79.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_2",
+    "original_value": "APPROVALS",
+    "ocr_value": "APPROVALS",
+    "confidence": 93.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_2",
+    "original_value": "Tar",
+    "ocr_value": "Tar",
+    "confidence": 90.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_2",
+    "original_value": "From:",
+    "ocr_value": "From:",
+    "confidence": 97.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_question_0",
+    "original_value": "NICOTINE:",
+    "ocr_value": "NICOTIEN:",
+    "confidence": 45.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "district",
+    "original_value": "Madurai",
+    "ocr_value": "Madurai",
+    "confidence": 94.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_6",
+    "original_value": "Draw",
+    "ocr_value": "Draw!",
+    "confidence": 59.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_10",
+    "original_value": "STUDY NAME",
+    "ocr_value": "STUDY NAME!",
+    "confidence": 35.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_7",
+    "original_value": "FEMALE",
+    "ocr_value": "FEAMLE",
+    "confidence": 77.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_3",
+    "original_value": "#:",
+    "ocr_value": "#:!",
+    "confidence": 47.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_1",
+    "original_value": "COMPANY:",
+    "ocr_value": "COMPANY:",
+    "confidence": 99.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_1",
+    "original_value": "Brand:",
+    "ocr_value": "Brand:",
+    "confidence": 87.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_6",
+    "original_value": "YES",
+    "ocr_value": "YES!",
+    "confidence": 57.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_question_6",
+    "original_value": "19",
+    "ocr_value": "19!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_5",
+    "original_value": "yes",
+    "ocr_value": "yes",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_1",
+    "original_value": "Location",
+    "ocr_value": "oLcation",
+    "confidence": 55.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_2",
+    "original_value": "MEDIUM",
+    "ocr_value": "MEDIUM",
+    "confidence": 89.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "taluk",
+    "original_value": "Coimbatore South",
+    "ocr_value": "Coimbatore South",
+    "confidence": 91.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_4",
+    "original_value": "yes",
+    "ocr_value": "yes@",
+    "confidence": 77.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_question_11",
+    "original_value": "EVENT LOCATION:",
+    "ocr_value": "EVENT OCATION:",
+    "confidence": 31.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_14",
+    "original_value": "TOTAL",
+    "ocr_value": "TOTAL",
+    "confidence": 95.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "document_number",
+    "original_value": "AP-DHARANI-2024-912",
+    "ocr_value": "AP-DHARANI2024-912",
+    "confidence": 79.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_6",
+    "original_value": "BRAND",
+    "ocr_value": "BRAND",
+    "confidence": 88.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_7",
+    "original_value": "0%",
+    "ocr_value": "0%",
+    "confidence": 93.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_3",
+    "original_value": "SIGNATURE(S)",
+    "ocr_value": "SIGNATURE(S)!",
+    "confidence": 49.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_1",
+    "original_value": "80%",
+    "ocr_value": "B0%",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_B_for_8"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Dtae:",
+    "confidence": 25.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 98.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_2",
+    "original_value": "22",
+    "ocr_value": "22!",
+    "confidence": 76.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_1",
+    "original_value": "REQUISITIONER",
+    "ocr_value": "REQUlSITIONER",
+    "confidence": 86.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_l_for_I"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_5",
+    "original_value": "AGENCY",
+    "ocr_value": "AGENCY!",
+    "confidence": 51.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_7",
+    "original_value": "Defendant",
+    "ocr_value": "Defendant",
+    "confidence": 84.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_6",
+    "original_value": "Draw",
+    "ocr_value": "Draw",
+    "confidence": 92.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_5",
+    "original_value": "Date:",
+    "ocr_value": "Date:!",
+    "confidence": 39.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_2",
+    "original_value": "SUPPLIER",
+    "ocr_value": "SUPP-LIER",
+    "confidence": 53.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_1",
+    "original_value": "OBJECTIVE:",
+    "ocr_value": "OBJETCIVE:",
+    "confidence": 86.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_question_1",
+    "original_value": "Execution:",
+    "ocr_value": "Execu#tion:",
+    "confidence": 76.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_header_9",
+    "original_value": "FINAL REPORT AMENDMENT",
+    "ocr_value": "FINAL REPORT AMENDMENT!",
+    "confidence": 62.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_1",
+    "original_value": "FROM:",
+    "ocr_value": "FROM:",
+    "confidence": 78.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE",
+    "ocr_value": "DATE!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_header_5",
+    "original_value": "REGION:",
+    "ocr_value": "REGINO:",
+    "confidence": 73.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_4",
+    "original_value": "yes",
+    "ocr_value": "yes",
+    "confidence": 85.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_9",
+    "original_value": "TELEPHONE:",
+    "ocr_value": "TEL EPHONE:",
+    "confidence": 37.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_2",
+    "original_value": "Mugs",
+    "ocr_value": "uMgs",
+    "confidence": 57.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_2",
+    "original_value": "BLEND",
+    "ocr_value": "BLEND",
+    "confidence": 92.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_7",
+    "original_value": "PARTIAL",
+    "ocr_value": "PARTlAL",
+    "confidence": 28.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_l_for_I"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_6",
+    "original_value": "ENDORSEMENTS",
+    "ocr_value": "ENDORSEMENTS!",
+    "confidence": 60.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_header_7",
+    "original_value": "Urgent!",
+    "ocr_value": "Urgent!",
+    "confidence": 93.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_answer_6",
+    "original_value": "8/8",
+    "ocr_value": "#8/8",
+    "confidence": 35.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "village",
+    "original_value": "Vijayapura",
+    "ocr_value": "Vijayapura",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "document_date",
+    "original_value": "26/06/2015",
+    "ocr_value": "26/14/2015",
+    "confidence": 51.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "impossible_calendar_month"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_3",
+    "original_value": "dimensions:",
+    "ocr_value": "dimensions:!",
+    "confidence": 86.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_5",
+    "original_value": "19",
+    "ocr_value": "19!",
+    "confidence": 56.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_3",
+    "original_value": "MEDIUM",
+    "ocr_value": "EMDIUM",
+    "confidence": 80.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_0",
+    "original_value": "PROJECT",
+    "ocr_value": "PROJECT",
+    "confidence": 93.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_header_8",
+    "original_value": "REMARKS",
+    "ocr_value": "ERMARKS",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_8",
+    "original_value": "HEADLINE:",
+    "ocr_value": "HEDALINE:",
+    "confidence": 25.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_7",
+    "original_value": "Newport pleasure!",
+    "ocr_value": "Newp0rt pleasure!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_o"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_4",
+    "original_value": "ACCOUNT",
+    "ocr_value": "ACC0UNT",
+    "confidence": 79.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_1",
+    "original_value": "DESCRIPTION",
+    "ocr_value": "DESCRIPTION",
+    "confidence": 89.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_0",
+    "original_value": "Weight",
+    "ocr_value": "Weight",
+    "confidence": 86.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_6",
+    "original_value": "ORIGINATOR",
+    "ocr_value": "ORIGI@NATOR",
+    "confidence": 49.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_0",
+    "original_value": "Weight",
+    "ocr_value": "Weight ",
+    "confidence": 87.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_8",
+    "original_value": "NAME:",
+    "ocr_value": "NAME:!",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_0",
+    "original_value": "AUG 4",
+    "ocr_value": "AUG 4",
+    "confidence": 99.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_question_1",
+    "original_value": "NONMENTHOL:",
+    "ocr_value": "NONMENTHOL:",
+    "confidence": 92.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Date:",
+    "confidence": 93.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_9",
+    "original_value": "GENERAL INFORMATION:",
+    "ocr_value": "GENERAL INFORMATINO:",
+    "confidence": 39.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "village",
+    "original_value": "Vijayapura",
+    "ocr_value": "Vijayaupra",
+    "confidence": 30.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_0",
+    "original_value": "Division",
+    "ocr_value": "Division",
+    "confidence": 93.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_7",
+    "original_value": "NO",
+    "ocr_value": "NO!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_header_13",
+    "original_value": "APPROVALS",
+    "ocr_value": "APPROVALS",
+    "confidence": 96.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_9",
+    "original_value": "FULL",
+    "ocr_value": "FULL",
+    "confidence": 97.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "pattadar_name",
+    "original_value": "K. Meenakshi Sundaram",
+    "ocr_value": "K. Meenakshi Sundaram",
+    "confidence": 84.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_13",
+    "original_value": "Approved;",
+    "ocr_value": "Approved",
+    "confidence": 78.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_1",
+    "original_value": "REQUISITIONER",
+    "ocr_value": "REQUISITIONER",
+    "confidence": 79.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "document_number",
+    "original_value": "TN-COI-2024-002",
+    "ocr_value": "TN-COI-2024-002",
+    "confidence": 86.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_1",
+    "original_value": "To:",
+    "ocr_value": "To:",
+    "confidence": 84.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_3",
+    "original_value": "COMMENTS:",
+    "ocr_value": "COMMENTS:",
+    "confidence": 96.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_6",
+    "original_value": "FULL",
+    "ocr_value": "FULL",
+    "confidence": 82.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_5",
+    "original_value": "BRAND",
+    "ocr_value": "BRAND",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_1",
+    "original_value": "Firm:",
+    "ocr_value": "Firm:",
+    "confidence": 95.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_answer_3",
+    "original_value": "Novato",
+    "ocr_value": "Novao",
+    "confidence": 77.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "survey_number",
+    "original_value": "142/3B",
+    "ocr_value": "142/3B",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_9",
+    "original_value": "FULL",
+    "ocr_value": "ULL",
+    "confidence": 29.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_5",
+    "original_value": "100'S",
+    "ocr_value": "100'S",
+    "confidence": 91.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "extent",
+    "original_value": "1.85 Acres",
+    "ocr_value": "1.85 Acres",
+    "confidence": 95.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_header_6",
+    "original_value": "AARBERG -STRAHAN INKS & COATINGS CORP.",
+    "ocr_value": "AARBERG -STRAHAN INKS & COATINGS CORP.",
+    "confidence": 95.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_header_5",
+    "original_value": "Cigarettes",
+    "ocr_value": "Cigarettes",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_1",
+    "original_value": "Brand:",
+    "ocr_value": "Brad:",
+    "confidence": 43.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_0",
+    "original_value": "TO:",
+    "ocr_value": "TO:!",
+    "confidence": 26.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_question_0",
+    "original_value": "Customer",
+    "ocr_value": "Customer",
+    "confidence": 94.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_26",
+    "original_value": "This form was placed before Bates ID",
+    "ocr_value": "This form wasplaced before Bates ID",
+    "confidence": 65.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_3",
+    "original_value": "15",
+    "ocr_value": "15!",
+    "confidence": 56.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_7",
+    "original_value": "31,000.00",
+    "ocr_value": "31,000#.00",
+    "confidence": 31.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_3",
+    "original_value": "Color",
+    "ocr_value": "Color",
+    "confidence": 86.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_header_25",
+    "original_value": "BROWN & WILLAMSON 1994 COLLECTION PROTOCOPYING VARIANCE FORM",
+    "ocr_value": "BROWN & WILLAMSON 1994 COLLECTION PROTOCOPYING VARIANCE FORM",
+    "confidence": 95.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_3",
+    "original_value": "OBJECTIVE",
+    "ocr_value": "OBJECTIVE",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_2",
+    "original_value": "SUBJECT:",
+    "ocr_value": "SUBJECT:!",
+    "confidence": 36.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_16",
+    "original_value": "23",
+    "ocr_value": "@23",
+    "confidence": 71.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_4",
+    "original_value": "Description:",
+    "ocr_value": " Description:",
+    "confidence": 55.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_header_11",
+    "original_value": "Status",
+    "ocr_value": "Status",
+    "confidence": 97.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_header_3",
+    "original_value": "Purpose",
+    "ocr_value": "Purpose",
+    "confidence": 85.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_2",
+    "original_value": "5%",
+    "ocr_value": "5#%",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_7",
+    "original_value": "PARTIAL",
+    "ocr_value": "PARTIAL",
+    "confidence": 92.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_6",
+    "original_value": "ENDORSEMENTS",
+    "ocr_value": "ENDORSEMENTS",
+    "confidence": 78.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_9",
+    "original_value": "cc:",
+    "ocr_value": " cc:",
+    "confidence": 35.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_16",
+    "original_value": "23",
+    "ocr_value": "23",
+    "confidence": 97.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_8",
+    "original_value": "CQA",
+    "ocr_value": "C QA",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_7",
+    "original_value": "NO.",
+    "ocr_value": "NO.",
+    "confidence": 97.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_3",
+    "original_value": "CASING",
+    "ocr_value": "CASIN@G",
+    "confidence": 43.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_30",
+    "original_value": "PAGE NUMBER(S) WERE MISSING IN THE ORIGINAL.",
+    "ocr_value": "PAGE NUMBER(S) WERE MISSING IN THE ORIGINAL.",
+    "confidence": 88.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_answer_3",
+    "original_value": "BTF",
+    "ocr_value": "BTF!",
+    "confidence": 59.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_1",
+    "original_value": "FROM:",
+    "ocr_value": "FROM:",
+    "confidence": 89.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_6",
+    "original_value": "15",
+    "ocr_value": "15",
+    "confidence": 93.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "taluk",
+    "original_value": "Melur",
+    "ocr_value": "Melu",
+    "confidence": 55.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "state",
+    "original_value": "Tamil Nadu",
+    "ocr_value": "Tami-l Nadu",
+    "confidence": 25.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "document_number",
+    "original_value": "TN-MDU-2023-3382",
+    "ocr_value": "TN-MDU-2023-3382!",
+    "confidence": 36.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_1",
+    "original_value": "PMRM",
+    "ocr_value": "PMRM!",
+    "confidence": 65.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_answer_6",
+    "original_value": "8/8",
+    "ocr_value": "8/8",
+    "confidence": 96.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_header_6",
+    "original_value": "Filters",
+    "ocr_value": "Filters",
+    "confidence": 86.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_2",
+    "original_value": "PHONE:",
+    "ocr_value": "PHQNE:",
+    "confidence": 86.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_Q_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_10",
+    "original_value": "Jul",
+    "ocr_value": "Jul!",
+    "confidence": 65.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_1",
+    "original_value": "3,",
+    "ocr_value": "3,!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_6",
+    "original_value": "ORIGINATOR",
+    "ocr_value": "ORIGINATOR",
+    "confidence": 96.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_6",
+    "original_value": "DATE:",
+    "ocr_value": "DATE:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Date:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_7",
+    "original_value": "Newport pleasure!",
+    "ocr_value": "Newport pleasure!",
+    "confidence": 91.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_1",
+    "original_value": "1818",
+    "ocr_value": "181 8",
+    "confidence": 31.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_1",
+    "original_value": "3,",
+    "ocr_value": "3,",
+    "confidence": 85.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_3",
+    "original_value": "Room:",
+    "ocr_value": "Room:",
+    "confidence": 93.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_4",
+    "original_value": "TARGET",
+    "ocr_value": "TARGET!",
+    "confidence": 32.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_1",
+    "original_value": "OBJECTIVE:",
+    "ocr_value": "OBJECTIVE:",
+    "confidence": 98.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_6",
+    "original_value": "QUANTITY",
+    "ocr_value": "QUANTITY",
+    "confidence": 95.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_7",
+    "original_value": "FEMALE",
+    "ocr_value": "FEMALE",
+    "confidence": 92.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_9",
+    "original_value": "GENERAL INFORMATION:",
+    "ocr_value": "GENERAL INFORMATION:",
+    "confidence": 99.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_answer_34",
+    "original_value": "FILE FOLDER",
+    "ocr_value": "FILE FOLDE_R",
+    "confidence": 87.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "pattadar_name",
+    "original_value": "K. Senthil Nathan",
+    "ocr_value": "K. S3nthil Nathan",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "digit_intruded_in_name"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_28",
+    "original_value": "AT THE TIME OF REPRODUCTION, THE FOLLOWING NOTATTONS WERE MADE:",
+    "ocr_value": "AT THE TIME OF REPRODUCTION, THE FOLLOWING NOTATTONS WERE MADE:!",
+    "confidence": 40.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_1",
+    "original_value": "Address",
+    "ocr_value": "Adderss",
+    "confidence": 28.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_9",
+    "original_value": "FROM:",
+    "ocr_value": "FROM:",
+    "confidence": 87.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_4",
+    "original_value": "Recipient(s):",
+    "ocr_value": "Recipient(s):",
+    "confidence": 91.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_header_8",
+    "original_value": "REMARKS",
+    "ocr_value": "REMARKS",
+    "confidence": 86.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "owner_name",
+    "original_value": "K. Senthil Nathan",
+    "ocr_value": "K. Senthil Nathan",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_answer_6",
+    "original_value": "MSA",
+    "ocr_value": "MSA",
+    "confidence": 85.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_0",
+    "original_value": "COMMENTS",
+    "ocr_value": "C0MMENTS",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_2",
+    "original_value": "JUN 23",
+    "ocr_value": "JUN 23",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_5",
+    "original_value": "cc:",
+    "ocr_value": " cc:",
+    "confidence": 78.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_2",
+    "original_value": "SUPPLIER",
+    "ocr_value": "SUPPLIER",
+    "confidence": 97.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_0",
+    "original_value": "COMMENTS",
+    "ocr_value": "COMMENTS",
+    "confidence": 86.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_question_0",
+    "original_value": "Customer",
+    "ocr_value": "Cutsomer",
+    "confidence": 33.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_7",
+    "original_value": "Date",
+    "ocr_value": "Date!",
+    "confidence": 54.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "owner_name",
+    "original_value": "K. Meenakshi Sundaram",
+    "ocr_value": "Name: K. Meenakshi Sundaram",
+    "confidence": 28.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "unstripped_ocr_label_prefix"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "patta_number",
+    "original_value": "PAT-2024-002",
+    "ocr_value": "PAT-2024-00",
+    "confidence": 69.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "incomplete_patta_token"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_3",
+    "original_value": "CASTING",
+    "ocr_value": "CA5TING",
+    "confidence": 28.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "village",
+    "original_value": "Punganur",
+    "ocr_value": "Punganur",
+    "confidence": 86.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_header_1",
+    "original_value": "COMPANY",
+    "ocr_value": "COMPANY",
+    "confidence": 97.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_1",
+    "original_value": "PRODUCT",
+    "ocr_value": "RPODUCT",
+    "confidence": 76.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_2",
+    "original_value": "Re:",
+    "ocr_value": "Re:!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_3",
+    "original_value": "Room:",
+    "ocr_value": "Room:!",
+    "confidence": 45.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_answer_35",
+    "original_value": "REDROPE EXPANDABLE FILE",
+    "ocr_value": "REDR0PE EXPANDABLE FILE",
+    "confidence": 78.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "patta_number",
+    "original_value": "9120",
+    "ocr_value": "912",
+    "confidence": 45.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "incomplete_patta_token"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "patta_number",
+    "original_value": "PAT-2024-002",
+    "ocr_value": "PAT-2024-002",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_7",
+    "original_value": "Tars",
+    "ocr_value": "Tars",
+    "confidence": 91.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_question_10",
+    "original_value": "EVENT NAME:",
+    "ocr_value": "EVENT NAM@E:",
+    "confidence": 26.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_2",
+    "original_value": "Mugs",
+    "ocr_value": "Mugs",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_8",
+    "original_value": "2,303",
+    "ocr_value": "2,303!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_header_2",
+    "original_value": "TOBACCO",
+    "ocr_value": "/TOBACCO",
+    "confidence": 50.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_0",
+    "original_value": "TO:",
+    "ocr_value": "TO:",
+    "confidence": 93.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "APPB-2023-8711",
+    "ocr_value": "APPB-2023-8711",
+    "confidence": 77.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_0",
+    "original_value": "31",
+    "ocr_value": "31",
+    "confidence": 91.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_5",
+    "original_value": "TESTED",
+    "ocr_value": "TE5TED",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_0",
+    "original_value": "Name",
+    "ocr_value": "Name",
+    "confidence": 79.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_1",
+    "original_value": "Job#:",
+    "ocr_value": "Jo#b:",
+    "confidence": 50.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_6",
+    "original_value": "DIRECTOR",
+    "ocr_value": "DIRECTOR",
+    "confidence": 91.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_0",
+    "original_value": "Division",
+    "ocr_value": "Divisin",
+    "confidence": 58.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_3",
+    "original_value": "PUBLICATION",
+    "ocr_value": "PUBLICATION!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_header_3",
+    "original_value": "Lorillard",
+    "ocr_value": "Lorillard",
+    "confidence": 92.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "APPB-2023-8711",
+    "ocr_value": "APPB-2023-8711",
+    "confidence": 97.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_2",
+    "original_value": "5%",
+    "ocr_value": "5%",
+    "confidence": 97.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_5",
+    "original_value": "Date",
+    "ocr_value": "Date",
+    "confidence": 88.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE:",
+    "ocr_value": "ATE:",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_1",
+    "original_value": "SOURCE",
+    "ocr_value": "SOURCE",
+    "confidence": 99.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_4",
+    "original_value": "Sample:",
+    "ocr_value": "Samp-le:",
+    "confidence": 53.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_1",
+    "original_value": "on",
+    "ocr_value": "on!",
+    "confidence": 37.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_1",
+    "original_value": "PRODUCT:",
+    "ocr_value": "PRODUCT:",
+    "confidence": 98.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_1",
+    "original_value": "Address",
+    "ocr_value": "Address",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_0",
+    "original_value": "Description",
+    "ocr_value": "Descriptio",
+    "confidence": 46.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_0",
+    "original_value": "Description",
+    "ocr_value": "Description",
+    "confidence": 93.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Date:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_4",
+    "original_value": "24",
+    "ocr_value": "24",
+    "confidence": 82.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_1",
+    "original_value": "Domestic",
+    "ocr_value": "Domestic!",
+    "confidence": 28.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_4",
+    "original_value": "Supplier",
+    "ocr_value": "Supplier",
+    "confidence": 99.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_1",
+    "original_value": "SPECIFICS:",
+    "ocr_value": "SPECIFICS:",
+    "confidence": 79.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_3",
+    "original_value": "GEOGRAPHY",
+    "ocr_value": "GEOGRAPHY",
+    "confidence": 79.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_4",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 97.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_header_5",
+    "original_value": "DIVISION:",
+    "ocr_value": "DIVISION:",
+    "confidence": 96.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_4",
+    "original_value": "ference.",
+    "ocr_value": "erence.",
+    "confidence": 30.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_3",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 81.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_8",
+    "original_value": "Jan",
+    "ocr_value": "Jan",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_1",
+    "original_value": "To:",
+    "ocr_value": "T0:",
+    "confidence": 34.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_o"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "survey_number",
+    "original_value": "78/2",
+    "ocr_value": "78/2",
+    "confidence": 89.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "district",
+    "original_value": "Bengaluru Rural",
+    "ocr_value": "Bengaluru Rural",
+    "confidence": 93.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_1",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 97.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_9",
+    "original_value": "3%",
+    "ocr_value": "3%",
+    "confidence": 92.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "KAPB-2020-1289",
+    "ocr_value": "KAPB-2020-1829",
+    "confidence": 50.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_0",
+    "original_value": "TO:",
+    "ocr_value": "TO:!",
+    "confidence": 36.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_4",
+    "original_value": "Supplier",
+    "ocr_value": "Supplier!",
+    "confidence": 50.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_26",
+    "original_value": "This form was placed before Bates ID",
+    "ocr_value": "This form was placed before Bates ID",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_16",
+    "original_value": "EXPENSE",
+    "ocr_value": "EXPEN5E",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_9",
+    "original_value": "3%",
+    "ocr_value": "3%!",
+    "confidence": 68.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "document_date",
+    "original_value": "30/04/2021",
+    "ocr_value": "30/04/2021",
+    "confidence": 92.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_7",
+    "original_value": "DESCRIPTION",
+    "ocr_value": "DESCRIPTION",
+    "confidence": 90.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_3",
+    "original_value": "Massachusetts",
+    "ocr_value": "Massachusetts",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_7",
+    "original_value": "Defendant",
+    "ocr_value": "Defnedant",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_question_5",
+    "original_value": "*Note:",
+    "ocr_value": "*oNte:",
+    "confidence": 37.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_3",
+    "original_value": "DATE",
+    "ocr_value": "DATE!",
+    "confidence": 64.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_header_7",
+    "original_value": "Cigarettes",
+    "ocr_value": "Cigarettse",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_header_8",
+    "original_value": "Deliver",
+    "ocr_value": "De1iver",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_1_for_l"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_header_7",
+    "original_value": "Urgent!",
+    "ocr_value": "rgent!",
+    "confidence": 78.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_4",
+    "original_value": "PHONE:",
+    "ocr_value": "PHONE:",
+    "confidence": 82.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_2",
+    "original_value": "DATE:",
+    "ocr_value": "DATE:",
+    "confidence": 96.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "patta_number",
+    "original_value": "7741",
+    "ocr_value": "7741",
+    "confidence": 89.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_header_4",
+    "original_value": "GEOGRAPHY",
+    "ocr_value": "GEOGRAPY",
+    "confidence": 71.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_2",
+    "original_value": "SUBJECT:",
+    "ocr_value": "SUBJECT:",
+    "confidence": 86.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "extent",
+    "original_value": "2400 Sq.Ft",
+    "ocr_value": "2400 Sq.Ft",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_0",
+    "original_value": "To:",
+    "ocr_value": "To:!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_question_2",
+    "original_value": "RECEIVED",
+    "ocr_value": "RECEIVED",
+    "confidence": 91.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_header_5",
+    "original_value": "DIVISION:",
+    "ocr_value": "DIVISIO:",
+    "confidence": 64.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_header_1",
+    "original_value": "COMPANY",
+    "ocr_value": "COMPANY!",
+    "confidence": 34.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "document_number",
+    "original_value": "TN-MDU-2023-3382",
+    "ocr_value": "TN-MDU-2023-3382",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_header_11",
+    "original_value": "Status",
+    "ocr_value": "Sttaus",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_12",
+    "original_value": "Proposed",
+    "ocr_value": "Pr0posed",
+    "confidence": 53.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_o"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_3",
+    "original_value": "1985",
+    "ocr_value": "1985",
+    "confidence": 99.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_2",
+    "original_value": "Tar",
+    "ocr_value": "Tar!",
+    "confidence": 27.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "pattadar_name",
+    "original_value": "Basavaraj Patil",
+    "ocr_value": "savaraj Patil",
+    "confidence": 39.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "truncated_initials"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "document_number",
+    "original_value": "KA-BHOOMI-2023-774",
+    "ocr_value": "KA-BHOOMI-2023-774",
+    "confidence": 83.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_0",
+    "original_value": "HOURS:",
+    "ocr_value": "HOU_RS:",
+    "confidence": 33.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_7",
+    "original_value": "0%",
+    "ocr_value": "0%!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_4",
+    "original_value": "Description:",
+    "ocr_value": "Description:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_header_5",
+    "original_value": "Cigarettes",
+    "ocr_value": "Cigarette5",
+    "confidence": 43.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_s"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_4",
+    "original_value": "RECASING",
+    "ocr_value": "RECASING",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "owner_name",
+    "original_value": "V. Venkata Rao",
+    "ocr_value": "Name: V. Venkata Rao",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "unstripped_ocr_label_prefix"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_7",
+    "original_value": "ALTERNATIVES:",
+    "ocr_value": "ALTERNATIVES:",
+    "confidence": 89.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_7",
+    "original_value": "92",
+    "ocr_value": "92!",
+    "confidence": 83.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_9",
+    "original_value": "3,890",
+    "ocr_value": "3,890",
+    "confidence": 82.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_answer_3",
+    "original_value": "BTF",
+    "ocr_value": "BTF",
+    "confidence": 85.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_answer_27",
+    "original_value": "6708105266",
+    "ocr_value": "G708105266",
+    "confidence": 61.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_G_for_6"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_question_2",
+    "original_value": "NONFILTER:",
+    "ocr_value": "NONFILTER:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_11",
+    "original_value": "SKGC-4518",
+    "ocr_value": "SKGC-418",
+    "confidence": 38.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_2",
+    "original_value": "Cigarette",
+    "ocr_value": "Cigaette",
+    "confidence": 26.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_8",
+    "original_value": "DEC 1 1 1989",
+    "ocr_value": "DEC 1 1 1989",
+    "confidence": 79.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_question_6",
+    "original_value": "19",
+    "ocr_value": "19",
+    "confidence": 81.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_4",
+    "original_value": "Carlton",
+    "ocr_value": "Carlton",
+    "confidence": 95.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_2",
+    "original_value": "INVESTIGATOR(S)",
+    "ocr_value": "INVESTIGATOR(S)",
+    "confidence": 95.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_1",
+    "original_value": "SEP 15",
+    "ocr_value": "5EP 15",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_0",
+    "original_value": "COMPOUND",
+    "ocr_value": "COMPOUND",
+    "confidence": 92.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "survey_number",
+    "original_value": "200/1A",
+    "ocr_value": "2O0/1A",
+    "confidence": 87.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_O_for_0"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_7",
+    "original_value": "no",
+    "ocr_value": "no!",
+    "confidence": 33.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_2",
+    "original_value": "DESCRIPTION",
+    "ocr_value": "DESCRIPTION",
+    "confidence": 89.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "taluk",
+    "original_value": "Madanapalle",
+    "ocr_value": "Madanapalel",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_8",
+    "original_value": "TO:",
+    "ocr_value": "TO:_",
+    "confidence": 51.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_3",
+    "original_value": "15",
+    "ocr_value": "15",
+    "confidence": 95.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_4",
+    "original_value": "Carlton",
+    "ocr_value": "Cralton",
+    "confidence": 83.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_0",
+    "original_value": "TO:",
+    "ocr_value": "TO:",
+    "confidence": 98.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_answer_3",
+    "original_value": "3/17/82",
+    "ocr_value": "3/1 7/82",
+    "confidence": 31.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_12",
+    "original_value": "Proposed",
+    "ocr_value": "Proposed",
+    "confidence": 90.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_7",
+    "original_value": "12",
+    "ocr_value": "12",
+    "confidence": 86.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_5",
+    "original_value": "Telephone",
+    "ocr_value": "T-elephone",
+    "confidence": 30.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_2",
+    "original_value": "JUN 23",
+    "ocr_value": "JUN Z3",
+    "confidence": 51.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_Z_for_2"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_header_8",
+    "original_value": "Deliver",
+    "ocr_value": "Deliver",
+    "confidence": 93.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_4",
+    "original_value": "State",
+    "ocr_value": "State",
+    "confidence": 85.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "extent",
+    "original_value": "1.50 Acres",
+    "ocr_value": "1.50__Acres",
+    "confidence": 27.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "underscore_noise_artifact"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_answer_5",
+    "original_value": "803E",
+    "ocr_value": "803E",
+    "confidence": 99.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_5",
+    "original_value": "NAME:",
+    "ocr_value": "NAME:",
+    "confidence": 95.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_4",
+    "original_value": "TERMS",
+    "ocr_value": "TERMS",
+    "confidence": 89.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_4",
+    "original_value": "ACCOUNT",
+    "ocr_value": "ACCOUNT",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_3",
+    "original_value": "SIGNATURE(S)",
+    "ocr_value": "SIGNATURE(S)",
+    "confidence": 83.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_3",
+    "original_value": "Export",
+    "ocr_value": "Exprot",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_5",
+    "original_value": "Amount",
+    "ocr_value": "Am0unt",
+    "confidence": 65.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_o"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_8",
+    "original_value": "FULL",
+    "ocr_value": "F/ULL",
+    "confidence": 45.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_2",
+    "original_value": "BRANDS",
+    "ocr_value": "BRANDS",
+    "confidence": 91.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "district",
+    "original_value": "Chittoor",
+    "ocr_value": "Chittoor",
+    "confidence": 92.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_1",
+    "original_value": "on",
+    "ocr_value": "on!",
+    "confidence": 51.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_answer_6",
+    "original_value": "CA",
+    "ocr_value": "CA!",
+    "confidence": 58.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "pattadar_name",
+    "original_value": "V. Venkata Rao",
+    "ocr_value": "V. Venkata Rao",
+    "confidence": 90.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_answer_6",
+    "original_value": "141",
+    "ocr_value": "141",
+    "confidence": 97.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_5",
+    "original_value": "Company:",
+    "ocr_value": "Company:",
+    "confidence": 95.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_1",
+    "original_value": "SEP 15",
+    "ocr_value": "SEP 15",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_2",
+    "original_value": "Revision",
+    "ocr_value": "Revi5ion",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_s"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 86.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_2",
+    "original_value": "1992",
+    "ocr_value": "1992",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "patta_number",
+    "original_value": "5521",
+    "ocr_value": "552",
+    "confidence": 58.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "incomplete_patta_token"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_6",
+    "original_value": "FULL",
+    "ocr_value": "FULL",
+    "confidence": 42.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_1",
+    "original_value": "Domestic",
+    "ocr_value": "Domestic",
+    "confidence": 97.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_1",
+    "original_value": "FROM:",
+    "ocr_value": "FROM:!",
+    "confidence": 26.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_question_2",
+    "original_value": "(S)",
+    "ocr_value": "(S)",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Date:!",
+    "confidence": 39.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_3",
+    "original_value": "Supplier:",
+    "ocr_value": "Supplier:",
+    "confidence": 95.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE",
+    "ocr_value": "ADTE",
+    "confidence": 78.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_6",
+    "original_value": "MALE",
+    "ocr_value": "MALE#",
+    "confidence": 25.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "pattadar_name",
+    "original_value": "Basavaraj Patil",
+    "ocr_value": "Basavaraj Patil",
+    "confidence": 88.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "document_number",
+    "original_value": "AP-DHARANI-2024-912",
+    "ocr_value": "AP-DHARANI-2024-912",
+    "confidence": 89.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_11",
+    "original_value": "SKGC-4518",
+    "ocr_value": "SKGC-4518",
+    "confidence": 87.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_7",
+    "original_value": "Posters",
+    "ocr_value": "Posters",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_7",
+    "original_value": "RDC",
+    "ocr_value": "RDC",
+    "confidence": 96.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "village",
+    "original_value": "Alagar Kovil",
+    "ocr_value": "Alaagr Kovil",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_0",
+    "original_value": "HOURS:",
+    "ocr_value": "HOURS:",
+    "confidence": 84.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_1",
+    "original_value": "PRODUCT:",
+    "ocr_value": "PR0DUCT:",
+    "confidence": 66.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_6",
+    "original_value": "OFFICE:",
+    "ocr_value": "0FFICE:",
+    "confidence": 62.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_10",
+    "original_value": "Jul",
+    "ocr_value": "Jul",
+    "confidence": 99.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_0",
+    "original_value": "TO:",
+    "ocr_value": "T0:",
+    "confidence": 86.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_header_3",
+    "original_value": "Invitations:",
+    "ocr_value": "Invtations:",
+    "confidence": 30.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_header_6",
+    "original_value": "Filters",
+    "ocr_value": "Filters!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Date:!",
+    "confidence": 61.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_3",
+    "original_value": "5%",
+    "ocr_value": "5%!",
+    "confidence": 29.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_2",
+    "original_value": "Revision",
+    "ocr_value": "Revision",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "extent",
+    "original_value": "1.50 Acres",
+    "ocr_value": "1.50 Acres",
+    "confidence": 94.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_header_5",
+    "original_value": "REGION:",
+    "ocr_value": "REGION:",
+    "confidence": 98.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_3",
+    "original_value": "CASING",
+    "ocr_value": "CASING",
+    "confidence": 85.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "village",
+    "original_value": "Punganur",
+    "ocr_value": "Pu nganur",
+    "confidence": 27.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_6",
+    "original_value": "PLATFORM",
+    "ocr_value": "PLATFORM",
+    "confidence": 90.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_4",
+    "original_value": "ISSUE:",
+    "ocr_value": "ISSUE:",
+    "confidence": 81.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_2",
+    "original_value": "Date",
+    "ocr_value": "Date!",
+    "confidence": 43.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0001463448",
+    "field_name": "funsd_question_28",
+    "original_value": "AT THE TIME OF REPRODUCTION, THE FOLLOWING NOTATTONS WERE MADE:",
+    "ocr_value": "AT THE TIME OF REPRODUCTION, THE FOLLOWING NOTATTONS WERE MADE:",
+    "confidence": 79.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_answer_2",
+    "original_value": "1992",
+    "ocr_value": "1992!",
+    "confidence": 87.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_12",
+    "original_value": "11",
+    "ocr_value": "11",
+    "confidence": 90.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_answer_8",
+    "original_value": "/A",
+    "ocr_value": "/A",
+    "confidence": 91.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_4",
+    "original_value": "Reason:",
+    "ocr_value": "Reason:",
+    "confidence": 91.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_header_3",
+    "original_value": "Lorillard",
+    "ocr_value": "Lorillard!",
+    "confidence": 86.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_question_0",
+    "original_value": "DIVISION:",
+    "ocr_value": "DIVISION:",
+    "confidence": 98.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_8",
+    "original_value": "TO:",
+    "ocr_value": "TO:",
+    "confidence": 90.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "state",
+    "original_value": "Karnataka",
+    "ocr_value": "Karnataka",
+    "confidence": 92.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_2",
+    "original_value": "DATE",
+    "ocr_value": "D@ATE",
+    "confidence": 40.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_4",
+    "original_value": "RECASING",
+    "ocr_value": "RECASING!",
+    "confidence": 60.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_2",
+    "original_value": "DATE:",
+    "ocr_value": "DAT:E",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_3",
+    "original_value": "DISTRIBUTION:",
+    "ocr_value": "DISTRIUBTION:",
+    "confidence": 80.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_2",
+    "original_value": "Title",
+    "ocr_value": "Title",
+    "confidence": 85.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_3",
+    "original_value": "CASTING",
+    "ocr_value": "CASTING",
+    "confidence": 94.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "pattadar_passbook_number",
+    "original_value": "PB-982341",
+    "ocr_value": "PB-98241",
+    "confidence": 81.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_6",
+    "original_value": "BRAND",
+    "ocr_value": "BR#AND",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_2",
+    "original_value": "BLEND",
+    "ocr_value": "BEND",
+    "confidence": 57.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_4",
+    "original_value": "From:",
+    "ocr_value": "From:",
+    "confidence": 94.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_2",
+    "original_value": "PHONE:",
+    "ocr_value": "PHONE:",
+    "confidence": 93.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_5",
+    "original_value": "MESSAGE:",
+    "ocr_value": "MESSAGE:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_question_0",
+    "original_value": "NICOTINE:",
+    "ocr_value": "NICOTINE:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_4",
+    "original_value": "King",
+    "ocr_value": "King",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_answer_11",
+    "original_value": "Induction of Hepatic Enzymes in rats (B202)",
+    "ocr_value": "Induction of Hepatic Enzymes in rats (B202)",
+    "confidence": 89.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_2",
+    "original_value": "BLEND",
+    "ocr_value": "BLEND",
+    "confidence": 91.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "district",
+    "original_value": "Coimbatore",
+    "ocr_value": "Coimbatore",
+    "confidence": 96.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_header_8",
+    "original_value": "DIVISION:",
+    "ocr_value": "DIVISION:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_7",
+    "original_value": "NO",
+    "ocr_value": "NO",
+    "confidence": 86.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "document_number",
+    "original_value": "KA-BHOOMI-2023-774",
+    "ocr_value": "KA-BHOOMI-2023-774!",
+    "confidence": 79.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_2",
+    "original_value": "Remarks",
+    "ocr_value": "Rmearks",
+    "confidence": 53.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_3",
+    "original_value": "OBJECTIVE",
+    "ocr_value": "OBJECTI VE",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_4",
+    "original_value": "DATE:",
+    "ocr_value": "DATE",
+    "confidence": 83.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_answer_8",
+    "original_value": "23",
+    "ocr_value": "23@",
+    "confidence": 77.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0060094595",
+    "field_name": "funsd_question_3",
+    "original_value": "Nicotine",
+    "ocr_value": "Nicot_ine",
+    "confidence": 80.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "document_date",
+    "original_value": "22/11/2023",
+    "ocr_value": "22/11/2023",
+    "confidence": 93.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_0",
+    "original_value": "BRAND",
+    "ocr_value": "BRAND",
+    "confidence": 81.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_15",
+    "original_value": "CAPITAL",
+    "ocr_value": "CAPITAL",
+    "confidence": 98.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_8",
+    "original_value": "FULL",
+    "ocr_value": "FULL",
+    "confidence": 90.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_5",
+    "original_value": "Weight",
+    "ocr_value": "Weight",
+    "confidence": 86.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_question_4",
+    "original_value": "ballot",
+    "ocr_value": "ballot!",
+    "confidence": 51.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_2",
+    "original_value": "BRANDS",
+    "ocr_value": "BRANDS!",
+    "confidence": 64.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_answer_6",
+    "original_value": "CA",
+    "ocr_value": "CA",
+    "confidence": 79.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_question_2",
+    "original_value": "(S)",
+    "ocr_value": "(S)!",
+    "confidence": 84.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_4",
+    "original_value": "Posters",
+    "ocr_value": "Postes",
+    "confidence": 39.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_4",
+    "original_value": "Sample:",
+    "ocr_value": "Sample:",
+    "confidence": 97.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "district",
+    "original_value": "Madurai",
+    "ocr_value": "Madur/ai",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_12",
+    "original_value": "Sep",
+    "ocr_value": "Sep!",
+    "confidence": 48.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_10",
+    "original_value": "TELEFAX",
+    "ocr_value": "TELEFAX",
+    "confidence": 93.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_6",
+    "original_value": "OFFICE:",
+    "ocr_value": "OFFICE:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_answer_5",
+    "original_value": "803E",
+    "ocr_value": "B03E",
+    "confidence": 28.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_B_for_8"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "survey_number",
+    "original_value": "210/4A2",
+    "ocr_value": "21O/4A2",
+    "confidence": 28.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_O_for_0"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_5",
+    "original_value": "STUDY",
+    "ocr_value": "STUDY",
+    "confidence": 91.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91914407",
+    "field_name": "funsd_question_8",
+    "original_value": "NAME:",
+    "ocr_value": "NAME:",
+    "confidence": 89.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_question_3",
+    "original_value": "Technician",
+    "ocr_value": "Technician!",
+    "confidence": 39.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_2",
+    "original_value": "BLEND",
+    "ocr_value": "BLEND ",
+    "confidence": 62.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_11",
+    "original_value": "Aug",
+    "ocr_value": "Aug",
+    "confidence": 92.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_question_5",
+    "original_value": "AGENCY",
+    "ocr_value": "AGENCY",
+    "confidence": 98.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_2",
+    "original_value": "Date",
+    "ocr_value": "Date",
+    "confidence": 97.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01150773_01150774",
+    "field_name": "funsd_question_10",
+    "original_value": "TELEFAX",
+    "ocr_value": "TELEFAX!",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_answer_6",
+    "original_value": "MSA",
+    "ocr_value": "MSA!",
+    "confidence": 39.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_0",
+    "original_value": "LOCATION",
+    "ocr_value": "LOCATION",
+    "confidence": 81.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_2",
+    "original_value": "Cigarette",
+    "ocr_value": "Cigarette",
+    "confidence": 97.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_4",
+    "original_value": "10%",
+    "ocr_value": "10%!",
+    "confidence": 28.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_question_5",
+    "original_value": "To:",
+    "ocr_value": "To:!",
+    "confidence": 37.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_8",
+    "original_value": "DEC 1 1 1989",
+    "ocr_value": "DEC l 1 1989",
+    "confidence": 63.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_l_for_1"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "district",
+    "original_value": "Coimbatore",
+    "ocr_value": "Coimbatoe",
+    "confidence": 55.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_5",
+    "original_value": "Amount",
+    "ocr_value": "Amount",
+    "confidence": 94.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_question_11",
+    "original_value": "EVENT LOCATION:",
+    "ocr_value": "EVENT LOCATION:",
+    "confidence": 98.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "document_number",
+    "original_value": "TN-COI-2024-002",
+    "ocr_value": "TN-CQI-2024-002",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_Q_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_answer_5",
+    "original_value": "Toluene",
+    "ocr_value": "T0luene",
+    "confidence": 84.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_o"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_5",
+    "original_value": "BRAND",
+    "ocr_value": "BRAD",
+    "confidence": 58.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_5",
+    "original_value": "STUDY",
+    "ocr_value": "5TUDY",
+    "confidence": 38.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-train-0071032790",
+    "field_name": "funsd_answer_6",
+    "original_value": "Files",
+    "ocr_value": "Flies",
+    "confidence": 76.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_2",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 88.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_question_0",
+    "original_value": "DIVISION:",
+    "ocr_value": "DIVSION:",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_0",
+    "original_value": "Date:",
+    "ocr_value": "Date:",
+    "confidence": 91.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "owner_name",
+    "original_value": "Basavaraj Patil",
+    "ocr_value": "Basavaraj Patil",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_5",
+    "original_value": "Chicago:",
+    "ocr_value": "Chicago :",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-82253362_3364",
+    "field_name": "funsd_question_1",
+    "original_value": "FROM:",
+    "ocr_value": "FRO:M",
+    "confidence": 43.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-00040534",
+    "field_name": "funsd_question_6",
+    "original_value": "MALE",
+    "ocr_value": "MALE",
+    "confidence": 81.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_8",
+    "original_value": "PRICE",
+    "ocr_value": "PRICE",
+    "confidence": 92.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-91814768_91814769",
+    "field_name": "funsd_question_4",
+    "original_value": "ballot",
+    "ocr_value": "ballot",
+    "confidence": 79.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_question_5",
+    "original_value": "MENIHOL",
+    "ocr_value": "MNEIHOL",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_6",
+    "original_value": "15",
+    "ocr_value": "15!",
+    "confidence": 35.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_4",
+    "original_value": "TERMS",
+    "ocr_value": "TEMS",
+    "confidence": 26.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0060068489",
+    "field_name": "funsd_answer_3",
+    "original_value": "3/17/82",
+    "ocr_value": "3/17/82",
+    "confidence": 98.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92586242",
+    "field_name": "funsd_header_8",
+    "original_value": "SPECIAL EVENT INFORMATION SHEET",
+    "ocr_value": "SPECIAL EVENT INFORMATION SHEET",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "owner_name",
+    "original_value": "K. Senthil Nathan",
+    "ocr_value": "K. S3nthil Nathan",
+    "confidence": 78.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "digit_intruded_in_name"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_6",
+    "original_value": "DIRECTOR",
+    "ocr_value": "DIRECTO#R",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_answer_8",
+    "original_value": "336",
+    "ocr_value": "336!",
+    "confidence": 39.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_4",
+    "original_value": "RECASING",
+    "ocr_value": "RECA5ING",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_question_0",
+    "original_value": "DATE",
+    "ocr_value": "DATE",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_question_2",
+    "original_value": "Media:",
+    "ocr_value": "Media:",
+    "confidence": 79.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_0",
+    "original_value": "To:",
+    "ocr_value": "To:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_question_10",
+    "original_value": "STUDY NAME",
+    "ocr_value": "STUDY NAME",
+    "confidence": 79.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_2",
+    "original_value": "City",
+    "ocr_value": "City",
+    "confidence": 90.9,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_question_3",
+    "original_value": "Adjustment",
+    "ocr_value": "Adju5tment",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_s"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_5",
+    "original_value": "Weight",
+    "ocr_value": "@Weight",
+    "confidence": 80.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "district",
+    "original_value": "Bengaluru Rural",
+    "ocr_value": "Bengaluru R#ural",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_3",
+    "original_value": "MAY 12",
+    "ocr_value": "MY 12",
+    "confidence": 56.9,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "survey_number",
+    "original_value": "78/2",
+    "ocr_value": "l78/2",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_l_prefix"
+  },
+  {
+    "doc_id": "FUNSD-testi-86263525",
+    "field_name": "funsd_answer_8",
+    "original_value": "/A",
+    "ocr_value": "/A!",
+    "confidence": 29.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-80310840a",
+    "field_name": "funsd_question_9",
+    "original_value": "Feb",
+    "ocr_value": "Feb",
+    "confidence": 92.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_question_1",
+    "original_value": "FROM:",
+    "ocr_value": "FROM:",
+    "confidence": 96.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "taluk",
+    "original_value": "Devanahalli",
+    "ocr_value": "Devanahalli",
+    "confidence": 92.3,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86079776_9777",
+    "field_name": "funsd_header_8",
+    "original_value": "CREATIVE INPUT DOCUMENT",
+    "ocr_value": "CREATIVE INPUT DOCUMENT",
+    "confidence": 87.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_answer_1",
+    "original_value": "PMRM",
+    "ocr_value": "PMRM",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_question_5",
+    "original_value": "Date:",
+    "ocr_value": "Date:",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "document_date",
+    "original_value": "15/12/2022",
+    "ocr_value": "15/12/2O22",
+    "confidence": 81.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "alphabetical_character_in_date"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_4",
+    "original_value": "SALES",
+    "ocr_value": "SALES",
+    "confidence": 98.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-86220490",
+    "field_name": "funsd_answer_7",
+    "original_value": "Autodial",
+    "ocr_value": "Autodial",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "document_date",
+    "original_value": "22/11/2023",
+    "ocr_value": "22/11/2O23",
+    "confidence": 45.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "alphabetical_character_in_date"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_7",
+    "original_value": "no",
+    "ocr_value": "no",
+    "confidence": 82.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "village",
+    "original_value": "Ondipudur",
+    "ocr_value": "Onidpudur",
+    "confidence": 84.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-0012199830",
+    "field_name": "funsd_question_2",
+    "original_value": "RECEIVED",
+    "ocr_value": "RECEIVED#",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_2",
+    "original_value": "22",
+    "ocr_value": "22",
+    "confidence": 87.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_4",
+    "original_value": "ISSUE:",
+    "ocr_value": "1SSUE:",
+    "confidence": 59.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_1_for_I"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_5",
+    "original_value": "Telephone",
+    "ocr_value": "Telephone",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_4",
+    "original_value": "PHONE:",
+    "ocr_value": "PH0NE:",
+    "confidence": 51.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_0_for_O"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_header_6",
+    "original_value": "Filters",
+    "ocr_value": "Filters",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "owner_name",
+    "original_value": "V. Venkata Rao",
+    "ocr_value": "V. Venkata Rao",
+    "confidence": 85.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_question_5",
+    "original_value": "FULL",
+    "ocr_value": "FLL",
+    "confidence": 31.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "survey_number",
+    "original_value": "142/3B",
+    "ocr_value": "142/3B#",
+    "confidence": 81.8,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "spurious_noise_symbol"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "patta_number",
+    "original_value": "7741",
+    "ocr_value": "774",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "incomplete_patta_token"
+  },
+  {
+    "doc_id": "DOC-TN-COI-002",
+    "field_name": "extent",
+    "original_value": "1.20 Acres",
+    "ocr_value": "1.20",
+    "confidence": 35.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "missing_cadastral_area_unit"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "pattadar_name",
+    "original_value": "K. Meenakshi Sundaram",
+    "ocr_value": "Name: K. Meenakshi Sundaram",
+    "confidence": 79.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "unstripped_ocr_label_prefix"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_4",
+    "original_value": "SALES",
+    "ocr_value": "5ALES",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-testi-83573282",
+    "field_name": "funsd_question_2",
+    "original_value": "Re:",
+    "ocr_value": "Re:",
+    "confidence": 81.1,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "state",
+    "original_value": "Andhra Pradesh",
+    "ocr_value": "Andhra Pradesh",
+    "confidence": 96.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "DOC-KA-BLR-007",
+    "field_name": "state",
+    "original_value": "Karnataka",
+    "ocr_value": "Karnataka!",
+    "confidence": 55.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060308461",
+    "field_name": "funsd_answer_9",
+    "original_value": "3,890",
+    "ocr_value": "3,B90",
+    "confidence": 86.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_B_for_8"
+  },
+  {
+    "doc_id": "FUNSD-train-0060077689",
+    "field_name": "funsd_question_7",
+    "original_value": "DESCRIPTION",
+    "ocr_value": "DESCIRPTION",
+    "confidence": 50.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "DOC-AP-CTR-008",
+    "field_name": "document_date",
+    "original_value": "15/12/2022",
+    "ocr_value": "15/12/2022",
+    "confidence": 83.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0011906503",
+    "field_name": "funsd_question_2",
+    "original_value": "Title",
+    "ocr_value": "Title!",
+    "confidence": 54.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_3",
+    "original_value": "MAY 12",
+    "ocr_value": "MAY 12",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-80707440_7443",
+    "field_name": "funsd_question_0",
+    "original_value": "CLIENT:",
+    "ocr_value": "CLIENT:",
+    "confidence": 94.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060080406",
+    "field_name": "funsd_question_1",
+    "original_value": "DATE",
+    "ocr_value": "DAET",
+    "confidence": 84.6,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-81619486_9488",
+    "field_name": "funsd_header_4",
+    "original_value": "REGION:",
+    "ocr_value": "REGION:",
+    "confidence": 94.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-91315069_91315070",
+    "field_name": "funsd_header_8",
+    "original_value": "SUBMISSION DATE:",
+    "ocr_value": "5UBMISSION DATE:",
+    "confidence": 25.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "visual_confusion_5_for_S"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_6",
+    "original_value": "Floor",
+    "ocr_value": "Floor!",
+    "confidence": 77.3,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-train-0060173256",
+    "field_name": "funsd_answer_7",
+    "original_value": "31,000.00",
+    "ocr_value": "31,000.00",
+    "confidence": 91.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83443897",
+    "field_name": "funsd_question_5",
+    "original_value": "MESSAGE:",
+    "ocr_value": "MESAGE:",
+    "confidence": 73.5,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  },
+  {
+    "doc_id": "FUNSD-train-0001476912",
+    "field_name": "funsd_question_3",
+    "original_value": "Supplier:",
+    "ocr_value": "Supplier:",
+    "confidence": 41.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-train-92433599_92433601",
+    "field_name": "funsd_question_2",
+    "original_value": "City",
+    "ocr_value": "iCty",
+    "confidence": 26.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-87125460",
+    "field_name": "funsd_header_9",
+    "original_value": "FINAL REPORT AMENDMENT",
+    "ocr_value": "FINAL REPORT AMENDMENT",
+    "confidence": 89.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_7",
+    "original_value": "Tars",
+    "ocr_value": "-Tars",
+    "confidence": 34.4,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_insertion"
+  },
+  {
+    "doc_id": "FUNSD-train-0012178355",
+    "field_name": "funsd_question_0",
+    "original_value": "BRAND",
+    "ocr_value": "BARND",
+    "confidence": 75.0,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_transposition"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_4",
+    "original_value": "REGION:",
+    "ocr_value": "REGION:",
+    "confidence": 97.7,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-01122115",
+    "field_name": "funsd_question_2",
+    "original_value": "Remarks",
+    "ocr_value": "Remarks",
+    "confidence": 94.6,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-83641919_1921",
+    "field_name": "funsd_answer_7",
+    "original_value": "209",
+    "ocr_value": "209!",
+    "confidence": 79.1,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-82252956_2958",
+    "field_name": "funsd_question_0",
+    "original_value": "AUG 4",
+    "ocr_value": "AUG 4!",
+    "confidence": 48.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "DOC-TN-MDU-009",
+    "field_name": "document_date",
+    "original_value": "26/06/2015",
+    "ocr_value": "26/06/2015",
+    "confidence": 99.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-93213298",
+    "field_name": "funsd_question_1",
+    "original_value": "Location",
+    "ocr_value": "Location",
+    "confidence": 88.5,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_3",
+    "original_value": "dimensions:",
+    "ocr_value": "dimensions:",
+    "confidence": 93.2,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-00093726",
+    "field_name": "funsd_question_1",
+    "original_value": "on",
+    "ocr_value": "on",
+    "confidence": 85.4,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-0060007216",
+    "field_name": "funsd_question_5",
+    "original_value": "cc:",
+    "ocr_value": "cc:",
+    "confidence": 94.8,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-train-92081358_1359",
+    "field_name": "funsd_answer_5",
+    "original_value": "100%",
+    "ocr_value": "100%",
+    "confidence": 78.0,
+    "label": "LIKELY_CORRECT",
+    "corruption_type": "none"
+  },
+  {
+    "doc_id": "FUNSD-testi-89856243",
+    "field_name": "funsd_question_8",
+    "original_value": "Approved",
+    "ocr_value": "Approved!",
+    "confidence": 87.2,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "syntax_corruption"
+  },
+  {
+    "doc_id": "FUNSD-testi-87093315_87093318",
+    "field_name": "funsd_header_6",
+    "original_value": "Filters",
+    "ocr_value": "ilters",
+    "confidence": 83.7,
+    "label": "NEEDS_REVIEW",
+    "corruption_type": "character_omission"
+  }
+]

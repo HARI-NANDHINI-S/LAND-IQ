@@ -34,7 +34,7 @@ ENV PYTHONUNBUFFERED=1 \
 EXPOSE 8001
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:8001/health || exit 1
+    CMD curl -f http://localhost:8001/ready || exit 1
 
 # Start production server using uvicorn worker
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "2", "--timeout-keep-alive", "65"]

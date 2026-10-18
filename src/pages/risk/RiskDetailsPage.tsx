@@ -12,6 +12,8 @@ import {
 } from 'lucide-react';
 import { riskService } from '@/services/risk/riskService';
 import { documentService } from '@/services/documents/documentService';
+import { mlService, type MLPredictionInput } from '@/services/ml/mlService';
+import { AnomalyPriorityCard } from '@/components/ml/AnomalyPriorityCard';
 import { useAuth } from '@/hooks/auth/useAuth';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -52,6 +54,21 @@ export default function RiskDetailsPage() {
   const riskSignals = (assessment?.risk_signals ?? []) as any[];
   const relatedDocuments = (record?.documents ?? []) as any[];
   const duplicateCandidates = (assessment?.duplicate_candidates ?? []) as any[];
+
+  const mlQuery = useQuery({
+    queryKey: ['ml-risk-prediction', record?.id],
+    queryFn: async () => {
+      const topSimilarity = duplicateCandidates[0]?.similarity_score ? Number(duplicateCandidates[0].similarity_score) : 0;
+      const input: MLPredictionInput = {
+        duplicate_similarity_score: topSimilarity,
+        missing_fields_count: riskSignals.filter((s: any) => s.signal_type === 'DATA_INCONSISTENCY').length,
+        area_outlier_score: record?.land_area && Number(record.land_area) > 10 ? 0.75 : 0.1,
+        document_type: relatedDocuments[0]?.document_type || 'PATTA',
+      };
+      return mlService.predictAnomalyPriority(input);
+    },
+    enabled: !!record,
+  });
 
   const statusBadge = (value?: string | null) => {
     const label = value || 'ACTIVE';
@@ -198,6 +215,8 @@ export default function RiskDetailsPage() {
           </CardContent>
         </Card>
       </div>
+
+      <AnomalyPriorityCard prediction={mlQuery.data ?? null} isLoading={mlQuery.isLoading} />
 
       <Card>
         <CardHeader>

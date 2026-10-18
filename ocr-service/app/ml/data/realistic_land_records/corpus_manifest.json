@@ -1,0 +1,344 @@
+[
+  {
+    "doc_id": "EVAL-TN-COI-PATTA-001",
+    "doc_type": "patta_chitta_extract",
+    "quality": "clean",
+    "image_filename": "EVAL-TN-COI-PATTA-001_clean.png",
+    "image_rel_path": "images\\EVAL-TN-COI-PATTA-001_clean.png",
+    "fields_ground_truth": {
+      "document_number": "TN-COI-2024-7711",
+      "patta_number": "4521",
+      "survey_number": "142/3B",
+      "document_date": "14/06/2021",
+      "district": "Coimbatore",
+      "taluk": "Coimbatore South",
+      "village": "Perur",
+      "extent": "2.50 Acres",
+      "owner_name": "Ramesh Kumar"
+    },
+    "text_ground_truth": "GOVERNMENT OF TAMIL NADU - REVENUE DEPARTMENT\nPATTA / CHITTA EXTRACT (FORM 1)\n-----------------------------------------------------------------\nDocument Number : TN-COI-2024-7711\nPatta Number    : 4521\nSurvey Number   : 142/3B\nDocument Date   : 14/06/2021\nDistrict        : Coimbatore\nTaluk           : Coimbatore South\nVillage         : Perur\nExtent          : 2.50 Acres\nOwner Name      : Ramesh Kumar\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-PATTA-001",
+    "doc_type": "patta_chitta_extract",
+    "quality": "medium",
+    "image_filename": "EVAL-TN-COI-PATTA-001_medium.png",
+    "image_rel_path": "images\\EVAL-TN-COI-PATTA-001_medium.png",
+    "fields_ground_truth": {
+      "document_number": "TN-COI-2024-7711",
+      "patta_number": "4521",
+      "survey_number": "142/3B",
+      "document_date": "14/06/2021",
+      "district": "Coimbatore",
+      "taluk": "Coimbatore South",
+      "village": "Perur",
+      "extent": "2.50 Acres",
+      "owner_name": "Ramesh Kumar"
+    },
+    "text_ground_truth": "GOVERNMENT OF TAMIL NADU - REVENUE DEPARTMENT\nPATTA / CHITTA EXTRACT (FORM 1)\n-----------------------------------------------------------------\nDocument Number : TN-COI-2024-7711\nPatta Number    : 4521\nSurvey Number   : 142/3B\nDocument Date   : 14/06/2021\nDistrict        : Coimbatore\nTaluk           : Coimbatore South\nVillage         : Perur\nExtent          : 2.50 Acres\nOwner Name      : Ramesh Kumar\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-PATTA-001",
+    "doc_type": "patta_chitta_extract",
+    "quality": "degraded",
+    "image_filename": "EVAL-TN-COI-PATTA-001_degraded.png",
+    "image_rel_path": "images\\EVAL-TN-COI-PATTA-001_degraded.png",
+    "fields_ground_truth": {
+      "document_number": "TN-COI-2024-7711",
+      "patta_number": "4521",
+      "survey_number": "142/3B",
+      "document_date": "14/06/2021",
+      "district": "Coimbatore",
+      "taluk": "Coimbatore South",
+      "village": "Perur",
+      "extent": "2.50 Acres",
+      "owner_name": "Ramesh Kumar"
+    },
+    "text_ground_truth": "GOVERNMENT OF TAMIL NADU - REVENUE DEPARTMENT\nPATTA / CHITTA EXTRACT (FORM 1)\n-----------------------------------------------------------------\nDocument Number : TN-COI-2024-7711\nPatta Number    : 4521\nSurvey Number   : 142/3B\nDocument Date   : 14/06/2021\nDistrict        : Coimbatore\nTaluk           : Coimbatore South\nVillage         : Perur\nExtent          : 2.50 Acres\nOwner Name      : Ramesh Kumar\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-TSLR-002",
+    "doc_type": "tslr_extract",
+    "quality": "clean",
+    "image_filename": "EVAL-TN-COI-TSLR-002_clean.png",
+    "image_rel_path": "images\\EVAL-TN-COI-TSLR-002_clean.png",
+    "fields_ground_truth": {
+      "document_number": "TSLR-2023-9901",
+      "patta_number": "PAT-2023-882",
+      "survey_number": "200/1A",
+      "document_date": "22/11/2023",
+      "district": "Coimbatore",
+      "taluk": "Coimbatore South",
+      "village": "Ondipudur",
+      "extent": "1.20 Acres",
+      "owner_name": "K. Senthil Nathan"
+    },
+    "text_ground_truth": "TOWN SURVEY LAND REGISTER (TSLR) EXTRACT\nCOIMBATORE MUNICIPAL CORPORATION\n-----------------------------------------------------------------\nDocument Number : TSLR-2023-9901\nPatta Number    : PAT-2023-882\nSurvey Number   : 200/1A\nDocument Date   : 22/11/2023\nDistrict        : Coimbatore\nTaluk           : Coimbatore South\nVillage         : Ondipudur\nExtent          : 1.20 Acres\nOwner Name      : K. Senthil Nathan\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-TSLR-002",
+    "doc_type": "tslr_extract",
+    "quality": "medium",
+    "image_filename": "EVAL-TN-COI-TSLR-002_medium.png",
+    "image_rel_path": "images\\EVAL-TN-COI-TSLR-002_medium.png",
+    "fields_ground_truth": {
+      "document_number": "TSLR-2023-9901",
+      "patta_number": "PAT-2023-882",
+      "survey_number": "200/1A",
+      "document_date": "22/11/2023",
+      "district": "Coimbatore",
+      "taluk": "Coimbatore South",
+      "village": "Ondipudur",
+      "extent": "1.20 Acres",
+      "owner_name": "K. Senthil Nathan"
+    },
+    "text_ground_truth": "TOWN SURVEY LAND REGISTER (TSLR) EXTRACT\nCOIMBATORE MUNICIPAL CORPORATION\n-----------------------------------------------------------------\nDocument Number : TSLR-2023-9901\nPatta Number    : PAT-2023-882\nSurvey Number   : 200/1A\nDocument Date   : 22/11/2023\nDistrict        : Coimbatore\nTaluk           : Coimbatore South\nVillage         : Ondipudur\nExtent          : 1.20 Acres\nOwner Name      : K. Senthil Nathan\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-TSLR-002",
+    "doc_type": "tslr_extract",
+    "quality": "degraded",
+    "image_filename": "EVAL-TN-COI-TSLR-002_degraded.png",
+    "image_rel_path": "images\\EVAL-TN-COI-TSLR-002_degraded.png",
+    "fields_ground_truth": {
+      "document_number": "TSLR-2023-9901",
+      "patta_number": "PAT-2023-882",
+      "survey_number": "200/1A",
+      "document_date": "22/11/2023",
+      "district": "Coimbatore",
+      "taluk": "Coimbatore South",
+      "village": "Ondipudur",
+      "extent": "1.20 Acres",
+      "owner_name": "K. Senthil Nathan"
+    },
+    "text_ground_truth": "TOWN SURVEY LAND REGISTER (TSLR) EXTRACT\nCOIMBATORE MUNICIPAL CORPORATION\n-----------------------------------------------------------------\nDocument Number : TSLR-2023-9901\nPatta Number    : PAT-2023-882\nSurvey Number   : 200/1A\nDocument Date   : 22/11/2023\nDistrict        : Coimbatore\nTaluk           : Coimbatore South\nVillage         : Ondipudur\nExtent          : 1.20 Acres\nOwner Name      : K. Senthil Nathan\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-SLM-SALEDEED-003",
+    "doc_type": "sale_deed_extract",
+    "quality": "clean",
+    "image_filename": "EVAL-TN-SLM-SALEDEED-003_clean.png",
+    "image_rel_path": "images\\EVAL-TN-SLM-SALEDEED-003_clean.png",
+    "fields_ground_truth": {
+      "document_number": "DOC-SLM-2022-4412",
+      "patta_number": "10492",
+      "survey_number": "89/4C",
+      "document_date": "10/01/2019",
+      "district": "Salem",
+      "taluk": "Attur",
+      "village": "Valapady",
+      "extent": "50 Cents",
+      "owner_name": "S. Murugan"
+    },
+    "text_ground_truth": "SUB-REGISTRAR OFFICE VALAPADY - SALEM DISTRICT\nREGISTRATION ACT 1908 - SCHEDULE OF PROPERTY\n-----------------------------------------------------------------\nDocument Number : DOC-SLM-2022-4412\nPatta Number    : 10492\nSurvey Number   : 89/4C\nDocument Date   : 10/01/2019\nDistrict        : Salem\nTaluk           : Attur\nVillage         : Valapady\nExtent          : 50 Cents\nOwner Name      : S. Murugan\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-SLM-SALEDEED-003",
+    "doc_type": "sale_deed_extract",
+    "quality": "medium",
+    "image_filename": "EVAL-TN-SLM-SALEDEED-003_medium.png",
+    "image_rel_path": "images\\EVAL-TN-SLM-SALEDEED-003_medium.png",
+    "fields_ground_truth": {
+      "document_number": "DOC-SLM-2022-4412",
+      "patta_number": "10492",
+      "survey_number": "89/4C",
+      "document_date": "10/01/2019",
+      "district": "Salem",
+      "taluk": "Attur",
+      "village": "Valapady",
+      "extent": "50 Cents",
+      "owner_name": "S. Murugan"
+    },
+    "text_ground_truth": "SUB-REGISTRAR OFFICE VALAPADY - SALEM DISTRICT\nREGISTRATION ACT 1908 - SCHEDULE OF PROPERTY\n-----------------------------------------------------------------\nDocument Number : DOC-SLM-2022-4412\nPatta Number    : 10492\nSurvey Number   : 89/4C\nDocument Date   : 10/01/2019\nDistrict        : Salem\nTaluk           : Attur\nVillage         : Valapady\nExtent          : 50 Cents\nOwner Name      : S. Murugan\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-SLM-SALEDEED-003",
+    "doc_type": "sale_deed_extract",
+    "quality": "degraded",
+    "image_filename": "EVAL-TN-SLM-SALEDEED-003_degraded.png",
+    "image_rel_path": "images\\EVAL-TN-SLM-SALEDEED-003_degraded.png",
+    "fields_ground_truth": {
+      "document_number": "DOC-SLM-2022-4412",
+      "patta_number": "10492",
+      "survey_number": "89/4C",
+      "document_date": "10/01/2019",
+      "district": "Salem",
+      "taluk": "Attur",
+      "village": "Valapady",
+      "extent": "50 Cents",
+      "owner_name": "S. Murugan"
+    },
+    "text_ground_truth": "SUB-REGISTRAR OFFICE VALAPADY - SALEM DISTRICT\nREGISTRATION ACT 1908 - SCHEDULE OF PROPERTY\n-----------------------------------------------------------------\nDocument Number : DOC-SLM-2022-4412\nPatta Number    : 10492\nSurvey Number   : 89/4C\nDocument Date   : 10/01/2019\nDistrict        : Salem\nTaluk           : Attur\nVillage         : Valapady\nExtent          : 50 Cents\nOwner Name      : S. Murugan\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-TPR-SETTLE-004",
+    "doc_type": "settlement_deed_extract",
+    "quality": "clean",
+    "image_filename": "EVAL-TN-TPR-SETTLE-004_clean.png",
+    "image_rel_path": "images\\EVAL-TN-TPR-SETTLE-004_clean.png",
+    "fields_ground_truth": {
+      "document_number": "TN-TPR-2023-3190",
+      "patta_number": "PAT-2023-004",
+      "survey_number": "412/1",
+      "document_date": "17/09/2023",
+      "district": "Tiruppur",
+      "taluk": "Dharapuram",
+      "village": "Kundadam",
+      "extent": "3.80 Hectares",
+      "owner_name": "P. Vijayalakshmi"
+    },
+    "text_ground_truth": "SETTLEMENT DEED SCHEDULE - TIRUPPUR REGISTRATION DISTRICT\nREVENUE SUB-DIVISION SCHEDULE 'A'\n-----------------------------------------------------------------\nDocument Number : TN-TPR-2023-3190\nPatta Number    : PAT-2023-004\nSurvey Number   : 412/1\nDocument Date   : 17/09/2023\nDistrict        : Tiruppur\nTaluk           : Dharapuram\nVillage         : Kundadam\nExtent          : 3.80 Hectares\nOwner Name      : P. Vijayalakshmi\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-TPR-SETTLE-004",
+    "doc_type": "settlement_deed_extract",
+    "quality": "medium",
+    "image_filename": "EVAL-TN-TPR-SETTLE-004_medium.png",
+    "image_rel_path": "images\\EVAL-TN-TPR-SETTLE-004_medium.png",
+    "fields_ground_truth": {
+      "document_number": "TN-TPR-2023-3190",
+      "patta_number": "PAT-2023-004",
+      "survey_number": "412/1",
+      "document_date": "17/09/2023",
+      "district": "Tiruppur",
+      "taluk": "Dharapuram",
+      "village": "Kundadam",
+      "extent": "3.80 Hectares",
+      "owner_name": "P. Vijayalakshmi"
+    },
+    "text_ground_truth": "SETTLEMENT DEED SCHEDULE - TIRUPPUR REGISTRATION DISTRICT\nREVENUE SUB-DIVISION SCHEDULE 'A'\n-----------------------------------------------------------------\nDocument Number : TN-TPR-2023-3190\nPatta Number    : PAT-2023-004\nSurvey Number   : 412/1\nDocument Date   : 17/09/2023\nDistrict        : Tiruppur\nTaluk           : Dharapuram\nVillage         : Kundadam\nExtent          : 3.80 Hectares\nOwner Name      : P. Vijayalakshmi\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-TPR-SETTLE-004",
+    "doc_type": "settlement_deed_extract",
+    "quality": "degraded",
+    "image_filename": "EVAL-TN-TPR-SETTLE-004_degraded.png",
+    "image_rel_path": "images\\EVAL-TN-TPR-SETTLE-004_degraded.png",
+    "fields_ground_truth": {
+      "document_number": "TN-TPR-2023-3190",
+      "patta_number": "PAT-2023-004",
+      "survey_number": "412/1",
+      "document_date": "17/09/2023",
+      "district": "Tiruppur",
+      "taluk": "Dharapuram",
+      "village": "Kundadam",
+      "extent": "3.80 Hectares",
+      "owner_name": "P. Vijayalakshmi"
+    },
+    "text_ground_truth": "SETTLEMENT DEED SCHEDULE - TIRUPPUR REGISTRATION DISTRICT\nREVENUE SUB-DIVISION SCHEDULE 'A'\n-----------------------------------------------------------------\nDocument Number : TN-TPR-2023-3190\nPatta Number    : PAT-2023-004\nSurvey Number   : 412/1\nDocument Date   : 17/09/2023\nDistrict        : Tiruppur\nTaluk           : Dharapuram\nVillage         : Kundadam\nExtent          : 3.80 Hectares\nOwner Name      : P. Vijayalakshmi\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-MDU-PATTA-005",
+    "doc_type": "patta_chitta_extract",
+    "quality": "clean",
+    "image_filename": "EVAL-TN-MDU-PATTA-005_clean.png",
+    "image_rel_path": "images\\EVAL-TN-MDU-PATTA-005_clean.png",
+    "fields_ground_truth": {
+      "document_number": "TN-MDU-2024-5501",
+      "patta_number": "6102",
+      "survey_number": "78/2A",
+      "document_date": "03/04/2022",
+      "district": "Madurai",
+      "taluk": "Madurai East",
+      "village": "Othakadai",
+      "extent": "1.75 Acres",
+      "owner_name": "A. Meenakshi Sundaram"
+    },
+    "text_ground_truth": "GOVERNMENT OF TAMIL NADU - REVENUE DEPARTMENT\nPATTA PASSBOOK EXTRACT (MADURAI EAST)\n-----------------------------------------------------------------\nDocument Number : TN-MDU-2024-5501\nPatta Number    : 6102\nSurvey Number   : 78/2A\nDocument Date   : 03/04/2022\nDistrict        : Madurai\nTaluk           : Madurai East\nVillage         : Othakadai\nExtent          : 1.75 Acres\nOwner Name      : A. Meenakshi Sundaram\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-MDU-PATTA-005",
+    "doc_type": "patta_chitta_extract",
+    "quality": "medium",
+    "image_filename": "EVAL-TN-MDU-PATTA-005_medium.png",
+    "image_rel_path": "images\\EVAL-TN-MDU-PATTA-005_medium.png",
+    "fields_ground_truth": {
+      "document_number": "TN-MDU-2024-5501",
+      "patta_number": "6102",
+      "survey_number": "78/2A",
+      "document_date": "03/04/2022",
+      "district": "Madurai",
+      "taluk": "Madurai East",
+      "village": "Othakadai",
+      "extent": "1.75 Acres",
+      "owner_name": "A. Meenakshi Sundaram"
+    },
+    "text_ground_truth": "GOVERNMENT OF TAMIL NADU - REVENUE DEPARTMENT\nPATTA PASSBOOK EXTRACT (MADURAI EAST)\n-----------------------------------------------------------------\nDocument Number : TN-MDU-2024-5501\nPatta Number    : 6102\nSurvey Number   : 78/2A\nDocument Date   : 03/04/2022\nDistrict        : Madurai\nTaluk           : Madurai East\nVillage         : Othakadai\nExtent          : 1.75 Acres\nOwner Name      : A. Meenakshi Sundaram\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-MDU-PATTA-005",
+    "doc_type": "patta_chitta_extract",
+    "quality": "degraded",
+    "image_filename": "EVAL-TN-MDU-PATTA-005_degraded.png",
+    "image_rel_path": "images\\EVAL-TN-MDU-PATTA-005_degraded.png",
+    "fields_ground_truth": {
+      "document_number": "TN-MDU-2024-5501",
+      "patta_number": "6102",
+      "survey_number": "78/2A",
+      "document_date": "03/04/2022",
+      "district": "Madurai",
+      "taluk": "Madurai East",
+      "village": "Othakadai",
+      "extent": "1.75 Acres",
+      "owner_name": "A. Meenakshi Sundaram"
+    },
+    "text_ground_truth": "GOVERNMENT OF TAMIL NADU - REVENUE DEPARTMENT\nPATTA PASSBOOK EXTRACT (MADURAI EAST)\n-----------------------------------------------------------------\nDocument Number : TN-MDU-2024-5501\nPatta Number    : 6102\nSurvey Number   : 78/2A\nDocument Date   : 03/04/2022\nDistrict        : Madurai\nTaluk           : Madurai East\nVillage         : Othakadai\nExtent          : 1.75 Acres\nOwner Name      : A. Meenakshi Sundaram\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-CHITTA-006",
+    "doc_type": "patta_chitta_extract",
+    "quality": "clean",
+    "image_filename": "EVAL-TN-COI-CHITTA-006_clean.png",
+    "image_rel_path": "images\\EVAL-TN-COI-CHITTA-006_clean.png",
+    "fields_ground_truth": {
+      "document_number": "TN-COI-2023-8812",
+      "patta_number": "8812",
+      "survey_number": "55/1A",
+      "document_date": "18/08/2022",
+      "district": "Coimbatore",
+      "taluk": "Pollachi",
+      "village": "Kinathukadavu",
+      "extent": "4.15 Hectares",
+      "owner_name": "M. Palanisamy"
+    },
+    "text_ground_truth": "REVENUE REGISTER (CHITTA) EXTRACT\nPOLLACHI TALUK - COIMBATORE DISTRICT\n-----------------------------------------------------------------\nDocument Number : TN-COI-2023-8812\nPatta Number    : 8812\nSurvey Number   : 55/1A\nDocument Date   : 18/08/2022\nDistrict        : Coimbatore\nTaluk           : Pollachi\nVillage         : Kinathukadavu\nExtent          : 4.15 Hectares\nOwner Name      : M. Palanisamy\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-CHITTA-006",
+    "doc_type": "patta_chitta_extract",
+    "quality": "medium",
+    "image_filename": "EVAL-TN-COI-CHITTA-006_medium.png",
+    "image_rel_path": "images\\EVAL-TN-COI-CHITTA-006_medium.png",
+    "fields_ground_truth": {
+      "document_number": "TN-COI-2023-8812",
+      "patta_number": "8812",
+      "survey_number": "55/1A",
+      "document_date": "18/08/2022",
+      "district": "Coimbatore",
+      "taluk": "Pollachi",
+      "village": "Kinathukadavu",
+      "extent": "4.15 Hectares",
+      "owner_name": "M. Palanisamy"
+    },
+    "text_ground_truth": "REVENUE REGISTER (CHITTA) EXTRACT\nPOLLACHI TALUK - COIMBATORE DISTRICT\n-----------------------------------------------------------------\nDocument Number : TN-COI-2023-8812\nPatta Number    : 8812\nSurvey Number   : 55/1A\nDocument Date   : 18/08/2022\nDistrict        : Coimbatore\nTaluk           : Pollachi\nVillage         : Kinathukadavu\nExtent          : 4.15 Hectares\nOwner Name      : M. Palanisamy\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  },
+  {
+    "doc_id": "EVAL-TN-COI-CHITTA-006",
+    "doc_type": "patta_chitta_extract",
+    "quality": "degraded",
+    "image_filename": "EVAL-TN-COI-CHITTA-006_degraded.png",
+    "image_rel_path": "images\\EVAL-TN-COI-CHITTA-006_degraded.png",
+    "fields_ground_truth": {
+      "document_number": "TN-COI-2023-8812",
+      "patta_number": "8812",
+      "survey_number": "55/1A",
+      "document_date": "18/08/2022",
+      "district": "Coimbatore",
+      "taluk": "Pollachi",
+      "village": "Kinathukadavu",
+      "extent": "4.15 Hectares",
+      "owner_name": "M. Palanisamy"
+    },
+    "text_ground_truth": "REVENUE REGISTER (CHITTA) EXTRACT\nPOLLACHI TALUK - COIMBATORE DISTRICT\n-----------------------------------------------------------------\nDocument Number : TN-COI-2023-8812\nPatta Number    : 8812\nSurvey Number   : 55/1A\nDocument Date   : 18/08/2022\nDistrict        : Coimbatore\nTaluk           : Pollachi\nVillage         : Kinathukadavu\nExtent          : 4.15 Hectares\nOwner Name      : M. Palanisamy\n-----------------------------------------------------------------\nStatutory Revenue Extract - Certified Copy for Land Record Verification"
+  }
+]

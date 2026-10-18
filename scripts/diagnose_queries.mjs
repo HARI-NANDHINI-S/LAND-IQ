@@ -6,52 +6,37 @@ dotenv.config();
 const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_ANON_KEY);
 
 async function main() {
-  const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-    email: 'admin@landiq.local',
-    password: 'Admin123!'
-  });
-  if (authError) {
-    console.error('Auth error:', authError);
-    return;
-  }
-  console.log('Logged in as:', authData.user.email);
+  await supabase.auth.signInWithPassword({ email: 'admin@landiq.local', password: 'Admin123!' });
 
-  console.log('\n--- Testing RPC: get_spatial_land_record_extent ---');
+  console.log('--- 1. Testing get_spatial_land_record_extent ---');
   const extentRes = await supabase.rpc('get_spatial_land_record_extent');
-  if (extentRes.error) {
-    console.error('get_spatial_land_record_extent error:', extentRes.error);
-  } else {
-    console.log('get_spatial_land_record_extent result:', extentRes.data);
-  }
+  console.log('Extent result:', extentRes.data);
 
-  console.log('\n--- Testing RPC: get_spatial_land_records ---');
-  const recordsRes = await supabase.rpc('get_spatial_land_records', {
-    p_west: 60,
-    p_south: 6,
-    p_east: 100,
-    p_north: 40,
-  });
-  if (recordsRes.error) {
-    console.error('get_spatial_land_records error:', recordsRes.error);
-  } else {
-    console.log('get_spatial_land_records count:', recordsRes.data?.length);
-    console.log('First record sample:', recordsRes.data?.[0]);
-  }
-
-  console.log('\n--- Testing land_records schema / sample row ---');
-  const lrRes = await supabase.from('land_records').select('*').limit(2);
-  if (lrRes.error) {
-    console.error('land_records select error:', lrRes.error);
-  } else {
-    console.log('land_records columns in row 0:', Object.keys(lrRes.data?.[0] || {}));
-    console.log('Row 0 coordinates / parcel info:', {
-      id: lrRes.data?.[0]?.id,
-      record_number: lrRes.data?.[0]?.record_number,
-      survey_number: lrRes.data?.[0]?.survey_number,
-      centroid_latitude: lrRes.data?.[0]?.centroid_latitude,
-      centroid_longitude: lrRes.data?.[0]?.centroid_longitude,
-      parcel_boundaries: lrRes.data?.[0]?.parcel_boundaries,
+  const extent = extentRes.data?.[0];
+  if (extent) {
+    console.log('--- 2. Testing get_spatial_land_records within extent ---');
+    const recordsRes = await supabase.rpc('get_spatial_land_records', {
+      p_west: extent.west - 0.1,
+      p_south: extent.south - 0.1,
+      p_east: extent.east + 0.1,
+      p_north: extent.north + 0.1,
     });
+    console.log('Records returned count:', recordsRes.data?.length);
+    console.log('Sample record 0:', {
+      record_number: recordsRes.data?.[0]?.record_number,
+      latitude: recordsRes.data?.[0]?.latitude,
+      longitude: recordsRes.data?.[0]?.longitude,
+      geometry_type: recordsRes.data?.[0]?.geometry_geojson?.type,
+    });
+
+    console.log('--- 3. Testing get_nearby_land_records (10.9712, 76.9184) within 5km ---');
+    const nearbyRes = await supabase.rpc('get_nearby_land_records', {
+      p_latitude: 10.9712,
+      p_longitude: 76.9184,
+      p_radius_meters: 20000,
+    });
+    console.log('Nearby records count:', nearbyRes.data?.length);
+    console.log('Nearby sample:', nearbyRes.data?.[0]);
   }
 }
 
