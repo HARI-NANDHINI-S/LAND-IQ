@@ -31,6 +31,8 @@ import UsersPage from './pages/users/UsersPage';
 
 import AuditLogsPage from './pages/audit/AuditLogsPage';
 import SettingsPage from './pages/settings/SettingsPage';
+import CitizenPortalPage from './pages/citizen/CitizenPortalPage';
+import ApplicationsPage from './pages/applications/ApplicationsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -110,6 +112,10 @@ export default function App() {
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
             
+            {/* Citizen & Applications Modules */}
+            <Route path="citizen/applications" element={<CitizenPortalPage />} />
+            <Route path="applications" element={<PermissionRoute permission="application:read"><ApplicationsPage /></PermissionRoute>} />
+
             {/* Land Records Module */}
             <Route path="land-records">
               <Route index element={<PermissionRoute permission="land_record:read"><LandRecordsPage /></PermissionRoute>} />
