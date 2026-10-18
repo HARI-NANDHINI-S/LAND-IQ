@@ -7,6 +7,7 @@ import {
   Bell,
   Bot,
   CheckCheck,
+  ClipboardList,
   FileText,
   Files,
   Gauge,
@@ -140,7 +141,13 @@ export default function DashboardPage() {
             .neq('status', 'RESOLVED')
         : { count: 0, error: null }
 
-      const countError = [pendingVerification.error, highRisk.error, pendingDuplicates.error, activeAlerts.error].find(Boolean);
+      const citizenApps = hasPermission('application:create') || hasPermission('application:read')
+        ? await supabase
+            .from('citizen_applications')
+            .select('id', { count: 'exact', head: true })
+        : { count: 0, error: null }
+
+      const countError = [pendingVerification.error, highRisk.error, pendingDuplicates.error, activeAlerts.error, citizenApps.error].find(Boolean);
       if (countError) throw toAppError(countError);
 
       const landRecordsCount = hasPermission('land_record:read') ? (landRecords.count ?? (landRecords.data?.length ?? 0)) : 0;
@@ -261,6 +268,7 @@ export default function DashboardPage() {
           highRisk: highRisk.count ?? 0,
           activeAlerts: activeAlerts.count ?? 0,
           pendingDuplicates: pendingDuplicates.count ?? 0,
+          citizenApplications: citizenApps.count ?? 0,
         },
         recentRecords,
         recentActivity: recentActivity.data ?? [],
@@ -284,6 +292,11 @@ export default function DashboardPage() {
 
     const cards = [] as Array<{ title: string; value: number; description: string; icon: typeof FileText; href: string; permission: boolean; tone?: 'amber' | 'rose' | 'orange' | 'blue' | 'emerald' }>; 
 
+    if (hasPermission('application:create')) {
+      cards.push({ title: 'My Applications', value: dashboardQuery.data.totals.citizenApplications, description: 'Submitted applications', icon: ClipboardList, href: '/citizen/applications', permission: true, tone: 'amber' });
+    } else if (hasPermission('application:read')) {
+      cards.push({ title: 'Applications Queue', value: dashboardQuery.data.totals.citizenApplications, description: 'Citizen cases in scope', icon: ClipboardList, href: '/applications', permission: true, tone: 'blue' });
+    }
     if (hasPermission('land_record:read')) {
       cards.push({ title: 'Land Records', value: dashboardQuery.data.totals.landRecords, description: 'Total records in scope', icon: FileText, href: '/land-records', permission: true, tone: 'blue' });
     }
@@ -310,6 +323,8 @@ export default function DashboardPage() {
   }, [dashboardQuery.data, hasPermission]);
 
   const quickActions = [
+    hasPermission('application:create') ? { label: 'Submit Application', href: '/citizen/applications', icon: Plus } : null,
+    hasPermission('application:read') && !hasPermission('application:create') ? { label: 'Applications Queue', href: '/applications', icon: ClipboardList } : null,
     hasPermission('land_record:create') ? { label: 'Add Land Record', href: '/land-records/new', icon: Plus } : null,
     hasPermission('document:create') ? { label: 'Upload Document', href: '/documents', icon: Files } : null,
     hasPermission('verification:read') ? { label: 'Open Verification', href: '/verification', icon: CheckCheck } : null,
