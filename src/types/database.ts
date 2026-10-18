@@ -201,6 +201,36 @@ export interface Database {
         Insert: { actor_id?: string | null; actor_role?: string | null; actor_email?: string | null; action: string; entity_type: string; entity_id?: string | null; before_state?: Json | null; after_state?: Json | null; metadata?: Json | null; status?: string | null; remarks?: string | null; correlation_id?: string | null }
         Update: never
       }
+      cadastral_parcels: {
+        Row: { id: string; parcel_id: string; state_id: string; district_id: string; taluk_id: string | null; village_id: string; survey_number: string; subdivision_number: string | null; parcel_area: number; area_unit: string; land_use: string | null; boundary_geometry: any; boundary_geojson: Json | null; cadastral_source: string; source_timestamp: string; is_active: boolean; created_at: string }
+        Insert: { id?: string; parcel_id: string; state_id: string; district_id: string; taluk_id?: string | null; village_id: string; survey_number: string; subdivision_number?: string | null; parcel_area: number; area_unit?: string; land_use?: string | null; boundary_geometry?: any; boundary_geojson?: Json | null; cadastral_source?: string; is_active?: boolean }
+        Update: { parcel_area?: number; land_use?: string | null; is_active?: boolean }
+      }
+      gis_cross_validations: {
+        Row: { id: string; land_record_id: string | null; document_id: string | null; state_id: string | null; district_id: string | null; village_id: string | null; extracted_survey_number: string | null; extracted_subdivision: string | null; extracted_area: string | null; matched_parcel_id: string | null; cadastral_survey_number: string | null; cadastral_area: number | null; cadastral_area_unit: string | null; validation_status: 'MATCHED' | 'POSSIBLE_MISMATCH' | 'AMBIGUOUS_MATCH' | 'NO_MATCH' | 'SOURCE_DATA_UNAVAILABLE' | 'NOT_YET_VALIDATED'; confidence_score: number | null; discrepancies: Json | null; is_duplicate_parcel: boolean; has_geometry_overlap: boolean; overlapping_parcel_ids: Json | null; geometry_geojson: Json | null; cadastral_source: string | null; source_timestamp: string; officer_resolution_status: 'PENDING' | 'ACCEPTED_OVERRIDE' | 'CONFIRMED_MATCH' | 'REJECTED_DISCREPANCY' | null; officer_notes: string | null; resolved_by: string | null; resolved_at: string | null; created_at: string; updated_at: string }
+        Insert: { id?: string; land_record_id?: string | null; document_id?: string | null; state_id?: string | null; district_id?: string | null; village_id?: string | null; extracted_survey_number?: string | null; extracted_subdivision?: string | null; extracted_area?: string | null; matched_parcel_id?: string | null; cadastral_survey_number?: string | null; cadastral_area?: number | null; cadastral_area_unit?: string | null; validation_status?: 'MATCHED' | 'POSSIBLE_MISMATCH' | 'AMBIGUOUS_MATCH' | 'NO_MATCH' | 'SOURCE_DATA_UNAVAILABLE' | 'NOT_YET_VALIDATED'; confidence_score?: number | null; discrepancies?: Json | null; is_duplicate_parcel?: boolean; has_geometry_overlap?: boolean; overlapping_parcel_ids?: Json | null; geometry_geojson?: Json | null; cadastral_source?: string | null; officer_resolution_status?: 'PENDING' | 'ACCEPTED_OVERRIDE' | 'CONFIRMED_MATCH' | 'REJECTED_DISCREPANCY' | null; officer_notes?: string | null; resolved_by?: string | null; resolved_at?: string | null }
+        Update: { officer_resolution_status?: 'PENDING' | 'ACCEPTED_OVERRIDE' | 'CONFIRMED_MATCH' | 'REJECTED_DISCREPANCY' | null; officer_notes?: string | null; resolved_by?: string | null; resolved_at?: string | null; updated_at?: string }
+      }
+      land_record_versions: {
+        Row: { id: string; land_record_id: string; version_number: number; document_id: string | null; event_type: 'INITIAL_INGESTION' | 'OCR_EXTRACTED' | 'PROPOSED_CORRECTION' | 'VERIFIED_APPROVAL' | 'REJECTION' | 'GIS_DISCREPANCY_RESOLVED' | 'MANUAL_EDIT'; snapshot: Json; field_changes: Json | null; actor_id: string | null; actor_role: string | null; reason: string | null; correlation_id: string | null; created_at: string }
+        Insert: { id?: string; land_record_id: string; version_number: number; document_id?: string | null; event_type: 'INITIAL_INGESTION' | 'OCR_EXTRACTED' | 'PROPOSED_CORRECTION' | 'VERIFIED_APPROVAL' | 'REJECTION' | 'GIS_DISCREPANCY_RESOLVED' | 'MANUAL_EDIT'; snapshot: Json; field_changes?: Json | null; actor_id?: string | null; actor_role?: string | null; reason?: string | null; correlation_id?: string | null }
+        Update: never
+      }
+      citizen_applications: {
+        Row: { id: string; application_number: string; citizen_id: string; request_type: 'DIGITIZATION' | 'CORRECTION' | 'MUTATION' | 'TITLE_VERIFICATION'; status: 'SUBMITTED' | 'OCR_PROCESSING' | 'UNDER_REVIEW' | 'ACTION_REQUIRED' | 'RESUBMITTED' | 'APPROVED' | 'REJECTED' | 'PROCESSING_FAILED' | 'CANCELLED'; land_record_id: string | null; state_id: string | null; district_id: string | null; taluk_id: string | null; village_id: string | null; survey_number: string | null; applicant_name: string; applicant_phone: string | null; applicant_email: string | null; description: string | null; clarification_request: string | null; clarification_response: string | null; officer_decision_reason: string | null; assigned_officer_id: string | null; assigned_clerk_id: string | null; created_at: string; updated_at: string }
+        Insert: { id?: string; application_number?: string; citizen_id: string; request_type: 'DIGITIZATION' | 'CORRECTION' | 'MUTATION' | 'TITLE_VERIFICATION'; status?: 'SUBMITTED' | 'OCR_PROCESSING' | 'UNDER_REVIEW' | 'ACTION_REQUIRED' | 'RESUBMITTED' | 'APPROVED' | 'REJECTED' | 'PROCESSING_FAILED' | 'CANCELLED'; land_record_id?: string | null; state_id?: string | null; district_id?: string | null; taluk_id?: string | null; village_id?: string | null; survey_number?: string | null; applicant_name: string; applicant_phone?: string | null; applicant_email?: string | null; description?: string | null; clarification_request?: string | null; clarification_response?: string | null; officer_decision_reason?: string | null; assigned_officer_id?: string | null; assigned_clerk_id?: string | null }
+        Update: { status?: 'SUBMITTED' | 'OCR_PROCESSING' | 'UNDER_REVIEW' | 'ACTION_REQUIRED' | 'RESUBMITTED' | 'APPROVED' | 'REJECTED' | 'PROCESSING_FAILED' | 'CANCELLED'; clarification_request?: string | null; clarification_response?: string | null; officer_decision_reason?: string | null; assigned_officer_id?: string | null; assigned_clerk_id?: string | null; updated_at?: string }
+      }
+      application_documents: {
+        Row: { id: string; application_id: string; document_id: string; document_type: string; is_clarification_evidence: boolean; uploaded_by: string | null; created_at: string }
+        Insert: { id?: string; application_id: string; document_id: string; document_type?: string; is_clarification_evidence?: boolean; uploaded_by?: string | null }
+        Update: never
+      }
+      application_timeline: {
+        Row: { id: string; application_id: string; status: string; actor_id: string | null; actor_role: string | null; event_title: string; event_description: string | null; citizen_visible: boolean; created_at: string }
+        Insert: { id?: string; application_id: string; status: string; actor_id?: string | null; actor_role?: string | null; event_title: string; event_description?: string | null; citizen_visible?: boolean }
+        Update: never
+      }
     }
     Views: Record<string, never>
     Functions: {
@@ -325,6 +355,44 @@ export interface Database {
       demo_data_visible: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      },
+      perform_gis_cross_validation: {
+        Args: { p_land_record_id: string; p_document_id?: string | null }
+        Returns: Database['public']['Tables']['gis_cross_validations']['Row']
+      },
+      resolve_gis_discrepancy: {
+        Args: { p_validation_id: string; p_resolution_status: string; p_notes: string }
+        Returns: Database['public']['Tables']['gis_cross_validations']['Row']
+      },
+      create_record_version: {
+        Args: { p_land_record_id: string; p_event_type: string; p_document_id?: string | null; p_reason?: string | null; p_field_changes?: Json }
+        Returns: Database['public']['Tables']['land_record_versions']['Row']
+      },
+      submit_citizen_application: {
+        Args: {
+          p_request_type: string
+          p_state_id: string
+          p_district_id: string
+          p_village_id: string
+          p_survey_number: string
+          p_applicant_name: string
+          p_applicant_phone: string
+          p_description: string
+          p_document_ids?: string[]
+        }
+        Returns: Database['public']['Tables']['citizen_applications']['Row']
+      },
+      request_application_clarification: {
+        Args: { p_application_id: string; p_message: string }
+        Returns: Database['public']['Tables']['citizen_applications']['Row']
+      },
+      respond_application_clarification: {
+        Args: { p_application_id: string; p_response: string; p_new_document_id?: string | null }
+        Returns: Database['public']['Tables']['citizen_applications']['Row']
+      },
+      decide_citizen_application: {
+        Args: { p_application_id: string; p_decision: string; p_reason: string }
+        Returns: Database['public']['Tables']['citizen_applications']['Row']
       }
     }
     Enums: Record<string, never>
